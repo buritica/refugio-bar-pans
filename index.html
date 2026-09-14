@@ -160,7 +160,7 @@
           <div><span class="w-num">175 mm</span><span class="w-lbl">labio</span><span class="w-note">ancho de la bandeja y de la <b>franja</b> que se reserva en el mesón.</span></div>
           <div><span class="w-num">156 mm</span><span class="w-lbl">corte pasante</span><span class="w-note">el hueco. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
         </div>
-        <span class="w-foot">Iguales para la 1/3, la 1/6 y la 1/9. A ras la franja pasa a <b>181 mm</b>; el corte sigue en 156.</span>
+        <span class="w-foot">Iguales para la 1/3, la 1/6 y la 1/9. A ras la franja crece a <b>181 mm</b> (3 mm de aire por lado para el labio); el corte sigue en 156.</span>
       </li>
       <li><b>Partimos de la 1/3, la 1/6 y la 1/9.</b> Comparten el lado corto de 175 mm, así que una sola franja les sirve a las tres.</li>
       <li><b>La idea es una fila de norte a sur.</b> Cada bandeja ocupa 324, 159 o 108 mm; la fila suma el largo de la cavidad.</li>
@@ -173,7 +173,7 @@
     <h2><span class="num">2</span>Probar combinaciones</h2>
     <p>De oeste a este: <b>butcher block · bandejas · estufa</b>. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p>
     <div class="ctl" id="ctl">
-      <div class="ctl-row"><span class="ctl-lbl">Cavidad</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="483"> mm</label><span class="ctl-hint">× 175 mm · supuesto</span></div>
+      <div class="ctl-row"><span class="ctl-lbl">Cavidad</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="483"> mm</label><span class="ctl-hint">× <span id="cav-w">175</span> mm · supuesto</span></div>
       <div class="ctl-row"><span class="ctl-lbl">Montaje</span><div class="seg" role="group" aria-label="Montaje"><button type="button" data-mount="proud" aria-pressed="true">Sobrepuesto</button><button type="button" data-mount="flush" aria-pressed="false">A ras</button></div></div>
     </div>
     <div class="chosen" id="chosen"></div>
@@ -185,7 +185,7 @@
 
   <section id="cabe">
     <h2><span class="num">3</span>¿Cabría?</h2>
-    <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y los <b>cortes</b>. A ras se sumaría el <b>rebaje</b>, más grande que los labios. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
+    <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y los <b>cortes</b>. A ras la franja crece 3 mm por lado para que el labio baje al <b>rebaje</b>. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
     <div class="sheet"><svg id="fit"></svg></div>
     <div class="legend"><span class="l-cav">franja</span><span class="l-pocket">rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">corte pasante</span></div>
     <div id="verdict" class="verdict"></div>
@@ -257,7 +257,7 @@ let MOUNT = 'proud';                            // 'proud' | 'flush'            
 let CAVITY, LAYOUT;
 const usedLen = () => ROW.reduce((a, it) => a + PANS[it.p].w, 0);
 function layout() {
-  CAVITY = { l: CAV_MM / 25.4, w: PANS.third.l };
+  CAVITY = { l: CAV_MM / 25.4, w: PANS.third.l + (MOUNT === 'flush' ? 2 * CLEAR : 0) };   // a ras: labio + 3 mm por lado
   let cursor = 0;
   LAYOUT = ROW.map(it => { const o = { p: it.p, x: cursor, y: 0 }; cursor += PANS[it.p].w; return o; });
 }
@@ -437,12 +437,13 @@ function render() {
   drawPlan();
   drawSection('section', MOUNT === 'flush', ROW.map(it => ({ name: PANS[it.p].name, W: PANS[it.p].w, d: it.d })), CAVITY.l, ['norte', 'sur']);
   const deep = ROW.reduce((a, b) => (b.d >= a.d ? b : a));
-  drawSection('section-b', MOUNT === 'flush', [{ name: deep ? PANS[deep.p].name : '', W: PANS.third.l, d: deep.d }], CAVITY.w, ['butcher block ←', '→ estufa']);
+  drawSection('section-b', MOUNT === 'flush', [{ name: deep ? PANS[deep.p].name : '', W: PANS.third.l, d: deep.d }], PANS.third.l, ['butcher block ←', '→ estufa']);
   drawDetail('detail', MOUNT === 'flush');
   drawFit();
   drawCards();
   drawChosen();
   document.getElementById('cav-len').value = CAV_MM;
+  document.getElementById('cav-w').textContent = mm(CAVITY.w);
   document.querySelectorAll('[data-mount]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mount === MOUNT));
   writeHash();
   document.getElementById('mounts').innerHTML =
@@ -485,9 +486,8 @@ function drawCards() {
 }
 function drawChosen() {
   const left = CAVITY.l - rowLen(MOUNT);        // a ras: cada bandeja pide 6 mm más
-  const wBad = MOUNT === 'flush' && fitGeom().needW > fitGeom().cavW + 1e-9;
   const seq = ROW.map(it => `${PANS[it.p].name} (${mm(it.d)})`).join(' → ');
-  document.getElementById('chosen').innerHTML = `<b>Probando:</b> ${seq} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · cavidad ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}${wBad ? ` · <span style="color:#c0392b">ancho: a ras pide ${mm(fitGeom().needW)} mm, no ${mm(fitGeom().cavW)}</span>` : ''}`;
+  document.getElementById('chosen').innerHTML = `<b>Probando:</b> ${seq} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · cavidad ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}`;
   document.getElementById('corte-lead').innerHTML = MOUNT === 'proud'
     ? '<b>Sobrepuesto:</b> el labio apoyaría sobre el mesón y serviría de agarre. Términos en el <a href="#glosario">glosario</a>.'
     : '<b>A ras:</b> el labio bajaría a un <a href="#glosario">rebaje</a> y quedaría al nivel del mesón.';
@@ -504,7 +504,7 @@ function fitGeom() {
   const cutW = lipW - 2 * LIP + 2 * CLEAR;
   return { flush, n, lipW, lipsL, pocketW, pocketL, cutW,
     needW: flush ? pocketW : lipW, needL: flush ? pocketL : lipsL,
-    cavW: PANS.third.l, cavL: CAVITY.l };
+    cavW: CAVITY.w, cavL: CAVITY.l };
 }
 function drawFit() {
   const g0 = fitGeom(), S = 15, M = { l: 150, t: 70, r: 40, b: 60 };
@@ -539,10 +539,10 @@ function drawFit() {
   svg.setAttribute('viewBox', `0 0 ${M.l + Math.max(cavL, g0.needL * S) + M.r} ${M.t + cavW + M.b}`);
   svg.innerHTML = g;
 
-  const okW = g0.needW <= g0.cavW + 1e-9, okL = g0.needL <= g0.cavL + 1e-9;
+  const okL = g0.needL <= g0.cavL + 1e-9;
   const what = g0.flush ? 'el rebaje pide' : 'los labios piden';
   document.getElementById('verdict').innerHTML =
-    `<div class="${okW ? 'ok' : 'no'}"><b>Ancho:</b> ${what} ${mm(g0.needW)} mm, hay ${mm(g0.cavW)} → ${okW ? 'cabe' : `faltan ${mm(g0.needW - g0.cavW)} mm. A ras la franja debe medir ${mm(g0.pocketW)}.`}</div>` +
+    `<div class="ok"><b>Ancho:</b> la franja mide ${mm(g0.cavW)} mm${g0.flush ? ` (labio 175 + ${mm(CLEAR)} de aire por lado)` : ' (el labio)'}. Fijo para cualquier bandeja.</div>` +
     `<div class="${okL ? 'ok' : 'no'}"><b>Largo:</b> ${what} ${mm(g0.needL)} mm, hay ${mm(g0.cavL)} → ${okL ? `cabe, sobran ${mm(g0.cavL - g0.needL)} mm` : `faltan ${mm(g0.needL - g0.cavL)} mm`}</div>`;
 
   const rows = [
