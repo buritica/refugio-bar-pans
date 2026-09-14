@@ -135,7 +135,7 @@
   @media (max-width: 700px) { .two { grid-template-columns: 1fr; } }
   .legend { display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--mono); font-size: .75rem; color: var(--ink-2); }
   .legend .hint { margin-left: auto; }
-  .legend .hint::before { display: none; }
+  .legend .hint::before, .legend .hint span::before { display: none; }
   .legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--steel-edge); }
   .legend .l-pan::before { background: var(--steel); }
   .legend .l-cav::before { background: var(--cavity); border-style: dashed; border-color: var(--accent); border-width: 1.5px; }
@@ -145,7 +145,7 @@
 <div class="wrap">
   <header>
     <div class="eyebrow">Casa Refugio · Cocina · exploración · borrador</div>
-    <div class="zones" role="group" aria-label="Zona"><button type="button" data-zone-btn="barra" aria-pressed="true"><span class="z-name">Barra</span><span class="z-sub">norte–sur · 483 mm</span></button><button type="button" data-zone-btn="isla" aria-pressed="false"><span class="z-name">Isla</span><span class="z-sub">oeste–este · 975 mm</span></button></div>
+    <div class="zones" role="group" aria-label="Zona"><button type="button" data-zone-btn="barra" aria-pressed="true"><span class="z-name">Barra</span><span class="z-sub">norte–sur · <span data-zlen="barra">483</span> mm</span></button><button type="button" data-zone-btn="isla" aria-pressed="false"><span class="z-name">Isla</span><span class="z-sub">oeste–este · <span data-zlen="isla">975</span> mm</span></button></div>
 <div data-zone="barra">
     <h1>Exploración de bandejas de acero para la barra</h1>
     <p class="lead">Un cuaderno para probar ideas: qué bandejas podrían caber en la barra, en qué combinaciones, y qué implicaría cada una para el mesón. Nada aquí está decidido.</p>
@@ -228,9 +228,9 @@
   <section id="corte">
     <h2><span class="num">4</span>Visto en corte</h2>
     <p id="corte-lead"></p>
-    <h3>A–A · norte–sur</h3>
+    <h3>A–A · <span data-zone="barra">norte–sur</span><span data-zone="isla">oeste–este</span></h3>
     <div class="sheet"><svg id="section"></svg></div>
-    <h3>B–B · este–oeste, por la bandeja más honda</h3>
+    <h3>B–B · <span data-zone="barra">este–oeste</span><span data-zone="isla">norte–sur</span>, por la bandeja más honda</h3>
     <span data-zone="barra"><p>Sería igual para cualquier bandeja: labio 175, corte 156. Solo cambiaría el hondo.</p></span><span data-zone="isla"><p>Sería igual para cualquier bandeja: labio 175, corte 156. Solo cambiaría el hondo.</p></span>
     <div class="sheet"><svg id="section-b"></svg></div>
     <div class="two">
@@ -547,6 +547,7 @@ function render() {
   drawAssume();
   document.querySelectorAll('[data-zone]').forEach(el => el.hidden = el.dataset.zone !== ZONE);
   document.querySelectorAll('[data-zone-btn]').forEach(b => b.setAttribute('aria-pressed', b.dataset.zoneBtn === ZONE));
+  document.querySelector(`[data-zlen="${ZONE}"]`).textContent = CAV_MM;
   document.getElementById('cav-len').value = CAV_MM;
   document.getElementById('cav-w').textContent = mm(CAVITY.w);
   document.querySelectorAll('[data-mount]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mount === MOUNT));
