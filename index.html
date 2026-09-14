@@ -30,7 +30,7 @@
   }
   body { background: var(--ground); color: var(--ink); font-family: var(--sans); padding-inline: 20px; padding-block: 28px 48px; }
   .wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 32px; }
-  header { display: grid; gap: 6px; }
+  header { display: grid; gap: 8px; }
   h1 { font-size: 1.5rem; font-weight: 600; margin: 0; text-wrap: balance; }
   .eyebrow { font-family: var(--mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
   p { max-width: 66ch; line-height: 1.55; margin: 0; color: var(--ink-2); }
@@ -96,8 +96,13 @@
   h2 { font-size: 1.25rem; font-weight: 600; margin: 0; display: flex; align-items: baseline; gap: 12px; text-wrap: balance; }
   h2 .num { font-family: var(--mono); font-size: .8rem; font-weight: 500; color: var(--accent); letter-spacing: .06em; border: 1px solid var(--accent); padding: 2px 7px; border-radius: 2px; }
   .toc { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 4px 6px; padding: 10px 0; background: var(--ground); border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: .74rem; }
-  .toc .zone { margin-right: 10px; }
-  .toc .zone button { font: inherit; font-size: .74rem; padding: 4px 10px; cursor: pointer; color: var(--ink); }
+  .zones { display: flex; gap: 8px; margin: 6px 0 4px; }
+  .zones button { font: inherit; text-align: left; display: grid; gap: 2px; padding: 8px 14px; min-width: 150px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 2px; cursor: pointer; }
+  .zones button:hover { border-color: var(--accent); }
+  .zones button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .zones button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: var(--accent-soft); }
+  .zones .z-name { font-weight: 600; font-size: 1rem; }
+  .zones .z-sub { font-family: var(--mono); font-size: .7rem; color: var(--ink-2); }
   [data-zone][hidden] { display: none !important; }
   .toc a { color: var(--ink-2); text-decoration: none; padding: 4px 8px; border-radius: 2px; }
   .toc a:hover, .toc a:focus-visible { color: var(--accent); background: var(--accent-soft); outline: none; }
@@ -140,6 +145,7 @@
 <div class="wrap">
   <header>
     <div class="eyebrow">Casa Refugio · Cocina · exploración · borrador</div>
+    <div class="zones" role="group" aria-label="Zona"><button type="button" data-zone-btn="barra" aria-pressed="true"><span class="z-name">Barra</span><span class="z-sub">norte–sur · 483 mm</span></button><button type="button" data-zone-btn="isla" aria-pressed="false"><span class="z-name">Isla</span><span class="z-sub">oeste–este · 975 mm</span></button></div>
 <div data-zone="barra">
     <h1>Exploración de bandejas de acero para la barra</h1>
     <p class="lead">Un cuaderno para probar ideas: qué bandejas podrían caber en la barra, en qué combinaciones, y qué implicaría cada una para el mesón. Nada aquí está decidido.</p>
@@ -151,7 +157,6 @@
   </header>
 
   <nav class="toc" aria-label="Secciones">
-    <div class="seg zone" role="group" aria-label="Zona"><button type="button" data-zone-btn="barra" aria-pressed="true">Barra</button><button type="button" data-zone-btn="isla" aria-pressed="false">Isla</button></div>
     <a href="#principios">1 Empezamos</a>
     <a href="#planta">2 La fila</a>
     <a href="#cabe">3 ¿Cabe?</a>
