@@ -69,6 +69,11 @@
   .legend .l-pocket::before { background: var(--accent-soft); border-style: dotted; border-color: var(--accent); }
   .legend .l-cut::before { background: var(--paper); border-style: solid; border-color: var(--ink); }
   .cut { fill: var(--paper); stroke: var(--ink); stroke-width: 1; }
+  .unit { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.4; }
+  .tank { fill: var(--cavity); stroke: var(--steel-edge); stroke-width: 1.2; }
+  .legend .l-unit::before { background: var(--accent-soft); border-color: var(--accent); }
+  [data-cold][hidden], [data-warm][hidden] { display: none !important; }
+  .seg button[data-slots] { min-width: 2.4em; }
   .pocket { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1; stroke-dasharray: 2 2; }
   .verdict { display: grid; gap: 6px; font-family: var(--mono); font-size: .8rem; }
   .verdict div { padding: 6px 10px; border-left: 3px solid var(--line); background: var(--paper); }
@@ -206,22 +211,26 @@
     <span data-zone="barra"><p>Vista desde el lado de quien cocina, con el invitado al norte. De oeste a este: <b>butcher block · bandejas · estufa</b>. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p></span><span data-zone="isla"><p>El pozo corre de oeste a este a lo largo de la isla; largo estimado 975 mm, tres 1/3. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p></span>
     <div class="ctl" id="ctl">
       <div class="ctl-row"><span class="ctl-lbl"><span data-zone="barra">Cavidad</span><span data-zone="isla">Pozo</span></span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="975"> mm</label><span class="ctl-hint">× <span id="cav-w">162</span> mm · estimado</span></div>
-      <div class="ctl-row"><span class="ctl-lbl">Montaje</span><div class="seg" role="group" aria-label="Montaje"><button type="button" data-mount="proud" aria-pressed="true">Sobrepuesto</button><button type="button" data-mount="flush" aria-pressed="false">A ras</button></div></div>
+      <div class="ctl-row"><span class="ctl-lbl">Montaje</span><div class="seg" role="group" aria-label="Montaje"><button type="button" data-mount="proud" aria-pressed="true">Sobrepuesto</button><button type="button" data-mount="flush" aria-pressed="false">A ras</button><button type="button" data-mount="cold" aria-pressed="false">Pozo frío</button></div></div>
+      <div class="ctl-row" data-cold><span class="ctl-lbl">Unidad</span><div class="seg" role="group" aria-label="Módulos"><button type="button" data-slots="1">1 módulo</button><button type="button" data-slots="2">2</button><button type="button" data-slots="3">3</button><button type="button" data-slots="4">4</button></div><span class="ctl-hint">drop-in refrigerado · cada módulo es una bandeja entera, 324 × 527 mm</span></div>
     </div>
     <div class="chosen" id="chosen"></div>
     <div class="sheet"><svg id="plan"></svg></div>
-    <div class="legend"><span class="l-cav">franja reservada</span><span class="l-pan">bandeja (labio exterior)</span><span class="l-left">sobrante</span><span class="hint">clic en una bandeja: 64 ↔ 102 mm · <button type="button" id="flip" class="link">invertir <span data-zone="barra">N↔S</span><span data-zone="isla">O↔E</span></button></span></div>
-    <h3>Lo que cabe en ese largo</h3>
-    <div id="cards" class="cards"></div>
+    <div class="legend"><span class="l-cav">franja reservada</span><span class="l-pan">bandeja (labio exterior)</span><span class="l-left">sobrante</span><span class="l-unit" data-cold>unidad refrigerada</span><span class="hint" data-warm>clic en una bandeja: 64 ↔ 102 mm · <button type="button" id="flip" class="link">invertir <span data-zone="barra">N↔S</span><span data-zone="isla">O↔E</span></button></span><span class="hint" data-cold>clic en un módulo lo divide: entera → 1/3 → 1/6 → 1/9</span></div>
+    <h3 data-warm>Lo que cabe en ese largo</h3>
+    <div id="cards" class="cards" data-warm></div>
+    <h3 data-cold>Cómo llenar los módulos</h3>
+    <div id="cold-cards" class="cards" data-cold></div>
   </section>
 
   <section id="cabe">
     <h2><span class="num">3</span>¿Y esto cabe?</h2>
-    <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y los <b>cortes</b>. A ras la franja crece 3 mm por lado para que el labio baje al <b>rebaje</b>. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
+    <p data-warm>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y los <b>cortes</b>. A ras la franja crece 3 mm por lado para que el labio baje al <b>rebaje</b>. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
+    <p data-cold>Con pozo frío la pregunta cambia: ya no es si los labios caben en la franja, sino qué reclama la <b>unidad</b> del mesón y del mueble. Afuera el <b>reborde</b> de la unidad, adentro el <b>corte</b> del fabricante y el <b>interior</b> donde van las bandejas; de fondo, la franja de hoy para comparar.</p>
     <div class="sheet"><svg id="fit"></svg></div>
-    <div class="legend"><span class="l-cav">franja</span><span class="l-pocket">rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">corte pasante</span></div>
+    <div class="legend"><span class="l-cav">franja</span><span class="l-pocket" data-warm>rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">corte<span data-warm> pasante</span><span data-cold> del fabricante</span></span><span class="l-unit" data-cold>reborde de la unidad</span></div>
     <div id="verdict" class="verdict"></div>
-    <h3>Lo que habría que cortar</h3>
+    <h3><span data-warm>Lo que habría que cortar</span><span data-cold>Lo que habría que cortar y prever</span></h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
   </section>
 
@@ -231,12 +240,13 @@
     <h3>A–A · <span data-zone="barra">norte–sur</span><span data-zone="isla">oeste–este</span></h3>
     <div class="sheet"><svg id="section"></svg></div>
     <h3>B–B · <span data-zone="barra">este–oeste</span><span data-zone="isla">norte–sur</span>, por la bandeja más honda</h3>
-    <span data-zone="barra"><p>Sería igual para cualquier bandeja: labio 175, corte 156. Solo cambiaría el hondo.</p></span><span data-zone="isla"><p>Sería igual para cualquier bandeja: labio 175, corte 156. Solo cambiaría el hondo.</p></span>
+    <p data-warm>Sería igual para cualquier bandeja: labio 175, corte 156. Solo cambiaría el hondo.</p><p data-cold>A través de la unidad: el interior mide 527 mm, una bandeja entera. Las divisiones van con barras adaptadoras.</p>
     <div class="sheet"><svg id="section-b"></svg></div>
-    <div class="two">
+    <div class="two" data-warm>
       <div class="sheet"><svg id="detail"></svg></div>
       <div class="note" id="corte-note"></div>
     </div>
+    <div class="note" id="corte-note-cold" data-cold></div>
   </section>
 
   <section id="comparacion">
@@ -297,12 +307,19 @@ const ZONES = {
   },
 };
 let ZONE = 'barra', Z, PANS, KEYS, STRIP, DEFAULT_ROW, ROW, CAV_MM;
-let MOUNT = 'proud';                            // 'proud' | 'flush'
+let MOUNT = 'proud';                            // 'proud' | 'flush' | 'cold'
+// pozo frío: unidad drop-in refrigerada. Placeholders de catálogo hasta elegir modelo.
+const FULL = { w: 12.75, l: 20.75 };            // bandeja entera: 324 a lo largo del módulo, 527 a través
+const COLD = { flange: 1.5, cutGap: 0.25, below: 600 / 25.4, drain: 0.75, compressor: 12 };   // reborde, aire del corte, fondo bajo mesón, desagüe, tramo compresor (pulgadas)
+const SPLITS = { full: { name: 'Entera', a: 1, b: 1 }, third: { name: '1/3', a: 1, b: 3 }, sixth: { name: '1/6', a: 2, b: 3 }, ninth: { name: '1/9', a: 3, b: 3 } };  // a = piezas a lo largo del módulo, b = a través
+const SPLIT_ORDER = ['full', 'third', 'sixth', 'ninth'];
+let SLOTS = [];                                  // división de cada módulo, ej. ['third','third','full']
 const SAVED = {};                               // estado por zona al cambiar de una a otra
 function applyZone(z) {
-  if (Z) SAVED[ZONE] = { ROW, CAV_MM, MOUNT };
+  if (Z) SAVED[ZONE] = { ROW, CAV_MM, MOUNT, SLOTS };
   ZONE = z; Z = ZONES[z]; PANS = Z.pans; KEYS = Object.keys(PANS); STRIP = Z.strip; DEFAULT_ROW = Z.row;
   const sv = SAVED[z]; ROW = sv ? sv.ROW : DEFAULT_ROW(); CAV_MM = sv ? sv.CAV_MM : Z.cav; MOUNT = sv ? sv.MOUNT : MOUNT;
+  SLOTS = sv ? sv.SLOTS : Array(z === 'isla' ? 3 : 1).fill('third');
 }
 applyZone('barra');
 let CAVITY, LAYOUT;
@@ -535,13 +552,25 @@ function drawDetail(id, flush) {
 }
 function render() {
   layout();
-  drawPlan();
-  drawSection('section', MOUNT === 'flush', ROW.map(it => ({ name: PANS[it.p].name, W: PANS[it.p].w, d: it.d })), CAVITY.l, Z.aa);
-  const deep = ROW.reduce((a, b) => (b.d >= a.d ? b : a));
-  drawSection('section-b', MOUNT === 'flush', [{ name: deep ? PANS[deep.p].name : '', W: PANS[deep.p].l, d: deep.d }], STRIP, Z.bb);
-  drawDetail('detail', MOUNT === 'flush');
-  drawFit();
-  drawCards();
+  const cold = MOUNT === 'cold';
+  document.querySelectorAll('[data-cold]').forEach(el => el.hidden = !cold);
+  document.querySelectorAll('[data-warm]').forEach(el => el.hidden = cold);
+  if (cold) {
+    drawPlanCold();
+    drawSectionCold('section', true);
+    drawSectionCold('section-b', false);
+    drawFitCold();
+    drawColdCards();
+    document.querySelectorAll('[data-slots]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.slots === SLOTS.length));
+  } else {
+    drawPlan();
+    drawSection('section', MOUNT === 'flush', ROW.map(it => ({ name: PANS[it.p].name, W: PANS[it.p].w, d: it.d })), CAVITY.l, Z.aa);
+    const deep = ROW.reduce((a, b) => (b.d >= a.d ? b : a));
+    drawSection('section-b', MOUNT === 'flush', [{ name: deep ? PANS[deep.p].name : '', W: PANS[deep.p].l, d: deep.d }], STRIP, Z.bb);
+    drawDetail('detail', MOUNT === 'flush');
+    drawFit();
+    drawCards();
+  }
   drawChosen();
   drawSizes();
   drawAssume();
@@ -555,7 +584,8 @@ function render() {
   document.getElementById('mounts').innerHTML =
   `<tr><th>Montaje</th><th>Riel entre bandejas</th><th>Paso ${KEYS.map(k => PANS[k].name).join(' · ')}</th><th>Largo de la fila (ejemplo)</th><th>Mesón</th><th>Agarre</th></tr>` +
   [['Sobrepuesto', 'proud', 'cortes simples', 'el labio'], ['A ras', 'flush', 'cortes + rebaje', 'muesca o punto de izaje']].map(([n, m, work, grip]) =>
-    `<tr><td>${n}</td><td>${dimLabel(RAIL[m])}</td><td>${KEYS.map(k => mm(PITCH(k)[m])).join(' · ')} mm</td><td>${dimLabel(rowLen(m))}</td><td>${work}</td><td>${grip}</td></tr>`).join('');
+    `<tr><td>${n}</td><td>${dimLabel(RAIL[m])}</td><td>${KEYS.map(k => mm(PITCH(k)[m])).join(' · ')} mm</td><td>${dimLabel(rowLen(m))}</td><td>${work}</td><td>${grip}</td></tr>`).join('') +
+  `<tr><td>Pozo frío</td><td>rieles de la unidad</td><td>por módulo: 1 · 3 · 6 · 9</td><td>${mm(coldGeom().flL)} mm × ${mm(coldGeom().flW)} a través</td><td>corte del fabricante + ${mm(COLD.below)} mm abajo, desagüe, toma, rejilla</td><td>el labio, sobre los rieles</td></tr>`;
 }
 
 // ---- combinaciones que caben en la cavidad ----
@@ -592,6 +622,13 @@ function drawCards() {
   }).join('') || '<p>Nada cabe en ese largo.</p>';
 }
 function drawChosen() {
+  if (MOUNT === 'cold') {
+    const g0 = coldGeom(), left = CAVITY.l - g0.flL;
+    document.getElementById('chosen').innerHTML = `<b>Probando:</b> pozo frío de ${g0.n} módulo${g0.n > 1 ? 's' : ''} · ${SLOTS.map(k => SPLITS[k].name).join(' → ')} · ${g0.pans} bandejas · ${Z.word} ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm a lo largo` : `<span style="color:#c0392b">faltan ${mm(-left)} mm a lo largo</span>`} · <span style="color:#c0392b">${mm(g0.flW)} mm a través</span>`;
+    document.getElementById('corte-lead').innerHTML = '<b>Pozo frío:</b> una unidad refrigerada drop-in. Las bandejas cuelgan de los rieles de la unidad, no del mesón; el mesón solo recibe el reborde.';
+    document.getElementById('corte-note-cold').innerHTML = `<p>El tanque baja ${mm(COLD.below)} mm bajo el mesón y el compresor va a un costado, con rejilla y toma. El desagüe sale por el fondo y tiene que llegar a un sifón o a un desagüe de piso.</p><p>Cifras de catálogo genéricas hasta elegir modelo.</p>`;
+    return;
+  }
   const left = CAVITY.l - rowLen(MOUNT);        // a ras: cada bandeja pide 6 mm más
   const seq = ROW.map(it => `${PANS[it.p].name} (${mm(it.d)})`).join(' → ');
   document.getElementById('chosen').innerHTML = `<b>Probando:</b> ${seq} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · ${Z.word} ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}`;
@@ -602,6 +639,150 @@ function drawChosen() {
     ? `<p>Tres anchos por bandeja: <b>labio</b>, <b>cuerpo</b> y <b>corte</b>.</p><p>Las bandejas van labio con labio. Entre dos cortes queda el <b>riel</b>: ${mmL(RAIL.proud)}.</p>`
     : `<p>El rebaje sería un segundo paso: ${mmL(LIP + CLEAR)} de ancho y ${mmL(LIPT)} de hondo alrededor de cada corte.</p><p>Cada bandeja pide ${mmL(2 * CLEAR)} más de paso y el riel crece a ${mmL(RAIL.flush)}.</p><p><b>Ojo:</b> sin labio a la vista no habría de dónde agarrar. Haría falta una muesca o un punto de izaje por bandeja.</p>`;
 }
+
+// ---- pozo frío ----
+const coldGeom = () => {
+  const n = SLOTS.length, inL = n * FULL.w, inW = FULL.l;
+  return { n, inL, inW, cutL: inL + 2 * COLD.cutGap, cutW: inW + 2 * COLD.cutGap, flL: inL + 2 * COLD.flange, flW: inW + 2 * COLD.flange,
+    pans: SLOTS.reduce((a, k) => a + SPLITS[k].a * SPLITS[k].b, 0) };
+};
+// bandejas dentro de un módulo (coordenadas en pulgadas relativas al módulo: x a lo largo, y a través)
+function slotPans(split) {
+  const sp = SPLITS[split], out = [];
+  const pw = FULL.w / sp.a, pl = FULL.l / sp.b;
+  for (let i = 0; i < sp.a; i++) for (let j = 0; j < sp.b; j++) out.push({ x: i * pw, y: j * pl, w: pw, l: pl, name: sp.name });
+  return out;
+}
+function drawPlanCold() {
+  const g0 = coldGeom(), along = Z.orient === 'ew';                // ew: módulos de oeste a este en x
+  const S = along ? 11 : 14;
+  const L = Math.max(CAVITY.l, g0.flL) * S, Wd = g0.flW * S;      // extensión a lo largo, ancho a través
+  const M = along ? { l: 110, t: 90, r: 60, b: 60 } : { l: 330, t: 60, r: 160, b: 50 };
+  const X = (a, b) => along ? [M.l + a * S, M.t + b * S] : [M.l + b * S, M.t + a * S];   // (a lo largo, a través) → (x, y)
+  const R = (a, b, w, h, attrs) => { const [x, y] = X(a, b); const [x2, y2] = X(a + w, b + h); return h2('rect', { x: Math.min(x, x2), y: Math.min(y, y2), width: Math.abs(x2 - x), height: Math.abs(y2 - y), ...attrs }); };
+  const h2 = h;
+  let g = '';
+  const off = (g0.flW - STRIP) / 2;                                // la unidad se centra sobre la franja de hoy
+  // franja de hoy, de referencia
+  g += R(0, off, CAVITY.l, STRIP, { class: 'cav' });
+  // reborde, corte, interior
+  g += R(0, 0, g0.flL, g0.flW, { class: 'unit' });
+  g += R(COLD.flange - COLD.cutGap, COLD.flange - COLD.cutGap, g0.cutL, g0.cutW, { fill: 'var(--paper)', stroke: 'var(--ink)', 'stroke-width': 1, 'stroke-dasharray': '4 3' });
+  g += R(COLD.flange, COLD.flange, g0.inL, g0.inW, { class: 'tank' });
+  SLOTS.forEach((split, i) => {
+    const sx = COLD.flange + i * FULL.w;
+    for (const p of slotPans(split)) {
+      g += R(sx + p.x + 0.06, COLD.flange + p.y + 0.06, p.w - 0.12, p.l - 0.12, { class: 'pan hit', 'data-slot': i, rx: 2 });
+    }
+    const [cx, cy] = X(sx + FULL.w / 2, COLD.flange + FULL.l / 2);
+    g += h2('text', { x: cx, y: cy + 3, 'text-anchor': 'middle', class: 'lbl', 'pointer-events': 'none' }, `${SPLITS[split].name}${split === 'full' ? '' : ' × ' + SPLITS[split].a * SPLITS[split].b}`);
+  });
+  g += R(0, off, CAVITY.l, STRIP, { class: 'cav-line' });
+  // dims
+  if (along) {
+    g += dim(M.l, M.t - 40, M.l + CAVITY.l * S, M.t - 40, `franja de hoy ${mm(CAVITY.l)} mm`);
+    g += dim(M.l, M.t - 24, M.l + g0.flL * S, M.t - 24, `reborde ${mm(g0.flL)} mm`);
+    g += dim(M.l + COLD.flange * S, M.t - 10, M.l + (COLD.flange + g0.inL) * S, M.t - 10, `interior ${mm(g0.inL)} mm`);
+    g += dim(M.l - 14, M.t, M.l - 14, M.t + Wd, `reborde ${mm(g0.flW)}`);
+    g += dim(M.l + L + 14, M.t + off * S, M.l + L + 14, M.t + (off + STRIP) * S, `franja ${mm(STRIP)}`, 62);
+    g += h2('text', { x: M.l - 60, y: M.t + Wd / 2 + 3, 'text-anchor': 'end', class: 'sub' }, 'O ←');
+    g += h2('text', { x: M.l + L + 80, y: M.t + Wd / 2 + 3, class: 'sub' }, '→ E');
+  } else {
+    g += dim(M.l - 14, M.t, M.l - 14, M.t + CAVITY.l * S, `franja de hoy ${mm(CAVITY.l)} mm`);
+    g += dim(M.l - 100, M.t, M.l - 100, M.t + g0.flL * S, `reborde ${mm(g0.flL)} mm`);
+    g += dim(M.l, M.t - 30, M.l + Wd, M.t - 30, `reborde ${mm(g0.flW)} mm`);
+    g += dim(M.l + off * S, M.t - 14, M.l + (off + STRIP) * S, M.t - 14, `franja ${mm(STRIP)}`);
+    g += h2('text', { x: M.l + Wd / 2, y: M.t - 44, 'text-anchor': 'middle', class: 'sub' }, 'N ↑ · lado del invitado');
+  }
+  const svg = document.getElementById('plan');
+  svg.setAttribute('viewBox', along ? `0 0 ${M.l + L + M.r + 110} ${M.t + Wd + M.b}` : `0 0 ${M.l + Wd + M.r} ${M.t + L + M.b}`);
+  svg.innerHTML = g;
+}
+// corte por la unidad: along = a lo largo de los módulos (A–A); si no, a través (B–B)
+function drawSectionCold(id, along) {
+  const g0 = coldGeom(), S = 12, side = 4, M = { l: 150 + side * S, t: 70 };
+  const y0 = M.t, topH = TOP * S;
+  const inner = along ? g0.inL : g0.inW, cut = along ? g0.cutL : g0.cutW, fl = along ? g0.flL : g0.flW;
+  const x0 = M.l + COLD.flange * S;                                 // inicio del interior
+  let g = '';
+  // mesón a ambos lados del corte
+  g += h('rect', { x: M.l - side * S, y: y0, width: (COLD.flange - COLD.cutGap) * S + side * S, height: topH, class: 'top' });
+  g += h('rect', { x: x0 + (inner + COLD.cutGap) * S, y: y0, width: (COLD.flange - COLD.cutGap) * S + side * S, height: topH, class: 'top' });
+  // tanque
+  g += h('rect', { x: x0 - COLD.cutGap * S, y: y0 + topH * 0.4, width: cut * S, height: (COLD.below - TOP * 0.4) * S, class: 'tank' });
+  // reborde sobre el mesón
+  g += h('rect', { x: M.l, y: y0 - 0.15 * S, width: fl * S, height: 0.3 * S, class: 'unit' });
+  // bandejas colgadas (4" de hondo) en el interior
+  if (along) {
+    SLOTS.forEach((split, i) => { for (const p of slotPans(split)) if (p.y === 0) g += h('rect', { x: x0 + (i * FULL.w + p.x + 0.08) * S, y: y0, width: (p.w - 0.16) * S, height: 4 * S, class: 'pan' }); });
+  } else {
+    const sp = SPLITS[SLOTS[0]];
+    for (let j = 0; j < sp.b; j++) g += h('rect', { x: x0 + (j * FULL.l / sp.b + 0.08) * S, y: y0, width: (FULL.l / sp.b - 0.16) * S, height: 4 * S, class: 'pan' });
+  }
+  // compresor (solo a lo largo) y desagüe
+  const bottom = y0 + COLD.below * S;
+  if (along) {
+    g += h('rect', { x: x0 + (inner + COLD.cutGap) * S + (COLD.flange - COLD.cutGap) * S, y: y0 + topH, width: COLD.compressor * S, height: (COLD.below - TOP) * S, fill: 'none', stroke: 'var(--steel-edge)', 'stroke-dasharray': '4 3' });
+    g += h('text', { x: x0 + (inner + COLD.flange) * S + COLD.compressor * S / 2, y: y0 + topH + 30, 'text-anchor': 'middle', class: 'sub' }, 'compresor');
+    g += h('text', { x: x0 + (inner + COLD.flange) * S + COLD.compressor * S / 2, y: y0 + topH + 42, 'text-anchor': 'middle', class: 'sub' }, 'rejilla + toma');
+  }
+  const dx = x0 + inner * S / 2;
+  g += h('rect', { x: dx - COLD.drain * S / 2, y: bottom, width: COLD.drain * S, height: 1.2 * S, fill: 'var(--steel-edge)' });
+  g += h('text', { x: dx, y: bottom + 1.2 * S + 12, 'text-anchor': 'middle', class: 'sub' }, `desagüe ${mm(COLD.drain)} mm → sifón o desagüe de piso`);
+  // dims
+  g += dim(M.l, y0 - 46, M.l + fl * S, y0 - 46, `reborde ${mm(fl)} mm`);
+  g += dim(x0 - COLD.cutGap * S, y0 - 32, x0 + (inner + COLD.cutGap) * S, y0 - 32, `corte ${mm(cut)} mm`);
+  g += dim(x0, y0 - 18, x0 + inner * S, y0 - 18, `interior ${mm(inner)} mm`);
+  g += dim(M.l - side * S - 14, y0, M.l - side * S - 14, bottom, `fondo ${mm(COLD.below)} mm`);
+  g += dim(M.l - side * S - 40, y0, M.l - side * S - 40, y0 + 4 * S, `bandeja ${mm(4)}`);
+  const svg = document.getElementById(id);
+  const total = M.l + fl * S + side * S + (along ? COLD.compressor * S : 0) + 60;
+  svg.setAttribute('viewBox', `0 0 ${total} ${bottom + 2.6 * S + 10}`);
+  svg.innerHTML = g;
+}
+function drawFitCold() {
+  const g0 = coldGeom(), S = 11, M = { l: 130, t: 60, r: 40, b: 40 };
+  const L = Math.max(CAVITY.l, g0.flL) * S, Wd = g0.flW * S, off = (g0.flW - STRIP) / 2;
+  let g = h('rect', { x: M.l, y: M.t + off * S, width: CAVITY.l * S, height: STRIP * S, class: 'cav' });
+  g += h('rect', { x: M.l, y: M.t, width: g0.flL * S, height: Wd, class: 'unit' });
+  g += h('rect', { x: M.l + (COLD.flange - COLD.cutGap) * S, y: M.t + (COLD.flange - COLD.cutGap) * S, width: g0.cutL * S, height: g0.cutW * S, class: 'cut', 'stroke-dasharray': '4 3' });
+  g += h('rect', { x: M.l + COLD.flange * S, y: M.t + COLD.flange * S, width: g0.inL * S, height: g0.inW * S, class: 'tank' });
+  g += h('rect', { x: M.l, y: M.t + off * S, width: CAVITY.l * S, height: STRIP * S, class: 'cav-line' });
+  g += dim(M.l, M.t - 40, M.l + CAVITY.l * S, M.t - 40, `franja de hoy ${mm(CAVITY.l)} mm`);
+  g += dim(M.l, M.t - 24, M.l + g0.flL * S, M.t - 24, `reborde ${mm(g0.flL)} mm`);
+  g += dim(M.l + (COLD.flange - COLD.cutGap) * S, M.t - 10, M.l + (COLD.flange + g0.inL + COLD.cutGap) * S, M.t - 10, `corte ${mm(g0.cutL)} mm`);
+  g += dim(M.l - 14, M.t, M.l - 14, M.t + Wd, `reborde ${mm(g0.flW)}`);
+  g += dim(M.l + L + 14, M.t + off * S, M.l + L + 14, M.t + (off + STRIP) * S, `franja ${mm(STRIP)}`, 62);
+  g += dim(M.l + L + 98, M.t + (COLD.flange - COLD.cutGap) * S, M.l + L + 98, M.t + (COLD.flange + g0.inW + COLD.cutGap) * S, `corte ${mm(g0.cutW)}`, 62);
+  const svg = document.getElementById('fit');
+  svg.setAttribute('viewBox', `0 0 ${M.l + L + M.r + 170} ${M.t + Wd + M.b}`);
+  svg.innerHTML = g;
+  const okL = g0.flL <= CAVITY.l + 1e-9;
+  document.getElementById('verdict').innerHTML =
+    `<div class="${okL ? 'ok' : 'no'}"><b>Largo:</b> el reborde pide ${mm(g0.flL)} mm, hay ${mm(CAVITY.l)} → ${okL ? `cabe, sobran ${mm(CAVITY.l - g0.flL)} mm` : `faltan ${mm(g0.flL - CAVITY.l)} mm`}</div>` +
+    `<div class="no"><b>Ancho:</b> la unidad reclama ${mm(g0.flW)} mm a través, contra los ${mm(STRIP)} de la franja de hoy. La franja pasaría a ${mm(g0.flW)}.</div>` +
+    `<div class="no"><b>Abajo:</b> ${mm(COLD.below)} mm libres bajo el mesón para el tanque y el compresor, un desagüe, una toma eléctrica y una rejilla de ventilación. Donde hoy van cajones.</div>`;
+  const rows = [
+    ['Corte en el mesón (del fabricante)', g0.cutW, g0.cutL, 'interior + 6 mm de aire por lado'],
+    ['Reborde de la unidad', g0.flW, g0.flL, 'apoya sobre el mesón, ' + mm(COLD.flange) + ' mm por lado'],
+    ['Interior', g0.inW, g0.inL, `${g0.n} módulo${g0.n > 1 ? 's' : ''} · ${g0.pans} bandeja${g0.pans > 1 ? 's' : ''} con barras adaptadoras`],
+    ['Fondo libre bajo el mesón', null, COLD.below, 'tanque + compresor'],
+    ['Desagüe', null, COLD.drain, 'a sifón o desagüe de piso, con corte de aire'],
+    ['Toma eléctrica', null, null, 'dedicada, junto al compresor, fuera de la zona húmeda'],
+    ['Ventilación', null, COLD.compressor, 'rejilla en frente o zócalo, del lado del compresor'],
+  ];
+  document.getElementById('cuts').innerHTML = `<tr>${Z.cutHead}</tr>` +
+    rows.map(([n, w, l, note]) => `<tr><td>${n}</td><td>${w == null ? '—' : mm(w) + ' mm'}</td><td>${l == null ? '—' : mm(l) + ' mm'}</td><td style="white-space:normal">${note}</td></tr>`).join('');
+}
+function drawColdCards() {
+  const presets = [['Todo entera', 'full'], ['Todo 1/3', 'third'], ['Todo 1/6', 'sixth'], ['Todo 1/9', 'ninth'], ['Mixto', null]];
+  document.getElementById('cold-cards').innerHTML = presets.map(([n, k]) => {
+    const seq = k ? Array(SLOTS.length).fill(k) : SLOTS.map((_, i) => SPLIT_ORDER[(i % 3) + 1]);
+    const cur = seq.join() === SLOTS.join();
+    return `<button type="button" class="card" data-cold-preset="${seq.join(',')}" aria-pressed="${cur}"><span class="name">${n}</span><span class="meta"><span>${seq.reduce((a, s) => a + SPLITS[s].a * SPLITS[s].b, 0)} bandejas</span></span></button>`;
+  }).join('');
+}
+
 // ---- cavidad vs labios ----
 function fitGeom() {
   const flush = MOUNT === 'flush', n = ROW.length;
@@ -665,12 +846,13 @@ function drawFit() {
 }
 
 // estado en la URL para que el enlace lleve la configuración
-function writeHash() { try { history.replaceState(null, '', `#z=${ZONE}&L=${CAV_MM}&m=${MOUNT}&r=${ROW.map(it => `${it.p}:${it.d}`).join(',')}`); } catch (e) { /* hosts de vista previa bloquean replaceState */ } }
+function writeHash() { try { history.replaceState(null, '', `#z=${ZONE}&L=${CAV_MM}&m=${MOUNT}&r=${ROW.map(it => `${it.p}:${it.d}`).join(',')}&s=${SLOTS.join(',')}`); } catch (e) { /* hosts de vista previa bloquean replaceState */ } }
 function readHash() {
   const q = new URLSearchParams(location.hash.slice(1));
   if (ZONES[q.get('z')]) applyZone(q.get('z'));
   const L = +q.get('L'); if (L >= 100 && L <= 3000) CAV_MM = L;
-  if (['proud', 'flush'].includes(q.get('m'))) MOUNT = q.get('m');
+  if (['proud', 'flush', 'cold'].includes(q.get('m'))) MOUNT = q.get('m');
+  const sl = (q.get('s') || '').split(',').filter(k => SPLITS[k]); if (sl.length >= 1 && sl.length <= 4) SLOTS = sl;
   const r = (q.get('r') || '').split(',').map(x => x.split(':')).filter(([p, d]) => PANS[p] && [2.5, 4].includes(+d)).map(([p, d]) => ({ p, d: +d }));
   if (r.length) ROW = r;
 }
@@ -685,8 +867,14 @@ document.getElementById('cav-len').addEventListener('change', e => {
   render();
 });
 document.getElementById('ctl').addEventListener('click', e => {
-  const b = e.target.closest('button[data-mount]'); if (!b) return;
-  MOUNT = b.dataset.mount; render();
+  const b = e.target.closest('button[data-mount], button[data-slots]'); if (!b) return;
+  if (b.dataset.mount) MOUNT = b.dataset.mount;
+  else { const n = +b.dataset.slots; SLOTS = Array.from({ length: n }, (_, i) => SLOTS[i] || 'third'); }
+  render();
+});
+document.getElementById('cold-cards').addEventListener('click', e => {
+  const b = e.target.closest('button[data-cold-preset]'); if (!b) return;
+  SLOTS = b.dataset.coldPreset.split(','); render();
 });
 document.getElementById('cards').addEventListener('click', e => {
   const b = e.target.closest('button[data-combo]'); if (!b) return;
@@ -694,6 +882,8 @@ document.getElementById('cards').addEventListener('click', e => {
   render();
 });
 document.getElementById('plan').addEventListener('click', e => {
+  const sl = e.target.closest('[data-slot]');
+  if (sl) { const i = +sl.dataset.slot; SLOTS[i] = SPLIT_ORDER[(SPLIT_ORDER.indexOf(SLOTS[i]) + 1) % SPLIT_ORDER.length]; render(); return; }
   const r = e.target.closest('[data-i]'); if (!r) return;
   const it = ROW[+r.dataset.i]; it.d = it.d === MAXD ? 2.5 : MAXD; render();
 });
@@ -716,6 +906,7 @@ function drawAssume() {
     ['Espesor del mesón', TOP, 'por definir'],
   ].map(([n, v, why]) => `<li><b>${n}: ${dimLabel(v)}</b> — ${why}.</li>`).join('') +
     Z.lenNote(CAV_MM) +
+    (MOUNT === 'cold' ? `<li><b>Pozo frío: reborde ${mm(COLD.flange)} mm, fondo ${mm(COLD.below)} mm, desagüe ${mm(COLD.drain)} mm, compresor ${mm(COLD.compressor)} mm</b> — cifras genéricas de catálogo, pendientes de modelo.</li>` : '') +
     '<li><b>Aire bajo la bandeja más honda</b> — para sacarla.</li>';
 }
 
