@@ -142,18 +142,18 @@
   </header>
 
   <nav class="toc" aria-label="Secciones">
-    <a href="#principios">1 Puntos de partida</a>
-    <a href="#planta">2 Probar</a>
-    <a href="#cabe">3 ¿Cabría?</a>
-    <a href="#corte">4 Cortes</a>
-    <a href="#comparacion">5 Dos montajes</a>
-    <a href="#bandejas">6 Bandejas</a>
-    <a href="#supuestos">7 Por confirmar</a>
-    <a href="#glosario">8 Glosario</a>
+    <a href="#principios">1 Empezamos</a>
+    <a href="#planta">2 La fila</a>
+    <a href="#cabe">3 ¿Cabe?</a>
+    <a href="#corte">4 En corte</a>
+    <a href="#comparacion">5 Montaje</a>
+    <a href="#bandejas">6 Catálogo</a>
+    <a href="#supuestos">7 Dudas</a>
+    <a href="#glosario">8 Palabras</a>
   </nav>
 
   <section id="principios">
-    <h2><span class="num">1</span>Puntos de partida</h2>
+    <h2><span class="num">1</span>Por dónde empezamos</h2>
     <ol class="rules">
       <li><b>Hay dos anchos en juego, no uno.</b>
         <div class="widths">
@@ -170,7 +170,7 @@
   </section>
 
   <section id="planta">
-    <h2><span class="num">2</span>Probar combinaciones</h2>
+    <h2><span class="num">2</span>Armemos la fila</h2>
     <p>De oeste a este: <b>butcher block · bandejas · estufa</b>. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p>
     <div class="ctl" id="ctl">
       <div class="ctl-row"><span class="ctl-lbl">Cavidad</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="483"> mm</label><span class="ctl-hint">× <span id="cav-w">175</span> mm · supuesto</span></div>
@@ -179,22 +179,22 @@
     <div class="chosen" id="chosen"></div>
     <div class="sheet"><svg id="plan"></svg></div>
     <div class="legend"><span class="l-cav">franja reservada</span><span class="l-pan">bandeja (labio exterior)</span><span class="l-left">sobrante</span><span class="hint">clic en una bandeja: 64 ↔ 102 mm · <button type="button" id="flip" class="link">invertir N↔S</button></span></div>
-    <h3>Combinaciones posibles en ese largo</h3>
+    <h3>Lo que cabe en ese largo</h3>
     <div id="cards" class="cards"></div>
   </section>
 
   <section id="cabe">
-    <h2><span class="num">3</span>¿Cabría?</h2>
+    <h2><span class="num">3</span>¿Y esto cabe?</h2>
     <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y los <b>cortes</b>. A ras la franja crece 3 mm por lado para que el labio baje al <b>rebaje</b>. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
     <div class="sheet"><svg id="fit"></svg></div>
     <div class="legend"><span class="l-cav">franja</span><span class="l-pocket">rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">corte pasante</span></div>
     <div id="verdict" class="verdict"></div>
-    <h3>Lo que saldría en el mesón</h3>
+    <h3>Lo que habría que cortar</h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
   </section>
 
   <section id="corte">
-    <h2><span class="num">4</span>Cómo se vería en corte</h2>
+    <h2><span class="num">4</span>Visto en corte</h2>
     <p id="corte-lead"></p>
     <h3>A–A · norte–sur</h3>
     <div class="sheet"><svg id="section"></svg></div>
@@ -208,22 +208,22 @@
   </section>
 
   <section id="comparacion">
-    <h2><span class="num">5</span>Sobrepuesto o a ras</h2>
+    <h2><span class="num">5</span>Sobre el mesón o a ras</h2>
     <div class="sheet tbl"><table id="mounts"></table></div>
   </section>
 
   <section id="bandejas">
-    <h2><span class="num">6</span>Las bandejas</h2>
+    <h2><span class="num">6</span>El catálogo</h2>
     <p>Medidas de catálogo, formato US steam table.</p>
     <div class="sheet tbl"><table id="sizes"></table></div>
   </section>
 
   <section id="supuestos">
-    <h2><span class="num">7</span>Lo que falta confirmar</h2>
+    <h2><span class="num">7</span>Lo que aún no sabemos</h2>
     <ul class="assume" id="assume"></ul>
   </section>
   <section id="glosario">
-    <h2><span class="num">8</span>Glosario</h2>
+    <h2><span class="num">8</span>Cómo llamamos las cosas</h2>
     <dl class="terms">
       <div><dt>Cavidad / franja</dt><dd>Zona del mesón reservada para las bandejas, 175 mm por el largo de la fila. Ahí apoyan los labios. No es un hueco.</dd></div>
       <div><dt>Labio</dt><dd>Ceja exterior de la bandeja, la medida de catálogo. Sobresale <span id="t-lip"></span> por lado.</dd></div>
