@@ -556,7 +556,7 @@ function drawFit() {
 }
 
 // estado en la URL para que el enlace lleve la configuración
-function writeHash() { history.replaceState(null, '', `#L=${CAV_MM}&m=${MOUNT}&r=${ROW.map(it => `${it.p}:${it.d}`).join(',')}`); }
+function writeHash() { try { history.replaceState(null, '', `#L=${CAV_MM}&m=${MOUNT}&r=${ROW.map(it => `${it.p}:${it.d}`).join(',')}`); } catch (e) { /* hosts de vista previa bloquean replaceState */ } }
 function readHash() {
   const q = new URLSearchParams(location.hash.slice(1));
   const L = +q.get('L'); if (L >= 100 && L <= 3000) CAV_MM = L;
