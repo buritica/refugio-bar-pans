@@ -171,7 +171,7 @@
 
   <section id="planta">
     <h2><span class="num">2</span>Armemos la fila</h2>
-    <p>De oeste a este: <b>butcher block · bandejas · estufa</b>. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p>
+    <p>Vista desde el lado de quien cocina, con el invitado al norte. De oeste a este: <b>butcher block · bandejas · estufa</b>. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p>
     <div class="ctl" id="ctl">
       <div class="ctl-row"><span class="ctl-lbl">Cavidad</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="483"> mm</label><span class="ctl-hint">× <span id="cav-w">175</span> mm · supuesto</span></div>
       <div class="ctl-row"><span class="ctl-lbl">Montaje</span><div class="seg" role="group" aria-label="Montaje"><button type="button" data-mount="proud" aria-pressed="true">Sobrepuesto</button><button type="button" data-mount="flush" aria-pressed="false">A ras</button></div></div>
@@ -329,8 +329,8 @@ function drawPlan() {
   g += h('path', { d: `M${M.l - 8},${by}H${M.l + W + 8}`, class: 'dim', 'stroke-dasharray': '6 3' });
   g += h('text', { x: M.l - 12, y: by + 3, 'text-anchor': 'end', class: 'dimtxt' }, 'B');
   g += h('text', { x: M.l + W + 12, y: by + 3, class: 'dimtxt' }, 'B');
-  g += h('text', { x: M.l + W / 2, y: M.t - 30, 'text-anchor': 'middle', class: 'sub' }, 'N ↑');
-  g += h('text', { x: M.l + W / 2, y: M.t + H + 30, 'text-anchor': 'middle', class: 'sub' }, '↓ lado del invitado');
+  g += h('text', { x: M.l + W / 2, y: M.t - 30, 'text-anchor': 'middle', class: 'sub' }, 'N ↑ · lado del invitado');
+  g += h('text', { x: M.l + W / 2, y: M.t + H + 30, 'text-anchor': 'middle', class: 'sub' }, 'S ↓ · lado de quien cocina');
   const svg = document.getElementById('plan');
   svg.setAttribute('viewBox', `0 0 ${M.l + W + M.r} ${M.t + Math.max(H, used * S) + M.b}`);
   svg.innerHTML = g;
