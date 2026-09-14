@@ -1,4 +1,4 @@
-<title>Bandejas de la Barra Refugio</title>
+<title>Exploración Bandejas Barra</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
   :root {
@@ -136,70 +136,70 @@
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">Casa Refugio · Mueble Barra · v2.0</div>
-    <h1>Bandejas de acero en la barra</h1>
-    <p class="lead">Qué bandejas caben en la barra, en qué combinaciones, y qué se corta en el mesón.</p>
+    <div class="eyebrow">Casa Refugio · Mueble Barra · exploración · borrador</div>
+    <h1>Exploración de bandejas de acero para la barra</h1>
+    <p class="lead">Un cuaderno para probar ideas: qué bandejas podrían caber en la barra, en qué combinaciones, y qué implicaría cada una para el mesón. Nada aquí está decidido.</p>
   </header>
 
   <nav class="toc" aria-label="Secciones">
-    <a href="#principios">1 Principios</a>
-    <a href="#planta">2 Planta</a>
-    <a href="#cabe">3 ¿Cabe?</a>
+    <a href="#principios">1 Puntos de partida</a>
+    <a href="#planta">2 Probar</a>
+    <a href="#cabe">3 ¿Cabría?</a>
     <a href="#corte">4 Cortes</a>
-    <a href="#comparacion">5 Comparación</a>
+    <a href="#comparacion">5 Dos montajes</a>
     <a href="#bandejas">6 Bandejas</a>
-    <a href="#supuestos">7 Supuestos</a>
+    <a href="#supuestos">7 Por confirmar</a>
     <a href="#glosario">8 Glosario</a>
   </nav>
 
   <section id="principios">
-    <h2><span class="num">1</span>Principios de diseño</h2>
+    <h2><span class="num">1</span>Puntos de partida</h2>
     <ol class="rules">
-      <li><b>Dos anchos, no uno.</b>
+      <li><b>Hay dos anchos en juego, no uno.</b>
         <div class="widths">
           <div><span class="w-num">175 mm</span><span class="w-lbl">labio</span><span class="w-note">ancho de la bandeja y de la <b>franja</b> que se reserva en el mesón.</span></div>
           <div><span class="w-num">156 mm</span><span class="w-lbl">corte pasante</span><span class="w-note">el hueco. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
         </div>
         <span class="w-foot">Iguales para la 1/3, la 1/6 y la 1/9. A ras la franja pasa a <b>181 mm</b>; el corte sigue en 156.</span>
       </li>
-      <li><b>Solo caben la 1/3, la 1/6 y la 1/9.</b> Son las que miden 175 mm de lado corto.</li>
-      <li><b>Van en fila, de norte a sur.</b> Cada una ocupa 324, 159 o 108 mm. La fila suma el largo de la cavidad.</li>
-      <li><b>Hondo máximo 102 mm.</b> Se compran de 64 o 102 mm. El mueble se dimensiona para 102 más aire para sacarla.</li>
+      <li><b>Partimos de la 1/3, la 1/6 y la 1/9.</b> Comparten el lado corto de 175 mm, así que una sola franja les sirve a las tres.</li>
+      <li><b>La idea es una fila de norte a sur.</b> Cada bandeja ocupa 324, 159 o 108 mm; la fila suma el largo de la cavidad.</li>
+      <li><b>Hondo máximo, por ahora, 102 mm.</b> Se consiguen de 64 o 102. El mueble tendría que dar 102 más aire para sacarla.</li>
     </ol>
-    <p>Resultado: un solo ancho de corte para las tres bandejas. Cambiar la combinación después no toca la carpintería.</p>
+    <p>Lo atractivo de este camino: un solo ancho de corte para las tres bandejas, y cambiar la combinación después no tocaría la carpintería.</p>
   </section>
 
   <section id="planta">
-    <h2><span class="num">2</span>Planta y combinaciones</h2>
-    <p>De oeste a este: <b>butcher block · bandejas · estufa</b>. Fije el largo, elija una combinación y todo lo demás se redibuja.</p>
+    <h2><span class="num">2</span>Probar combinaciones</h2>
+    <p>De oeste a este: <b>butcher block · bandejas · estufa</b>. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p>
     <div class="ctl" id="ctl">
-      <div class="ctl-row"><span class="ctl-lbl">Cavidad</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="483"> mm</label><span class="ctl-hint">× 175 mm · por confirmar</span></div>
+      <div class="ctl-row"><span class="ctl-lbl">Cavidad</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="483"> mm</label><span class="ctl-hint">× 175 mm · supuesto</span></div>
       <div class="ctl-row"><span class="ctl-lbl">Montaje</span><div class="seg" role="group" aria-label="Montaje"><button type="button" data-mount="proud" aria-pressed="true">Sobrepuesto</button><button type="button" data-mount="flush" aria-pressed="false">A ras</button></div></div>
     </div>
     <div class="chosen" id="chosen"></div>
     <div class="sheet"><svg id="plan"></svg></div>
     <div class="legend"><span class="l-cav">franja reservada</span><span class="l-pan">bandeja (labio exterior)</span><span class="l-left">sobrante</span><span class="hint">clic en una bandeja: 64 ↔ 102 mm · <button type="button" id="flip" class="link">invertir N↔S</button></span></div>
-    <h3>Combinaciones que caben</h3>
+    <h3>Combinaciones posibles en ese largo</h3>
     <div id="cards" class="cards"></div>
   </section>
 
   <section id="cabe">
-    <h2><span class="num">3</span>¿Cabe?</h2>
-    <p>De afuera hacia adentro: la <b>franja</b> reservada, los <b>labios</b> y los <b>cortes</b>. A ras se suma el <b>rebaje</b>, más grande que los labios. Cada rectángulo tiene que caber en el de afuera.</p>
+    <h2><span class="num">3</span>¿Cabría?</h2>
+    <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y los <b>cortes</b>. A ras se sumaría el <b>rebaje</b>, más grande que los labios. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
     <div class="sheet"><svg id="fit"></svg></div>
     <div class="legend"><span class="l-cav">franja</span><span class="l-pocket">rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">corte pasante</span></div>
     <div id="verdict" class="verdict"></div>
-    <h3>Medidas de corte</h3>
+    <h3>Lo que saldría en el mesón</h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
   </section>
 
   <section id="corte">
-    <h2><span class="num">4</span>Cortes A–A y B–B</h2>
+    <h2><span class="num">4</span>Cómo se vería en corte</h2>
     <p id="corte-lead"></p>
     <h3>A–A · norte–sur</h3>
     <div class="sheet"><svg id="section"></svg></div>
     <h3>B–B · este–oeste, por la bandeja más honda</h3>
-    <p>Igual para cualquier bandeja: labio 175, corte 156. Solo cambia el hondo.</p>
+    <p>Sería igual para cualquier bandeja: labio 175, corte 156. Solo cambiaría el hondo.</p>
     <div class="sheet"><svg id="section-b"></svg></div>
     <div class="two">
       <div class="sheet"><svg id="detail"></svg></div>
@@ -208,18 +208,18 @@
   </section>
 
   <section id="comparacion">
-    <h2><span class="num">5</span>Sobrepuesto vs a ras</h2>
+    <h2><span class="num">5</span>Sobrepuesto o a ras</h2>
     <div class="sheet tbl"><table id="mounts"></table></div>
   </section>
 
   <section id="bandejas">
-    <h2><span class="num">6</span>Bandejas que caben</h2>
+    <h2><span class="num">6</span>Las bandejas</h2>
     <p>Medidas de catálogo, formato US steam table.</p>
     <div class="sheet tbl"><table id="sizes"></table></div>
   </section>
 
   <section id="supuestos">
-    <h2><span class="num">7</span>Supuestos</h2>
+    <h2><span class="num">7</span>Lo que falta confirmar</h2>
     <ul class="assume" id="assume"></ul>
   </section>
   <section id="glosario">
@@ -487,13 +487,13 @@ function drawChosen() {
   const left = CAVITY.l - rowLen(MOUNT);        // a ras: cada bandeja pide 6 mm más
   const wBad = MOUNT === 'flush' && fitGeom().needW > fitGeom().cavW + 1e-9;
   const seq = ROW.map(it => `${PANS[it.p].name} (${mm(it.d)})`).join(' → ');
-  document.getElementById('chosen').innerHTML = `<b>Elegida:</b> ${seq} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · cavidad ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}${wBad ? ` · <span style="color:#c0392b">ancho: a ras pide ${mm(fitGeom().needW)} mm, no ${mm(fitGeom().cavW)}</span>` : ''}`;
+  document.getElementById('chosen').innerHTML = `<b>Probando:</b> ${seq} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · cavidad ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}${wBad ? ` · <span style="color:#c0392b">ancho: a ras pide ${mm(fitGeom().needW)} mm, no ${mm(fitGeom().cavW)}</span>` : ''}`;
   document.getElementById('corte-lead').innerHTML = MOUNT === 'proud'
-    ? '<b>Sobrepuesto:</b> el labio apoya sobre el mesón y sirve de agarre. Términos en el <a href="#glosario">glosario</a>.'
-    : '<b>A ras:</b> el labio baja a un <a href="#glosario">rebaje</a> y queda al nivel del mesón.';
+    ? '<b>Sobrepuesto:</b> el labio apoyaría sobre el mesón y serviría de agarre. Términos en el <a href="#glosario">glosario</a>.'
+    : '<b>A ras:</b> el labio bajaría a un <a href="#glosario">rebaje</a> y quedaría al nivel del mesón.';
   document.getElementById('corte-note').innerHTML = MOUNT === 'proud'
     ? `<p>Tres anchos por bandeja: <b>labio</b>, <b>cuerpo</b> y <b>corte</b>.</p><p>Las bandejas van labio con labio. Entre dos cortes queda el <b>riel</b>: ${mmL(RAIL.proud)}.</p>`
-    : `<p>El rebaje es un segundo paso: ${mmL(LIP + CLEAR)} de ancho y ${mmL(LIPT)} de hondo alrededor de cada corte.</p><p>Cada bandeja pide ${mmL(2 * CLEAR)} más de paso y el riel crece a ${mmL(RAIL.flush)}.</p><p><b>Ojo:</b> sin labio a la vista no hay de dónde agarrar. Hace falta una muesca o un punto de izaje por bandeja.</p>`;
+    : `<p>El rebaje sería un segundo paso: ${mmL(LIP + CLEAR)} de ancho y ${mmL(LIPT)} de hondo alrededor de cada corte.</p><p>Cada bandeja pide ${mmL(2 * CLEAR)} más de paso y el riel crece a ${mmL(RAIL.flush)}.</p><p><b>Ojo:</b> sin labio a la vista no habría de dónde agarrar. Haría falta una muesca o un punto de izaje por bandeja.</p>`;
 }
 // ---- cavidad vs labios ----
 function fitGeom() {
@@ -604,7 +604,7 @@ document.getElementById('assume').innerHTML = [
   ['Holgura', CLEAR, 'por lado'],
   ['Espesor del mesón', TOP, 'por definir'],
 ].map(([n, v, why]) => `<li><b>${n}: ${dimLabel(v)}</b> — ${why}.</li>`).join('') +
-  `<li><b>Largo de la cavidad: ${CAV_MM} mm</b> — por confirmar. Entre 450 y 520, 483 es el largo con más combinaciones sin desperdicio: 1/3 + 1/6 y 1/6 + 3 × 1/9 exactos, 3 × 1/6 con 7 mm. A ras pediría 496 a 500.</li>` +
+  `<li><b>Largo de la cavidad: ${CAV_MM} mm</b> — valor de prueba. Entre 450 y 520, 483 es el largo con más combinaciones sin desperdicio: 1/3 + 1/6 y 1/6 + 3 × 1/9 exactos, 3 × 1/6 con 7 mm. A ras pediría 496 a 500.</li>` +
   '<li><b>Aire bajo la bandeja más honda</b> — para sacarla.</li>';
 
 // rellenos en el texto
