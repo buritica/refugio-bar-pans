@@ -310,7 +310,7 @@ let ZONE = 'barra', Z, PANS, KEYS, STRIP, DEFAULT_ROW, ROW, CAV_MM;
 let MOUNT = 'proud';                            // 'proud' | 'flush' | 'cold'
 // pozo frío: unidad drop-in refrigerada. Placeholders de catálogo hasta elegir modelo.
 const FULL = { w: 12.75, l: 20.75 };            // bandeja entera: 324 a lo largo del módulo, 527 a través
-const COLD = { flange: 1.5, cutGap: 0.25, below: 600 / 25.4, drain: 0.75, compressor: 12 };   // reborde, aire del corte, fondo bajo mesón, desagüe, tramo compresor (pulgadas)
+const COLD = { flange: 1.5, cutGap: 0.25, well: 8, below: 600 / 25.4, drain: 0.75, compressor: 12 };   // well: hondo útil del pozo; below: alto total de la unidad bajo el mesón   // reborde, aire del corte, fondo bajo mesón, desagüe, tramo compresor (pulgadas)
 const SPLITS = { full: { name: 'Entera', a: 1, b: 1 }, third: { name: '1/3', a: 1, b: 3 }, sixth: { name: '1/6', a: 2, b: 3 }, ninth: { name: '1/9', a: 3, b: 3 } };  // a = piezas a lo largo del módulo, b = a través
 const SPLIT_ORDER = ['full', 'third', 'sixth', 'ninth'];
 let SLOTS = [];                                  // división de cada módulo, ej. ['third','third','full']
@@ -626,7 +626,7 @@ function drawChosen() {
     const g0 = coldGeom(), left = CAVITY.l - g0.flL;
     document.getElementById('chosen').innerHTML = `<b>Probando:</b> pozo frío de ${g0.n} módulo${g0.n > 1 ? 's' : ''} · ${SLOTS.map(k => SPLITS[k].name).join(' → ')} · ${g0.pans} bandejas · ${Z.word} ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm a lo largo` : `<span style="color:#c0392b">faltan ${mm(-left)} mm a lo largo</span>`} · <span style="color:#c0392b">${mm(g0.flW)} mm a través</span>`;
     document.getElementById('corte-lead').innerHTML = '<b>Pozo frío:</b> una unidad refrigerada drop-in. Las bandejas cuelgan de los rieles de la unidad, no del mesón; el mesón solo recibe el reborde.';
-    document.getElementById('corte-note-cold').innerHTML = `<p>El tanque baja ${mm(COLD.below)} mm bajo el mesón y el compresor va a un costado, con rejilla y toma. El desagüe sale por el fondo y tiene que llegar a un sifón o a un desagüe de piso.</p><p>Cifras de catálogo genéricas hasta elegir modelo.</p>`;
+    document.getElementById('corte-note-cold').innerHTML = `<p>El pozo útil tiene ${mm(COLD.well)} mm de hondo; con aislamiento, serpentín y base la unidad llega a ${mm(COLD.below)} mm bajo el mesón. El compresor va a un costado, con rejilla y toma. El desagüe sale por el fondo y tiene que llegar a un sifón o a un desagüe de piso.</p><p>Cifras de catálogo genéricas hasta elegir modelo.</p>`;
     return;
   }
   const left = CAVITY.l - rowLen(MOUNT);        // a ras: cada bandeja pide 6 mm más
@@ -700,7 +700,7 @@ function drawPlanCold() {
 }
 // corte por la unidad: along = a lo largo de los módulos (A–A); si no, a través (B–B)
 function drawSectionCold(id, along) {
-  const g0 = coldGeom(), S = 12, side = 4, M = { l: 150 + side * S, t: 70 };
+  const g0 = coldGeom(), S = 12, side = 4, M = { l: 200 + side * S, t: 70 };
   const y0 = M.t, topH = TOP * S;
   const inner = along ? g0.inL : g0.inW, cut = along ? g0.cutL : g0.cutW, fl = along ? g0.flL : g0.flW;
   const x0 = M.l + COLD.flange * S;                                 // inicio del interior
@@ -709,7 +709,9 @@ function drawSectionCold(id, along) {
   g += h('rect', { x: M.l - side * S, y: y0, width: (COLD.flange - COLD.cutGap) * S + side * S, height: topH, class: 'top' });
   g += h('rect', { x: x0 + (inner + COLD.cutGap) * S, y: y0, width: (COLD.flange - COLD.cutGap) * S + side * S, height: topH, class: 'top' });
   // tanque
-  g += h('rect', { x: x0 - COLD.cutGap * S, y: y0 + topH * 0.4, width: cut * S, height: (COLD.below - TOP * 0.4) * S, class: 'tank' });
+  g += h('rect', { x: x0 - COLD.cutGap * S, y: y0 + COLD.well * S, width: cut * S, height: (COLD.below - COLD.well) * S, class: 'tank', 'stroke-dasharray': '3 3' });
+  g += h('rect', { x: x0 - COLD.cutGap * S, y: y0 + topH * 0.4, width: cut * S, height: (COLD.well - TOP * 0.4) * S, class: 'tank' });
+  g += h('text', { x: x0 + inner * S / 2, y: y0 + (COLD.well + (COLD.below - COLD.well) / 2) * S + 3, 'text-anchor': 'middle', class: 'sub' }, 'aislamiento · serpentín · base');
   // reborde sobre el mesón
   g += h('rect', { x: M.l, y: y0 - 0.15 * S, width: fl * S, height: 0.3 * S, class: 'unit' });
   // bandejas colgadas (4" de hondo) en el interior
@@ -733,8 +735,9 @@ function drawSectionCold(id, along) {
   g += dim(M.l, y0 - 46, M.l + fl * S, y0 - 46, `reborde ${mm(fl)} mm`);
   g += dim(x0 - COLD.cutGap * S, y0 - 32, x0 + (inner + COLD.cutGap) * S, y0 - 32, `corte ${mm(cut)} mm`);
   g += dim(x0, y0 - 18, x0 + inner * S, y0 - 18, `interior ${mm(inner)} mm`);
-  g += dim(M.l - side * S - 14, y0, M.l - side * S - 14, bottom, `fondo ${mm(COLD.below)} mm`);
-  g += dim(M.l - side * S - 40, y0, M.l - side * S - 40, y0 + 4 * S, `bandeja ${mm(4)}`);
+  g += dim(M.l - side * S - 14, y0, M.l - side * S - 14, y0 + COLD.well * S, `pozo ${mm(COLD.well)} mm`);
+  g += dim(M.l - side * S - 54, y0, M.l - side * S - 54, bottom, `unidad ${mm(COLD.below)} mm`);
+  g += dim(M.l - side * S - 94, y0, M.l - side * S - 94, y0 + 4 * S, `bandeja ${mm(4)}`);
   const svg = document.getElementById(id);
   const total = M.l + fl * S + side * S + (along ? COLD.compressor * S : 0) + 60;
   svg.setAttribute('viewBox', `0 0 ${total} ${bottom + 2.6 * S + 10}`);
@@ -761,12 +764,13 @@ function drawFitCold() {
   document.getElementById('verdict').innerHTML =
     `<div class="${okL ? 'ok' : 'no'}"><b>Largo:</b> el reborde pide ${mm(g0.flL)} mm, hay ${mm(CAVITY.l)} → ${okL ? `cabe, sobran ${mm(CAVITY.l - g0.flL)} mm` : `faltan ${mm(g0.flL - CAVITY.l)} mm`}</div>` +
     `<div class="no"><b>Ancho:</b> la unidad reclama ${mm(g0.flW)} mm a través, contra los ${mm(STRIP)} de la franja de hoy. La franja pasaría a ${mm(g0.flW)}.</div>` +
-    `<div class="no"><b>Abajo:</b> ${mm(COLD.below)} mm libres bajo el mesón para el tanque y el compresor, un desagüe, una toma eléctrica y una rejilla de ventilación. Donde hoy van cajones.</div>`;
+    `<div class="no"><b>Abajo:</b> la unidad completa mide ${mm(COLD.below)} mm de alto bajo el mesón (pozo de ${mm(COLD.well)} más aislamiento, serpentín y base), y necesita desagüe, toma eléctrica y rejilla. Donde hoy van cajones.</div>`;
   const rows = [
     ['Corte en el mesón (del fabricante)', g0.cutW, g0.cutL, 'interior + 6 mm de aire por lado'],
     ['Reborde de la unidad', g0.flW, g0.flL, 'apoya sobre el mesón, ' + mm(COLD.flange) + ' mm por lado'],
     ['Interior', g0.inW, g0.inL, `${g0.n} módulo${g0.n > 1 ? 's' : ''} · ${g0.pans} bandeja${g0.pans > 1 ? 's' : ''} con barras adaptadoras`],
-    ['Fondo libre bajo el mesón', null, COLD.below, 'tanque + compresor'],
+    ['Pozo (hondo útil)', null, COLD.well, 'donde cuelgan las bandejas'],
+    ['Alto total de la unidad', null, COLD.below, 'pozo + aislamiento + serpentín + base; es lo que hay que dejar libre'],
     ['Desagüe', null, COLD.drain, 'a sifón o desagüe de piso, con corte de aire'],
     ['Toma eléctrica', null, null, 'dedicada, junto al compresor, fuera de la zona húmeda'],
     ['Ventilación', null, COLD.compressor, 'rejilla en frente o zócalo, del lado del compresor'],
@@ -906,7 +910,7 @@ function drawAssume() {
     ['Espesor del mesón', TOP, 'por definir'],
   ].map(([n, v, why]) => `<li><b>${n}: ${dimLabel(v)}</b> — ${why}.</li>`).join('') +
     Z.lenNote(CAV_MM) +
-    (MOUNT === 'cold' ? `<li><b>Pozo frío: reborde ${mm(COLD.flange)} mm, fondo ${mm(COLD.below)} mm, desagüe ${mm(COLD.drain)} mm, compresor ${mm(COLD.compressor)} mm</b> — cifras genéricas de catálogo, pendientes de modelo.</li>` : '') +
+    (MOUNT === 'cold' ? `<li><b>Pozo frío: reborde ${mm(COLD.flange)} mm, pozo ${mm(COLD.well)} mm, alto total ${mm(COLD.below)} mm, desagüe ${mm(COLD.drain)} mm, compresor ${mm(COLD.compressor)} mm</b> — cifras genéricas de catálogo, pendientes de modelo.</li>` : '') +
     '<li><b>Aire bajo la bandeja más honda</b> — para sacarla.</li>';
 }
 
