@@ -1,0 +1,615 @@
+<title>Bandejas de la Barra Refugio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #eef0f1;
+    --paper: #f9fafa;
+    --ink: #1f2428;
+    --ink-2: #5b656c;
+    --line: #c9d0d4;
+    --steel: #cfd6da;
+    --steel-edge: #7f8b93;
+    --cavity: #dfe4e7;
+    --wood: #e7dccb;
+    --accent: #2c6fb3;
+    --accent-soft: #d6e4f3;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #171a1d; --paper: #1f2328; --ink: #e6e9eb; --ink-2: #9aa4ab;
+      --line: #3a4148; --steel: #4b545b; --steel-edge: #a7b1b8; --cavity: #2a3036;
+      --wood: #4a4034; --accent: #6ea6e0; --accent-soft: #24384d;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #171a1d; --paper: #1f2328; --ink: #e6e9eb; --ink-2: #9aa4ab;
+    --line: #3a4148; --steel: #4b545b; --steel-edge: #a7b1b8; --cavity: #2a3036;
+    --wood: #4a4034; --accent: #6ea6e0; --accent-soft: #24384d;
+  }
+  body { background: var(--ground); color: var(--ink); font-family: var(--sans); padding-inline: 20px; padding-block: 28px 48px; }
+  .wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 32px; }
+  header { display: grid; gap: 6px; }
+  h1 { font-size: 1.5rem; font-weight: 600; margin: 0; text-wrap: balance; }
+  .eyebrow { font-family: var(--mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  p { max-width: 66ch; line-height: 1.55; margin: 0; color: var(--ink-2); }
+  p b, li b, dd b { color: var(--ink); font-weight: 600; }
+  .lead { font-size: 1.05rem; color: var(--ink); }
+  .rules { margin: 0; padding-left: 1.4em; max-width: 78ch; display: grid; gap: 8px; line-height: 1.5; color: var(--ink-2); }
+  .rules li::marker { font-family: var(--mono); color: var(--accent); }
+  .widths { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0 6px; width: min(100%, 860px); }
+  @media (max-width: 560px) { .widths { grid-template-columns: 1fr; } }
+  .widths > div { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; padding: 10px 12px; background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--accent); }
+  .widths > div:last-child { border-left-color: var(--ink); }
+  .w-num { font-family: var(--mono); font-size: 1.25rem; font-weight: 500; color: var(--ink); }
+  .w-lbl { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .widths > div:last-child .w-lbl { color: var(--ink); }
+  .w-note { font-size: .88rem; line-height: 1.45; flex-basis: 100%; }
+  .w-foot { display: block; font-size: .92rem; }
+  .terms { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px 24px; }
+  .terms div { border-top: 2px solid var(--line); padding-top: 8px; }
+  dt { font-family: var(--mono); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  dd { margin: 4px 0 0; color: var(--ink-2); line-height: 1.5; font-size: .92rem; }
+  .assume { margin: 0; padding-left: 1.2em; color: var(--ink-2); line-height: 1.6; max-width: 66ch; }
+  .assume b { font-family: var(--mono); color: var(--ink); font-weight: 500; }
+  .tbl { padding: 6px 14px; }
+  .ctl { display: grid; gap: 8px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); font-family: var(--mono); font-size: .8rem; }
+  .ctl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .ctl-lbl { color: var(--ink-2); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; min-width: 6.5em; }
+  .ctl button { font: inherit; color: var(--ink); background: var(--ground); border: 1px solid var(--line); padding: 5px 10px; border-radius: 2px; cursor: pointer; }
+  .ctl button:hover { border-color: var(--accent); color: var(--accent); }
+  .ctl button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .ctl-hint { color: var(--ink-2); font-size: .74rem; }
+  .ctl-in { display: inline-flex; align-items: center; gap: 6px; }
+  .ctl input { font: inherit; width: 5.5em; padding: 4px 6px; border: 1px solid var(--line); border-radius: 2px; background: var(--ground); color: var(--ink); text-align: right; }
+  .ctl input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  h3 { font-size: 1rem; font-weight: 600; margin: 8px 0 0; }
+  .legend .l-left::before { background: var(--accent-soft); border-color: var(--accent-soft); }
+  .legend .l-pocket::before { background: var(--accent-soft); border-style: dotted; border-color: var(--accent); }
+  .legend .l-cut::before { background: var(--paper); border-style: solid; border-color: var(--ink); }
+  .cut { fill: var(--paper); stroke: var(--ink); stroke-width: 1; }
+  .pocket { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1; stroke-dasharray: 2 2; }
+  .verdict { display: grid; gap: 6px; font-family: var(--mono); font-size: .8rem; }
+  .verdict div { padding: 6px 10px; border-left: 3px solid var(--line); background: var(--paper); }
+  .verdict .ok { border-color: #2e7d4f; }
+  .verdict .no { border-color: #c0392b; }
+  .verdict b { font-weight: 600; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
+  .seg button { border: 0 !important; border-radius: 0 !important; background: transparent !important; }
+  .seg button[aria-pressed="true"] { background: var(--accent) !important; color: #fff !important; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 6px; }
+  .card { text-align: left; font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 2px; padding: 7px 9px; display: grid; gap: 4px; cursor: pointer; }
+  .card:hover { border-color: var(--accent); }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .card[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: var(--accent-soft); }
+  .card .name { font-weight: 600; font-size: .82rem; font-family: var(--mono); }
+  .card .meta { font-family: var(--mono); font-size: .7rem; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 2px 8px; }
+  .card .meta .bad { color: #c0392b; }
+  .card svg { width: 100%; height: 14px; display: block; }
+  .chosen { font-family: var(--mono); font-size: .8rem; color: var(--ink); padding: 8px 12px; border-left: 3px solid var(--accent); background: var(--paper); }
+  .chosen b { font-weight: 600; }
+  button.link { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  section { display: grid; gap: 14px; padding-top: 22px; border-top: 1px solid var(--line); scroll-margin-top: 64px; }
+  h2 { font-size: 1.25rem; font-weight: 600; margin: 0; display: flex; align-items: baseline; gap: 12px; text-wrap: balance; }
+  h2 .num { font-family: var(--mono); font-size: .8rem; font-weight: 500; color: var(--accent); letter-spacing: .06em; border: 1px solid var(--accent); padding: 2px 7px; border-radius: 2px; }
+  .toc { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 4px 6px; padding: 10px 0; background: var(--ground); border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: .74rem; }
+  .toc a { color: var(--ink-2); text-decoration: none; padding: 4px 8px; border-radius: 2px; }
+  .toc a:hover, .toc a:focus-visible { color: var(--accent); background: var(--accent-soft); outline: none; }
+  .toc + section { border-top: 0; padding-top: 4px; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  .sheet { background: var(--paper); border: 1px solid var(--line); overflow-x: auto; }
+  .sheet > svg { min-width: 620px; }
+  .two .sheet > svg { min-width: 0; }
+  svg { display: block; width: 100%; height: auto; font-family: var(--mono); }
+  .dim { stroke: var(--accent); fill: none; stroke-width: 1; }
+  .dimtxt { fill: var(--accent); font-size: 9px; }
+  .lbl { fill: var(--ink); font-size: 10px; font-weight: 500; }
+  .sub { fill: var(--ink-2); font-size: 8px; }
+  .pan { fill: var(--steel); stroke: var(--steel-edge); stroke-width: 1.2; }
+  .hit { cursor: pointer; }
+  .hit:hover { stroke: var(--accent); }
+  .body { fill: var(--cavity); stroke: var(--steel-edge); stroke-width: 1; }
+  .cav { fill: var(--cavity); stroke: none; }
+  .cav-line { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 3; }
+  .top { fill: var(--wood); stroke: var(--ink); stroke-width: 1; }
+  .rail { fill: var(--steel-edge); }
+  .note { display: grid; gap: 10px; align-content: start; }
+  .note p { font-size: .92rem; }
+  table { border-collapse: collapse; font-family: var(--mono); font-size: .8rem; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 6px 14px 6px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { font-weight: 500; color: var(--ink-2); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; }
+  .two .sheet svg { max-width: 380px; margin: 0 auto; }
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+  @media (max-width: 700px) { .two { grid-template-columns: 1fr; } }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--mono); font-size: .75rem; color: var(--ink-2); }
+  .legend .hint { margin-left: auto; }
+  .legend .hint::before { display: none; }
+  .legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--steel-edge); }
+  .legend .l-pan::before { background: var(--steel); }
+  .legend .l-cav::before { background: var(--cavity); border-style: dashed; border-color: var(--accent); border-width: 1.5px; }
+  .legend .l-top::before { background: var(--wood); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Casa Refugio · Mueble Barra · v1.9</div>
+    <h1>Bandejas de acero en la barra</h1>
+    <p class="lead">Cómo se modulan las bandejas de acero inoxidable dentro de la cavidad de la barra, y qué hay que cortar en el mesón para que encajen. Medidas en milímetros; la pulgada de catálogo va entre paréntesis.</p>
+  </header>
+
+  <nav class="toc" aria-label="Secciones">
+    <a href="#principios">1 Principios</a>
+    <a href="#planta">2 Planta</a>
+    <a href="#cabe">3 ¿Cabe?</a>
+    <a href="#corte">4 Cortes</a>
+    <a href="#comparacion">5 Comparación</a>
+    <a href="#bandejas">6 Bandejas</a>
+    <a href="#supuestos">7 Supuestos</a>
+    <a href="#glosario">8 Glosario</a>
+  </nav>
+
+  <section id="principios">
+    <h2><span class="num">1</span>Principios de diseño</h2>
+    <ol class="rules">
+      <li><b>Dos anchos distintos, y no hay que confundirlos.</b>
+        <div class="widths">
+          <div><span class="w-num">175 mm</span><span class="w-lbl">labio</span><span class="w-note">ancho de la bandeja. Es también el ancho de la <b>franja</b> que se reserva en el mesón: una zona, no un hueco.</span></div>
+          <div><span class="w-num">156 mm</span><span class="w-lbl">corte pasante</span><span class="w-note">el único hueco real. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm de mesón que quedan a cada lado.</span></div>
+        </div>
+        <span class="w-foot">Ambos anchos son iguales para la 1/3, la 1/6 y la 1/9, y nunca cambian. A ras, el labio necesita 3 mm de aire por lado: la franja pasa a <b>181 mm</b>; el corte sigue en 156.</span>
+      </li>
+      <li><b>Solo entran bandejas cuyo lado corto mida 175 mm:</b> la 1/3, la 1/6 y la 1/9. Las demás del catálogo (entera, media, media larga) no caben.</li>
+      <li><b>Las bandejas se ponen en fila, de norte a sur.</b> Solo cambia lo que cada una ocupa en esa dirección: 324 mm la 1/3, 159 mm la 1/6, 108 mm la 1/9. El largo de la cavidad es la suma de la fila.</li>
+      <li><b>Profundidad máxima 102 mm (4").</b> Las bandejas se compran de 64 o 102 mm de hondo. El mueble se dimensiona para la más honda, más espacio libre debajo para sacarla.</li>
+    </ol>
+    <p>Ventaja: un solo ancho de corte y una sola altura de riel sirven para las tres bandejas. Cambiar la combinación después no toca la carpintería.</p>
+  </section>
+
+  <section id="planta">
+    <h2><span class="num">2</span>Planta y combinaciones</h2>
+    <p>Vista desde arriba. La barra se lee de oeste a este: <b>butcher block · bandejas · estufa</b>. La cavidad tiene un largo fijo. Abajo están todas las combinaciones de 1/3, 1/6 y 1/9 que caben en ese largo; elija una y la planta, el corte y las tablas la siguen.</p>
+    <div class="ctl" id="ctl">
+      <div class="ctl-row"><span class="ctl-lbl">Cavidad</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="483"> mm</label><span class="ctl-hint">× 175 mm de ancho · largo por confirmar</span></div>
+      <div class="ctl-row"><span class="ctl-lbl">Montaje</span><div class="seg" role="group" aria-label="Montaje"><button type="button" data-mount="proud" aria-pressed="true">Sobrepuesto</button><button type="button" data-mount="flush" aria-pressed="false">A ras</button></div></div>
+    </div>
+    <div class="chosen" id="chosen"></div>
+    <div class="sheet"><svg id="plan"></svg></div>
+    <div class="legend"><span class="l-cav">franja reservada</span><span class="l-pan">bandeja (labio exterior)</span><span class="l-left">sobrante</span><span class="hint">clic en una bandeja cambia su hondo (64 ↔ 102) · <button type="button" id="flip" class="link">invertir orden N↔S</button></span></div>
+    <h3>Combinaciones que caben</h3>
+    <div id="cards" class="cards"></div>
+  </section>
+
+  <section id="cabe">
+    <h2><span class="num">3</span>Cavidad vs labios: ¿cabe?</h2>
+    <p>Tres rectángulos anidados, de afuera hacia adentro: la <b>franja</b> que se reserva en el mesón (una zona, no un hueco), los <b>labios</b> de las bandejas que tienen que apoyar dentro de ella, y los <b>cortes pasantes</b> por donde cuelgan los cuerpos. A ras aparece un cuarto, el <b>rebaje</b>, que es más grande que los labios. Si un rectángulo no cabe en el de afuera, no cabe.</p>
+    <div class="sheet"><svg id="fit"></svg></div>
+    <div class="legend"><span class="l-cav">franja reservada (zona, no hueco)</span><span class="l-pocket">rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">corte pasante</span></div>
+    <div id="verdict" class="verdict"></div>
+    <h3>Lo que se corta</h3>
+    <div class="sheet tbl"><table id="cuts"></table></div>
+  </section>
+
+  <section id="corte">
+    <h2><span class="num">4</span>Cortes A–A y B–B</h2>
+    <p id="corte-lead"></p>
+    <h3>A–A · norte a sur, a lo largo de la fila</h3>
+    <div class="sheet"><svg id="section"></svg></div>
+    <h3>B–B · este a oeste, a través de la bandeja más honda</h3>
+    <p>La misma cavidad vista de frente desde el lado del invitado. Aquí el labio mide siempre 175 mm y el corte 156 mm, sea cual sea la bandeja.</p>
+    <div class="sheet"><svg id="section-b"></svg></div>
+    <div class="two">
+      <div class="sheet"><svg id="detail"></svg></div>
+      <div class="note" id="corte-note"></div>
+    </div>
+  </section>
+
+  <section id="comparacion">
+    <h2><span class="num">5</span>Sobrepuesto vs a ras</h2>
+    <div class="sheet tbl"><table id="mounts"></table></div>
+  </section>
+
+  <section id="bandejas">
+    <h2><span class="num">6</span>Bandejas que caben</h2>
+    <p>Medidas de catálogo (labio exterior), formato US steam table, no GN.</p>
+    <div class="sheet tbl"><table id="sizes"></table></div>
+  </section>
+
+  <section id="supuestos">
+    <h2><span class="num">7</span>Supuestos por confirmar con el juego de muestra</h2>
+    <ul class="assume" id="assume"></ul>
+  </section>
+  <section id="glosario">
+    <h2><span class="num">8</span>Glosario del corte</h2>
+    <dl class="terms">
+      <div><dt>Cavidad / franja</dt><dd>La zona del mesón reservada para las bandejas: 175 mm de ancho por el largo de la fila. Es donde apoyan los labios. <b>No es un hueco.</b></dd></div>
+      <div><dt>Labio</dt><dd>La ceja exterior de la bandeja, la medida del catálogo. Sobresale <span id="t-lip"></span> por cada lado.</dd></div>
+      <div><dt>Cuerpo</dt><dd>La parte que cuelga dentro del mesón. Labio menos dos veces la ceja.</dd></div>
+      <div><dt>Holgura</dt><dd>Aire entre el cuerpo y el borde del corte, <span id="t-clear"></span> por lado, para que la bandeja entre y salga sin rozar.</dd></div>
+      <div><dt>Corte</dt><dd>Lo que se abre en el mesón: cuerpo más dos holguras.</dd></div>
+      <div><dt>Riel</dt><dd>El puente de mesón que queda entre dos cortes vecinos. Sobre él apoyan dos labios.</dd></div>
+      <div><dt>Rebaje</dt><dd>Escalón poco profundo alrededor del corte para que el labio quede a ras del mesón (solo en el montaje a ras).</dd></div>
+    </dl>
+  </section>
+
+</div>
+
+<script>
+// ---- data (all inches; edit here) ----
+// solo las bandejas cuyo lado corto (l) mide 6 7/8" = 175 mm
+const PANS = {
+  third: { name: '1/3', w: 12.75, l: 6.875 },
+  sixth: { name: '1/6', w: 6.25,  l: 6.875 },
+  ninth: { name: '1/9', w: 4.25,  l: 6.875 },
+};
+const LIP = 0.5;        // lip overhang each side (brief: 3/8–1/2)
+const TOP = 1.25;       // countertop thickness, assumed
+// single row along the bar. 1/3, 1/6 and 1/9 all share the 6 7/8" side,
+// which runs front-to-back. Only the along-bar width changes per pan.
+const MAXD = 4;
+const DEFAULT_ROW = () => [{ p: 'third', d: 4 }, { p: 'sixth', d: 2.5 }];
+let ROW = DEFAULT_ROW();                        // fila norte→sur: { p: tipo, d: hondo en pulgadas }
+let CAV_MM = 483;
+let MOUNT = 'proud';                            // 'proud' | 'flush'                               // largo fijo de la cavidad, en mm (editable en la página)
+let CAVITY, LAYOUT;
+const usedLen = () => ROW.reduce((a, it) => a + PANS[it.p].w, 0);
+function layout() {
+  CAVITY = { l: CAV_MM / 25.4, w: PANS.third.l };
+  let cursor = 0;
+  LAYOUT = ROW.map(it => { const o = { p: it.p, x: cursor, y: 0 }; cursor += PANS[it.p].w; return o; });
+}
+
+// ---- helpers ----
+const mm = v => Math.round(v * 25.4);
+const frac = v => {
+  const whole = Math.floor(v), r = v - whole;
+  const f = { 0.125: '⅛', 0.25: '¼', 0.375: '⅜', 0.5: '½', 0.625: '⅝', 0.75: '¾', 0.875: '⅞' }[Math.round(r * 8) / 8] || '';
+  return (whole || !f ? whole : '') + f;
+};
+const inch = v => `${frac(v)}"`;
+const dimLabel = v => `${mm(v)} mm (${inch(v)})`;
+const mmL = v => `${mm(v)} mm`;
+const h = (tag, attrs, inner = '') => {
+  const a = Object.entries(attrs).map(([k, v]) => ` ${k}="${v}"`).join('');
+  return `<${tag}${a}>${inner}</${tag}>`;
+};
+// dimension line with ticks
+function dim(x1, y1, x2, y2, text, off = 0) {
+  const horiz = y1 === y2;
+  const tx = (x1 + x2) / 2, ty = (y1 + y2) / 2;
+  const tick = horiz ? `M${x1},${y1-3}v6M${x2},${y2-3}v6` : `M${x1-3},${y1}h6M${x2-3},${y2}h6`;
+  const t = horiz
+    ? h('text', { x: tx, y: y1 - 4 + off, 'text-anchor': 'middle', class: 'dimtxt' }, text)
+    : h('text', { x: x1 - 5 + off, y: ty, 'text-anchor': 'end', 'dominant-baseline': 'middle', class: 'dimtxt' }, text);
+  return h('path', { d: `M${x1},${y1}L${x2},${y2}${tick}`, class: 'dim' }) + t;
+}
+
+// ---- plan view (north up; bar runs east–west: butcher block | pans | stove) ----
+function drawPlan() {
+  const S = 16, M = { l: 390, t: 44, r: 160, b: 40 }, CTX = 120, GAP = 262;
+  const W = CAVITY.w * S, H = CAVITY.l * S;      // cavity: 6 7/8" east–west, row stacked north–south
+  let g = '';
+  // neighbours, indicative only
+  g += h('rect', { x: M.l - CTX - GAP, y: M.t - 10, width: CTX, height: H + 20, class: 'top' });
+  g += h('text', { x: M.l - CTX / 2 - GAP, y: M.t + H / 2, 'text-anchor': 'middle', class: 'lbl' }, 'butcher block');
+  g += h('rect', { x: M.l + W + 8, y: M.t - 10, width: CTX, height: H + 20, fill: 'var(--cavity)', stroke: 'var(--line)' });
+  g += h('text', { x: M.l + W + 8 + CTX / 2, y: M.t + H / 2, 'text-anchor': 'middle', class: 'lbl' }, 'estufa');
+  g += h('rect', { x: M.l, y: M.t, width: W, height: H, class: 'cav' });
+  LAYOUT.forEach((it, i) => {
+    const p = PANS[it.p];
+    const x = M.l, y = M.t + it.x * S, pw = p.l * S, ph = p.w * S;   // 6 7/8" side runs east–west
+    g += h('rect', { x, y, width: pw, height: ph, rx: 3, class: 'pan hit', 'data-i': i });
+    g += h('rect', { x: x + LIP * S, y: y + LIP * S, width: pw - 2 * LIP * S, height: ph - 2 * LIP * S, rx: 2, class: 'body hit', 'data-i': i });
+    g += h('text', { x: x + pw / 2, y: y + ph / 2 - 2, 'text-anchor': 'middle', class: 'lbl' }, p.name);
+    g += h('text', { x: x + pw / 2, y: y + ph / 2 + 9, 'text-anchor': 'middle', class: 'sub' }, `${mm(ROW[i].d)} mm hondo ↕`);
+    g += dim(M.l - 14, y, M.l - 14, y + ph, dimLabel(p.w));
+  });
+  g += h('rect', { x: M.l, y: M.t, width: W, height: H, class: 'cav-line' });
+  g += dim(M.l - 112, M.t, M.l - 112, M.t + H, `franja ${dimLabel(CAVITY.l)}`);
+  g += dim(M.l, M.t - 16, M.l + W, M.t - 16, dimLabel(CAVITY.w));
+  const used = usedLen(), left = CAVITY.l - used;
+  if (left >= 0) {
+    if (mm(left) > 0) {
+      g += h('rect', { x: M.l, y: M.t + used * S, width: W, height: left * S, fill: 'var(--accent-soft)' });
+      if (left * S > 12) g += h('text', { x: M.l + W / 2, y: M.t + (used + left / 2) * S + 3, 'text-anchor': 'middle', class: 'sub' }, `sobra ${mm(left)} mm`);
+    }
+  } else {
+    g += h('rect', { x: M.l - 2, y: M.t + H, width: W + 4, height: -left * S, fill: 'none', stroke: '#c0392b', 'stroke-width': 1.5, 'stroke-dasharray': '3 2' });
+    g += h('text', { x: M.l + W / 2, y: M.t + H + (-left * S) / 2 + 3, 'text-anchor': 'middle', class: 'sub', fill: '#c0392b' }, `se pasa ${mm(-left)} mm`);
+  }
+  // section marker A–A, north–south through the row
+  const ax = M.l + W * 0.8;
+  g += h('path', { d: `M${ax},${M.t - 6}V${M.t + H + 6}`, class: 'dim', 'stroke-dasharray': '6 3' });
+  g += h('text', { x: ax + 4, y: M.t - 8, class: 'dimtxt' }, 'A');
+  g += h('text', { x: ax + 4, y: M.t + H + 16, class: 'dimtxt' }, 'A');
+  const bi = ROW.reduce((a, it, i) => (it.d >= ROW[a].d ? i : a), 0), by = M.t + (LAYOUT[bi].x + PANS[ROW[bi].p].w * 0.35) * S;
+  g += h('path', { d: `M${M.l - 8},${by}H${M.l + W + 8}`, class: 'dim', 'stroke-dasharray': '6 3' });
+  g += h('text', { x: M.l - 12, y: by + 3, 'text-anchor': 'end', class: 'dimtxt' }, 'B');
+  g += h('text', { x: M.l + W + 12, y: by + 3, class: 'dimtxt' }, 'B');
+  g += h('text', { x: M.l + W / 2, y: M.t - 30, 'text-anchor': 'middle', class: 'sub' }, 'N ↑');
+  g += h('text', { x: M.l + W / 2, y: M.t + H + 30, 'text-anchor': 'middle', class: 'sub' }, '↓ lado del invitado');
+  const svg = document.getElementById('plan');
+  svg.setAttribute('viewBox', `0 0 ${M.l + W + M.r} ${M.t + Math.max(H, used * S) + M.b}`);
+  svg.innerHTML = g;
+}
+
+// ---- cross sections: proud (lip on the counter) vs flush (lip in a rebate) ----
+const CLEAR = 0.125;   // clearance between pan body and cutout edge, each side
+const LIPT  = 0.125;   // lip thickness incl. rolled bead, assumed
+const geom = k => { const W = PANS[k].w, body = W - 2 * LIP, cut = body + 2 * CLEAR; return { W, body, cut }; };
+// rail material left between two adjacent body cutouts
+const RAIL = { proud: 2 * (LIP - CLEAR), flush: 2 * LIP };
+// centre-to-centre pitch of adjacent pans
+const PITCH = k => ({ proud: PANS[k].w, flush: PANS[k].w + 2 * CLEAR });
+const rowLen = m => ROW.reduce((a, it) => a + PITCH(it.p)[m], 0);
+
+function drawSection(id, flush, items, cavBase, sideLbl) {
+  const side = sideLbl ? 5 : 1.6, S = 18, M = { l: 100 + side * S, t: 60 }, y0 = M.t, topH = TOP * S;
+  const rebate = flush ? LIPT * S : 0;                // lip drops into a pocket this deep
+  const lipY = flush ? y0 : y0 - LIPT * S;            // top of lip
+  let g = '';
+  // pans, left to right
+  let x = 0;                                          // inches along the section
+  const cuts = [];                                    // body cutout spans, for counter drawing
+  for (const it of items) {
+    const W = it.W, body = W - 2 * LIP, cut = body + 2 * CLEAR, d = it.d;
+    const px = M.l + x * S, bodyX = px + LIP * S, bw = body * S, botY = y0 + d * S, taper = 0.2 * S;
+    cuts.push({ a: bodyX - CLEAR * S, b: bodyX + bw + CLEAR * S, lipA: px, lipB: px + W * S });
+    g += h('rect', { x: px, y: lipY, width: W * S, height: LIPT * S, class: 'pan' });
+    g += h('path', { d: `M${bodyX},${lipY + LIPT * S}L${bodyX + taper},${botY}L${bodyX + bw - taper},${botY}L${bodyX + bw},${lipY + LIPT * S}`, class: 'pan', fill: 'var(--cavity)' });
+    g += h('text', { x: px + W * S / 2, y: y0 + d * S / 2, 'text-anchor': 'middle', class: 'lbl' }, it.name);
+    if (W * S > 90) g += h('text', { x: px + W * S / 2, y: y0 + d * S / 2 + 11, 'text-anchor': 'middle', class: 'sub' }, `${mm(d)} mm hondo`);
+    // dims: outer lip above, body and cutout below the counter
+    const L = W * S > 150 ? dimLabel : mmL;        // narrow pans: mm only, so labels don't collide
+    g += dim(px, y0 - 34, px + W * S, y0 - 34, `labio ${L(W)}`);
+    g += dim(bodyX, y0 - 20, bodyX + bw, y0 - 20, `cuerpo ${L(body)}`);
+    g += dim(bodyX - CLEAR * S, y0 + 4.8 * S, bodyX + bw + CLEAR * S, y0 + 4.8 * S, `corte ${L(cut)}`, 16);
+    x += flush ? W + 2 * CLEAR : W;
+  }
+  const cavL = cavBase + (flush ? 2 * CLEAR * items.length : 0);   // a ras: la cavidad crece 6 mm por bandeja
+  const openW = Math.max(x, cavL) * S, left = cavL - x;
+  // countertop pieces between cutouts (drawn after pans so the rail reads on top)
+  const edges = [M.l - side * S, ...cuts.flatMap(c => [c.a, c.b]), M.l + openW + side * S];
+  for (let i = 0; i < edges.length; i += 2) {
+    const a = edges[i], b = edges[i + 1];
+    if (b - a <= 0) continue;
+    const isRail = i > 0 && i < edges.length - 2;
+    // in flush mode the top of the counter is rebated under the lips
+    const top = isRail || flush ? y0 + rebate : y0;
+    g += h('rect', { x: a, y: top, width: b - a, height: topH - (top - y0), class: isRail ? 'rail' : 'top' });
+    if (flush && !isRail) {  // un-rebated counter beyond the pocket
+      const outerA = i === 0 ? a : cuts[cuts.length - 1].lipB + CLEAR * S;
+      const outerB = i === 0 ? cuts[0].lipA - CLEAR * S : b;
+      g += h('rect', { x: outerA, y: y0, width: outerB - outerA, height: topH, class: 'top' });
+    }
+    if (isRail) g += dim(a, y0 + 5.6 * S, b, y0 + 5.6 * S, `riel ${dimLabel((b - a) / S)}`, 16);
+  }
+  // depth + counter dims
+  g += dim(M.l - side * S - 14, y0, M.l - side * S - 14, y0 + MAXD * S, `máx ${mmL(MAXD)}`);
+  if (sideLbl) { g += h('text', { x: M.l - side * S, y: y0 + topH + 12, class: 'sub' }, sideLbl[0]); g += h('text', { x: M.l + openW + side * S, y: y0 + topH + 12, 'text-anchor': 'end', class: 'sub' }, sideLbl[1]); }
+  g += dim(M.l + openW + side * S + 12, y0, M.l + openW + side * S + 12, y0 + topH, `mesón ${mmL(TOP)}`, 74);
+  g += dim(M.l, y0 - 48, M.l + cavL * S, y0 - 48, `franja reservada ${mm(cavL)} mm · no es hueco, es donde apoyan los labios`);
+  if (mm(left) > 0) g += dim(M.l + x * S, y0 + 4.8 * S, M.l + cavL * S, y0 + 4.8 * S, `sobra ${mm(left)} mm`, 16);
+  if (left < -0.01) g += h('text', { x: M.l + cavL * S, y: y0 - 6, 'text-anchor': 'end', class: 'sub', fill: '#c0392b' }, `la fila se pasa ${mm(-left)} mm`);
+  g += h('text', { x: M.l - side * S, y: y0 + 7.3 * S, class: 'sub' },
+    flush ? 'a ras: el labio queda enterrado, hace falta muesca o punto de izaje' : 'sobrepuesto: el labio sobresale 3 mm y sirve de agarre');
+  const svg = document.getElementById(id);
+  svg.setAttribute('viewBox', `0 0 ${M.l + openW + side * S + 90} ${y0 + 7.7 * S}`);
+  svg.innerHTML = g;
+}
+
+// 4× edge detail: one pan wall meeting the counter
+function drawDetail(id, flush) {
+  const S = 40, M = { l: 110, t: 50 }, y0 = M.t, rebate = flush ? LIPT * S : 0;
+  const lipY = flush ? y0 : y0 - LIPT * S;
+  const lipX = M.l, wallX = M.l + LIP * S, cutX = wallX - CLEAR * S, pocketX = flush ? lipX - CLEAR * S : cutX;
+  let g = '';
+  // counter: outer block up to pocket/cutout edge, then the rebated ledge under the lip (flush only)
+  g += h('rect', { x: M.l - 1.2 * S, y: y0, width: pocketX - (M.l - 1.2 * S), height: TOP * S, class: 'top' });
+  if (flush) g += h('rect', { x: pocketX, y: y0 + rebate, width: cutX - pocketX, height: TOP * S - rebate, class: 'top' });
+  // pan: lip (with bead) and wall
+  g += h('rect', { x: lipX, y: lipY, width: (LIP + 1.2) * S, height: LIPT * S, rx: 3, class: 'pan' });
+  g += h('circle', { cx: lipX + LIPT * S / 2, cy: lipY + LIPT * S / 2, r: LIPT * S / 2, class: 'pan' });
+  g += h('path', { d: `M${wallX},${lipY + LIPT * S}L${wallX + 0.06 * S},${y0 + 1.8 * S}`, class: 'pan', 'stroke-width': 3 });
+  g += h('text', { x: wallX + 0.35 * S, y: y0 + 1.2 * S, class: 'lbl' }, 'pared de la bandeja');
+  g += h('text', { x: M.l - 1.1 * S, y: y0 + 0.5 * S, class: 'lbl' }, 'mesón');
+  // dims
+  g += dim(lipX, y0 - 30, wallX, y0 - 30, `labio ${dimLabel(LIP)}`);
+  g += dim(cutX, y0 + 2.1 * S, wallX, y0 + 2.1 * S, `holgura ${mmL(CLEAR)}`, 18);
+  g += dim(lipX + (LIP + 1.2) * S + 8, lipY, lipX + (LIP + 1.2) * S + 8, lipY + LIPT * S, `espesor ${mmL(LIPT)}`, 62);
+  if (flush) {
+    g += dim(pocketX, y0 + 2.1 * S, cutX, y0 + 2.1 * S, `rebaje ${mmL(LIP + CLEAR)}`, 18);
+    g += h('text', { x: M.l - 1.2 * S, y: y0 + 2.7 * S, class: 'sub' }, `profundidad del rebaje = espesor del labio, ${mmL(LIPT)}`);
+    g += h('text', { x: M.l - 1.2 * S, y: y0 + 2.7 * S + 11, class: 'sub' }, 'el labio queda al nivel del mesón');
+  } else {
+    g += h('text', { x: M.l - 1.2 * S, y: y0 + 2.7 * S, class: 'sub' }, 'el labio apoya sobre el mesón');
+    g += h('text', { x: M.l - 1.2 * S, y: y0 + 2.7 * S + 11, class: 'sub' }, `apoyo por lado = labio − holgura = ${mmL(LIP - CLEAR)}`);
+  }
+  const svg = document.getElementById(id);
+  svg.setAttribute('viewBox', `0 0 ${M.l + 3.6 * S} ${y0 + 3.1 * S}`);
+  svg.innerHTML = g;
+}
+function render() {
+  layout();
+  drawPlan();
+  drawSection('section', MOUNT === 'flush', ROW.map(it => ({ name: PANS[it.p].name, W: PANS[it.p].w, d: it.d })), CAVITY.l, ['norte', 'sur']);
+  const deep = ROW.reduce((a, b) => (b.d >= a.d ? b : a));
+  drawSection('section-b', MOUNT === 'flush', [{ name: deep ? PANS[deep.p].name : '', W: PANS.third.l, d: deep.d }], CAVITY.w, ['butcher block ←', '→ estufa']);
+  drawDetail('detail', MOUNT === 'flush');
+  drawFit();
+  drawCards();
+  drawChosen();
+  document.getElementById('cav-len').value = CAV_MM;
+  document.querySelectorAll('[data-mount]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mount === MOUNT));
+  writeHash();
+  document.getElementById('mounts').innerHTML =
+  '<tr><th>Montaje</th><th>Riel entre bandejas</th><th>Paso 1/3 · 1/6 · 1/9</th><th>Largo de la fila (ejemplo)</th><th>Trabajo en el mesón</th><th>Agarre</th></tr>' +
+  [['Sobrepuesto', 'proud', 'cortes simples', 'el labio'], ['A ras', 'flush', 'cortes + rebaje alrededor de cada uno', 'muesca o punto de izaje']].map(([n, m, work, grip]) =>
+    `<tr><td>${n}</td><td>${dimLabel(RAIL[m])}</td><td>${['third','sixth','ninth'].map(k => mm(PITCH(k)[m])).join(' · ')} mm</td><td>${dimLabel(rowLen(m))}</td><td>${work}</td><td>${grip}</td></tr>`).join('');
+}
+
+// ---- combinaciones que caben en la cavidad ----
+function combos() {
+  const L = CAVITY.l, out = [];
+  const w = { third: PANS.third.w, sixth: PANS.sixth.w, ninth: PANS.ninth.w };
+  for (let a = 0; a * w.third <= L + 1e-9; a++)
+    for (let b = 0; a * w.third + b * w.sixth <= L + 1e-9; b++)
+      for (let c = 0; a * w.third + b * w.sixth + c * w.ninth <= L + 1e-9; c++) {
+        const n = a + b + c; if (!n) continue;
+        const len = a * w.third + b * w.sixth + c * w.ninth;
+        out.push({ a, b, c, n, len, left: L - len, flushOk: len + 2 * CLEAR * n <= L + 1e-9 });
+      }
+  return out.sort((p, q) => p.left - q.left || p.n - q.n);
+}
+const comboName = k => [k.a && `${k.a}×1/3`, k.b && `${k.b}×1/6`, k.c && `${k.c}×1/9`].filter(Boolean).join(' + ');
+const rowKey = () => ['third', 'sixth', 'ninth'].map(t => ROW.filter(it => it.p === t).length).join(',');
+function miniPlan(k) {
+  // barra horizontal N→S a proporción: bandejas como segmentos, sobrante sombreado
+  const L = CAVITY.l, seq = [...Array(k.a).fill('third'), ...Array(k.b).fill('sixth'), ...Array(k.c).fill('ninth')];
+  let x = 0, g = h('rect', { x: 0, y: 2, width: 100, height: 22, fill: 'var(--accent-soft)' });
+  for (const t of seq) { const w = PANS[t].w / L * 100; g += h('rect', { x: x + 0.4, y: 3, width: w - 0.8, height: 20, fill: 'var(--steel)', stroke: 'var(--steel-edge)', 'stroke-width': .6 }); x += w; }
+  return `<svg viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true">${g}</svg>`;
+}
+function drawCards() {
+  const cur = rowKey();
+  document.getElementById('cards').innerHTML = combos().slice(0, 16).map(k => {
+    const key = `${k.a},${k.b},${k.c}`, fits = MOUNT === 'proud' || k.flushOk;
+    return `<button type="button" class="card" data-combo="${key}" aria-pressed="${key === cur}">
+      <span class="name">${comboName(k)}</span>${miniPlan(k)}
+      <span class="meta"><span>sobran ${mm(k.left)} mm</span>${fits ? '' : `<span class="bad">a ras faltan ${mm(2 * CLEAR * k.n - k.left)}</span>`}</span>
+    </button>`;
+  }).join('') || '<p>Nada cabe en ese largo.</p>';
+}
+function drawChosen() {
+  const left = CAVITY.l - rowLen(MOUNT);        // a ras: cada bandeja pide 6 mm más
+  const wBad = MOUNT === 'flush' && fitGeom().needW > fitGeom().cavW + 1e-9;
+  const seq = ROW.map(it => `${PANS[it.p].name} (${mm(it.d)})`).join(' → ');
+  document.getElementById('chosen').innerHTML = `<b>Elegida:</b> ${seq} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · cavidad ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}${wBad ? ` · <span style="color:#c0392b">ancho: a ras pide ${mm(fitGeom().needW)} mm, no ${mm(fitGeom().cavW)}</span>` : ''}`;
+  document.getElementById('corte-lead').innerHTML = MOUNT === 'proud'
+    ? 'Montaje <b>sobrepuesto</b>: el labio apoya <em>sobre</em> el mesón. Cortes simples y el mismo labio sirve de agarre. Los términos están en el <a href="#glosario">glosario</a>.'
+    : 'Montaje <b>a ras</b>: el labio se hunde en un <a href="#glosario">rebaje</a> y queda al nivel del mesón. Mismos cortes, más un escalón alrededor de cada uno.';
+  document.getElementById('corte-note').innerHTML = MOUNT === 'proud'
+    ? `<p>Cada bandeja tiene tres anchos, de afuera hacia adentro: el <b>labio</b>, el <b>cuerpo</b> y el <b>corte</b>.</p><p>Las bandejas van labio con labio. El mesón que sobra entre dos cortes es el <b>riel</b>: dos veces (labio − holgura) = ${dimLabel(RAIL.proud)}.</p>`
+    : `<p>El rebaje es un segundo paso de mecanizado: ${mmL(LIP + CLEAR)} de ancho y ${mmL(LIPT)} de profundidad alrededor de cada corte.</p><p>Las bandejas ya no se tocan labio con labio. Cada una crece ${mmL(2 * CLEAR)} en paso y el riel se ensancha a ${dimLabel(RAIL.flush)}.</p><p><b>Ojo:</b> con el labio enterrado no hay de dónde agarrar. Cada bandeja necesita una muesca para el dedo o un punto de izaje.</p>`;
+}
+// ---- cavidad vs labios ----
+function fitGeom() {
+  const flush = MOUNT === 'flush', n = ROW.length;
+  const lipW = PANS.third.l;                                   // 175 mm, ancho de labio de las tres
+  const lipsL = usedLen();                                     // labios pegados
+  const pocketW = lipW + 2 * CLEAR, pocketL = lipsL + 2 * CLEAR * n;
+  const cutW = lipW - 2 * LIP + 2 * CLEAR;
+  return { flush, n, lipW, lipsL, pocketW, pocketL, cutW,
+    needW: flush ? pocketW : lipW, needL: flush ? pocketL : lipsL,
+    cavW: PANS.third.l, cavL: CAVITY.l };
+}
+function drawFit() {
+  const g0 = fitGeom(), S = 15, M = { l: 150, t: 70, r: 40, b: 60 };
+  const cavW = g0.cavW * S, cavL = g0.cavL * S;
+  // el dibujo va N→S de izquierda a derecha; ancho (E–O) vertical
+  let g = h('rect', { x: M.l, y: M.t, width: cavL, height: cavW, class: 'cav' });
+  let x = M.l, y = M.t;
+  if (g0.flush) {
+    // el rebaje se centra en la cavidad; si es más ancho, sobresale y se ve
+    y = M.t - CLEAR * S;
+    g += h('rect', { x: M.l, y, width: g0.pocketL * S, height: g0.pocketW * S, class: 'pocket' });
+    x = M.l + CLEAR * S; y = M.t;
+  }
+  for (const it of ROW) {
+    const W = PANS[it.p].w, body = W - 2 * LIP, cut = body + 2 * CLEAR;
+    g += h('rect', { x, y, width: W * S, height: g0.lipW * S, rx: 2, class: 'pan' });
+    g += h('rect', { x: x + (W - cut) / 2 * S, y: y + (g0.lipW - g0.cutW) / 2 * S, width: cut * S, height: g0.cutW * S, class: 'cut' });
+    g += h('text', { x: x + W * S / 2, y: y + g0.lipW * S / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, PANS[it.p].name);
+    g += dim(x, M.t + cavW + 14, x + W * S, M.t + cavW + 14, `labio ${mm(W)}`, 14);
+    g += dim(x + (W - cut) / 2 * S, M.t + cavW + 32, x + (W + cut) / 2 * S, M.t + cavW + 32, `corte ${mm(cut)}`, 14);
+    x += (W + (g0.flush ? 2 * CLEAR : 0)) * S;
+  }
+  g += h('rect', { x: M.l, y: M.t, width: cavL, height: cavW, class: 'cav-line' });
+  // dims de largo (arriba) y de ancho (izquierda)
+  g += dim(M.l, M.t - 40, M.l + cavL, M.t - 40, `franja reservada ${mm(g0.cavL)} mm`);
+  g += dim(M.l, M.t - 24, M.l + g0.needL * S, M.t - 24, `${g0.flush ? 'rebaje' : 'labios'} ${mm(g0.needL)} mm`);
+  g += dim(M.l - 14, M.t, M.l - 14, M.t + cavW, `franja ${mm(g0.cavW)}`);
+  g += dim(M.l - 44, M.t + (g0.lipW - g0.cutW) / 2 * S, M.l - 44, M.t + (g0.lipW + g0.cutW) / 2 * S, `corte ${mm(g0.cutW)}`);
+  if (g0.flush) g += dim(M.l - 74, M.t - CLEAR * S, M.l - 74, M.t - CLEAR * S + g0.pocketW * S, `rebaje ${mm(g0.pocketW)}`);
+  g += h('text', { x: M.l, y: M.t + cavW + 54, class: 'sub' }, 'N → S · la franja es una zona del mesón; el único hueco es el corte pasante');
+  const svg = document.getElementById('fit');
+  svg.setAttribute('viewBox', `0 0 ${M.l + Math.max(cavL, g0.needL * S) + M.r} ${M.t + cavW + M.b}`);
+  svg.innerHTML = g;
+
+  const okW = g0.needW <= g0.cavW + 1e-9, okL = g0.needL <= g0.cavL + 1e-9;
+  const what = g0.flush ? 'el rebaje pide' : 'los labios piden';
+  document.getElementById('verdict').innerHTML =
+    `<div class="${okW ? 'ok' : 'no'}"><b>Ancho:</b> ${what} ${mm(g0.needW)} mm, la franja tiene ${mm(g0.cavW)} mm → ${okW ? 'cabe' : `no cabe, faltan ${mm(g0.needW - g0.cavW)} mm. A ras la franja debe ser de ${mm(g0.pocketW)} mm de ancho.`}</div>` +
+    `<div class="${okL ? 'ok' : 'no'}"><b>Largo:</b> ${what} ${mm(g0.needL)} mm, la franja tiene ${mm(g0.cavL)} mm → ${okL ? `cabe, sobran ${mm(g0.cavL - g0.needL)} mm` : `no cabe, faltan ${mm(g0.needL - g0.cavL)} mm`}</div>`;
+
+  const rows = [
+    ['Franja reservada', g0.cavW, g0.cavL, 'zona del mesón donde apoyan los labios; no se corta'],
+    g0.flush ? ['Rebaje, 3 mm de hondo', g0.pocketW, g0.pocketL, 'un solo bolsillo para toda la fila, labio + 3 mm de aire por lado'] : null,
+    ...ROW.map((it, i) => ['Corte pasante ' + (i + 1) + ' · ' + PANS[it.p].name, g0.cutW, PANS[it.p].w - 2 * LIP + 2 * CLEAR, 'cuerpo + 3 mm de aire por lado']),
+    ['Riel entre cortes', null, RAIL[MOUNT], `mesón que queda entre dos cortes${g0.flush ? ', 3 mm por debajo de la superficie' : ''}`],
+  ].filter(Boolean);
+  document.getElementById('cuts').innerHTML = '<tr><th>Elemento</th><th>Ancho E–O</th><th>Largo N–S</th><th>Nota</th></tr>' +
+    rows.map(([n, w, l, note]) => `<tr><td>${n}</td><td>${w == null ? '—' : mm(w) + ' mm'}</td><td>${mm(l)} mm</td><td style="white-space:normal">${note}</td></tr>`).join('');
+}
+
+// estado en la URL para que el enlace lleve la configuración
+function writeHash() { history.replaceState(null, '', `#L=${CAV_MM}&m=${MOUNT}&r=${ROW.map(it => `${it.p}:${it.d}`).join(',')}`); }
+function readHash() {
+  const q = new URLSearchParams(location.hash.slice(1));
+  const L = +q.get('L'); if (L >= 100 && L <= 3000) CAV_MM = L;
+  if (['proud', 'flush'].includes(q.get('m'))) MOUNT = q.get('m');
+  const r = (q.get('r') || '').split(',').map(x => x.split(':')).filter(([p, d]) => PANS[p] && [2.5, 4].includes(+d)).map(([p, d]) => ({ p, d: +d }));
+  if (r.length) ROW = r;
+}
+
+document.getElementById('cav-len').addEventListener('change', e => {
+  const v = Math.round(+e.target.value); if (!(v >= 100 && v <= 3000)) { e.target.value = CAV_MM; return; }
+  CAV_MM = v; layout();
+  if (usedLen() > CAVITY.l + 1e-9) {              // la fila ya no cabe: tomar la mejor combinación
+    const k = combos()[0];
+    ROW = k ? [...Array(k.a).fill('third'), ...Array(k.b).fill('sixth'), ...Array(k.c).fill('ninth')].map(p => ({ p, d: MAXD })) : DEFAULT_ROW();
+  }
+  render();
+});
+document.getElementById('ctl').addEventListener('click', e => {
+  const b = e.target.closest('button[data-mount]'); if (!b) return;
+  MOUNT = b.dataset.mount; render();
+});
+document.getElementById('cards').addEventListener('click', e => {
+  const b = e.target.closest('button[data-combo]'); if (!b) return;
+  const [a, bb, c] = b.dataset.combo.split(',').map(Number);
+  ROW = [...Array(a).fill('third'), ...Array(bb).fill('sixth'), ...Array(c).fill('ninth')].map(p => ({ p, d: MAXD }));
+  render();
+});
+document.getElementById('plan').addEventListener('click', e => {
+  const r = e.target.closest('[data-i]'); if (!r) return;
+  const it = ROW[+r.dataset.i]; it.d = it.d === MAXD ? 2.5 : MAXD; render();
+});
+document.getElementById('flip').addEventListener('click', () => { ROW.reverse(); render(); });
+readHash();
+render();
+
+// tabla de bandejas
+document.getElementById('sizes').innerHTML =
+  '<tr><th>Bandeja</th><th>Lado corto (va este–oeste)</th><th>Lado largo (ocupa norte–sur)</th><th>Corte norte–sur</th><th>Hondos usuales</th></tr>' +
+  Object.values(PANS).map(p => `<tr><td>${p.name}</td><td>${dimLabel(p.l)}</td><td>${dimLabel(p.w)}</td><td>${dimLabel(p.w - 2 * LIP + 2 * CLEAR)}</td><td>64 · 102 mm</td></tr>`).join('');
+
+// supuestos
+document.getElementById('assume').innerHTML = [
+  ['Ceja del labio', LIP, 'el brief dice entre 10 y 13 mm; se dibuja el máximo'],
+  ['Espesor del labio', LIPT, 'incluye el rollo del borde'],
+  ['Holgura por lado', CLEAR, 'aire entre cuerpo y corte'],
+  ['Espesor del mesón', TOP, 'según el mesón que se elija'],
+].map(([n, v, why]) => `<li><b>${n}: ${dimLabel(v)}</b> — ${why}.</li>`).join('') +
+  `<li><b>Largo de la cavidad: ${CAV_MM} mm</b> — valor de trabajo, pendiente del plano de la barra. 483 mm es el largo entre 450 y 520 con más combinaciones sobrepuestas sin desperdicio: 1/3 + 1/6 y 1/6 + 3 × 1/9 exactos, 3 × 1/6 con 7 mm. A ras pediría 496–500 mm.</li>` +
+  '<li><b>Fondo libre bajo la bandeja más honda</b> — para poder sacarla.</li>';
+
+// rellenos en el texto
+const fill = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+fill('t-lip', mmL(LIP)); fill('t-clear', mmL(CLEAR)); fill('t-lipt', mmL(LIPT));
+fill('t-rebate', mmL(LIP + CLEAR)); fill('t-grow', mmL(2 * CLEAR));
+fill('t-rail-proud', dimLabel(RAIL.proud)); fill('t-rail-flush', dimLabel(RAIL.flush));
+</script>
