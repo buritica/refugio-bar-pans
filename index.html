@@ -226,7 +226,7 @@
     <div class="ctl" id="ctl">
       <div class="ctl-row"><span class="ctl-lbl">Franja</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="975"> mm</label><span class="ctl-hint">× <span id="cav-w">162</span> mm · estimado</span></div>
       <div class="ctl-row"><span class="ctl-lbl">Montaje</span><div class="seg" role="group" aria-label="Montaje"><button type="button" data-mount="proud" aria-pressed="true">Sobrepuesto</button><button type="button" data-mount="flush" aria-pressed="false">A ras</button></div></div>
-      <div class="ctl-row"><span class="ctl-lbl">Estado</span><div class="seg" role="group" aria-label="Estado"><button type="button" data-state="open" aria-pressed="true">Abierta</button><button type="button" data-state="closed" aria-pressed="false">Cerrada</button></div><span class="ctl-hint">cerrada: una tapa ciega de acero con el mismo labio ocupa toda la franja y la barra vuelve a ser una superficie continua</span></div>
+      <div class="ctl-row"><span class="ctl-lbl">Estado</span><div class="seg" role="group" aria-label="Estado"><button type="button" data-state="open" aria-pressed="true">Abierta</button><button type="button" data-state="closed" aria-pressed="false">Cerrada</button></div><span class="ctl-hint">cerrada: las bandejas salen y una tapa ciega de acero con el mismo labio ocupa la franja entera. Es una cosa o la otra, nunca las dos</span></div>
     </div>
     <div class="chosen" id="chosen"></div>
     <div class="sheet"><svg id="plan"></svg></div>
@@ -251,9 +251,9 @@
     <p>Dos maneras de que el labio encuentre el mesón. El selector de arriba cambia entre las dos; aquí van lado a lado.</p>
     <div class="sheet tbl"><table id="mounts"></table></div>
     <h3>La tapa ciega</h3>
-    <p>Cuando la barra no está en uso, una sola pieza de acero con el <b>mismo labio de 13 mm</b> que las bandejas ocupa toda la franja, y una falda de 20 mm entra en cada cavidad para que no se mueva. Se pone y se quita como una bandeja más. El selector Abierta / Cerrada de arriba la muestra en planta y en los cortes.</p>
+    <p>Cuando la barra no está en uso, las bandejas <b>salen</b> y en su lugar va una sola pieza de acero con el <b>mismo labio de 13 mm</b>, que ocupa la franja entera; una falda de 20 mm entra en cada cavidad para que no se mueva. No va encima de las bandejas: o están las bandejas o está la tapa. El selector Abierta / Cerrada de arriba muestra los dos estados en planta y en los cortes.</p>
     <p>Sirve con los dos montajes, porque se apoya igual que las bandejas. <b>Sobrepuesta</b>, queda 3 mm por encima del mesón: una franja de acero continua con un escalón mínimo en el borde. <b>A ras</b>, baja al rebaje y el mesón vuelve a ser un solo plano; es el mejor argumento a favor del montaje a ras.</p>
-    <p>Dos cosas que decide: cómo se levanta (a ras no hay labio a la vista, así que pide una muesca o una ventosa, igual que las bandejas) y dónde se guarda cuando la barra está abierta: mide <span id="t-tapa"></span> y no cabe en un cajón cualquiera.</p>
+    <p>Dos cosas que decide: cómo se levanta (a ras no hay labio a la vista, así que pide una muesca o una ventosa, igual que las bandejas) y dónde se guarda lo que no está puesto. Con la barra abierta, la tapa: mide <span id="t-tapa"></span> y no cabe en un cajón cualquiera. Con la barra cerrada, las bandejas.</p>
   </section>
 
   <section id="corte">
@@ -307,7 +307,7 @@
       <div><dt>Holgura</dt><dd>Aire entre cuerpo y cavidad, <span id="t-clear"></span> por lado.</dd></div>
       <div><dt>Corte</dt><dd>Lo mismo que cavidad, dicho desde la carpintería.</dd></div>
       <div><dt>Riel</dt><dd>Mesón que queda entre dos cavidades. Carga dos labios.</dd></div>
-      <div><dt>Tapa ciega</dt><dd>Pieza de acero del tamaño de la franja, con el mismo labio que las bandejas y una falda en cada cavidad. Cierra la barra cuando no se usa. Va con los dos montajes.</dd></div>
+      <div><dt>Tapa ciega</dt><dd>Pieza de acero del tamaño de la franja, con el mismo labio que las bandejas y una falda en cada cavidad. Reemplaza a las bandejas cuando la barra no se usa; nunca va encima de ellas. Va con los dos montajes.</dd></div>
       <div><dt>Rebaje</dt><dd>Escalón de 3 mm alrededor de la cavidad para que el labio quede a ras.</dd></div>
     </dl>
   </section>
@@ -662,7 +662,7 @@ function drawCards() {
 function drawChosen() {
   const left = CAVITY.l - rowLen(MOUNT);        // a ras: cada bandeja pide 6 mm más
   const seq = ROW.map(it => `${PANS[it.p].name} (${mm(it.d)})`).join(' → ');
-  document.getElementById('chosen').innerHTML = `<b>Probando:</b> ${seq}${STATE === 'closed' ? ' · <b>cerrada con tapa ciega</b>' : ''} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · ${Z.word} ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}`;
+  document.getElementById('chosen').innerHTML = `<b>Probando:</b> ${seq}${STATE === 'closed' ? ' · <b>cerrada: bandejas fuera, tapa ciega puesta</b>' : ''} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · ${Z.word} ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}`;
   document.getElementById('corte-lead').innerHTML = MOUNT === 'proud'
     ? '<b>Sobrepuesto:</b> el labio apoyaría sobre el mesón y serviría de agarre. Términos en el <a href="#glosario">glosario</a>.'
     : '<b>A ras:</b> el labio bajaría a un <a href="#glosario">rebaje</a> y quedaría al nivel del mesón.';
