@@ -75,12 +75,11 @@
   .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   #print { display: none; }
   @media print {
-    @page { size: A4 portrait; margin: 0; }
     body { background: #fff; padding: 0; }
     .wrap { display: none !important; }
     #print { display: block !important; }
-    .pg { width: 210mm; height: 297mm; page-break-after: always; overflow: hidden; }
-    .pg svg { width: 210mm; height: 297mm; display: block; }
+    .pg { page-break-after: always; overflow: hidden; }
+    .pg svg { display: block; }
   }
   .basin { fill: none; stroke: var(--steel-edge); stroke-width: 3; }
   .ice { fill: var(--accent-soft); }
@@ -254,7 +253,7 @@
     <div id="verdict" class="verdict"></div>
     <h3>Lo que habría que cortar</h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
-    <div class="ctl-row"><button type="button" id="print-btn" class="btn">Imprimir plantilla 1:1</button><span class="ctl-hint">A4 a escala real, sin ajustar a la página. Franja, cavidad y juntas, para pegar sobre el mesón.</span></div>
+    <div class="ctl-row"><span class="ctl-lbl">Plantilla 1:1</span><button type="button" class="btn" data-paper="carta">Carta</button><button type="button" class="btn" data-paper="a4">A4</button><button type="button" class="btn" data-paper="plotter">Plóter, una hoja</button><span class="ctl-hint">escala real, sin ajustar a la página. Carta y A4 van en hojas con solape; el plóter imprime la franja entera de una vez.</span></div>
   </section>
 
   <section id="comparacion">
@@ -835,10 +834,14 @@ document.getElementById('pozo-ctl').addEventListener('click', e => {
 
 
 // ---- plantilla 1:1 en A4: franja y cavidades de la fila, en hojas con solape ----
-function buildPrint() {
-  const PW = 210, PH = 297, MG = 10, OV = 10;                        // hoja, margen, solape (mm)
+const PAPERS = { carta: { PW: 215.9, PH: 279.4, name: 'carta' }, a4: { PW: 210, PH: 297, name: 'A4' } };
+function buildPrint(paper = 'carta') {
+  const MG = 10, OV = 10;                                              // margen, solape (mm)
+  const fwAll = mm(CAVITY.w), flAll = mm(CAVITY.l);
+  const plot = paper === 'plotter';
+  const PW = plot ? fwAll + 2 * MG + 60 : PAPERS[paper].PW, PH = plot ? flAll + 2 * MG + 40 : PAPERS[paper].PH;   // plóter: una hoja a la medida de la franja
   const fw = mm(CAVITY.w), fl = mm(CAVITY.l);                          // franja
-  const usable = PH - 2 * MG, step = usable - OV, pages = Math.max(1, Math.ceil((fl + 20 - OV) / step));
+  const usable = PH - 2 * MG, step = usable - OV, pages = plot ? 1 : Math.max(1, Math.ceil((fl + 20 - OV) / step));
   const ox = (PW - fw) / 2;                                            // franja centrada en la hoja
   const zoneLbl = Z.orient === 'ns' ? ['NORTE · lado del invitado', 'SUR · lado de quien cocina'] : ['OESTE', 'ESTE'];
   const cavs = [];                                                     // cavidades en mm, a lo largo de la franja
@@ -869,12 +872,14 @@ function buildPrint() {
     for (const [px, py] of [[MG, MG], [PW - MG, MG], [MG, PH - MG], [PW - MG, PH - MG]]) d += `<path d="M${px - 4},${py}h8M${px},${py - 4}v8" stroke="#1f2428" stroke-width="0.25"/>`;
     // barra de control de escala + pie
     d += `<path d="M${MG},${PH - 5}h100" stroke="#1f2428" stroke-width="0.6"/><path d="M${MG},${PH - 7}v4M${MG + 100},${PH - 7}v4" stroke="#1f2428" stroke-width="0.4"/><text x="${MG + 103}" y="${PH - 4}" font-size="3" font-family="IBM Plex Mono, monospace">= 100 mm si está al 100 %</text>`;
-    d += `<text x="${PW - MG}" y="${PH - 9.5}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">1:1 · ${ZONE} · ${ROW.map(it => PANS[it.p].name).join(' + ')} · hoja ${k + 1}/${pages}</text>`;
-    html += `<div class="pg"><svg viewBox="0 0 ${PW} ${PH}" xmlns="http://www.w3.org/2000/svg"><defs>${g}</defs>${d}</svg></div>`;
+    d += `<text x="${PW - MG}" y="${PH - 9.5}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">1:1 · ${ZONE} · ${ROW.map(it => PANS[it.p].name).join(' + ')} · ${plot ? 'plóter, una hoja' : `${PAPERS[paper].name} · hoja ${k + 1}/${pages}`}</text>`;
+    html += `<div class="pg" style="width:${PW}mm;height:${PH}mm"><svg viewBox="0 0 ${PW} ${PH}" style="width:${PW}mm;height:${PH}mm" xmlns="http://www.w3.org/2000/svg"><defs>${g}</defs>${d}</svg></div>`;
   }
+  let st = document.getElementById('page-size'); if (!st) { st = document.createElement('style'); st.id = 'page-size'; document.head.appendChild(st); }
+  st.textContent = `@page { size: ${PW}mm ${PH}mm; margin: 0; }`;
   const el = document.getElementById('print'); el.innerHTML = html; el.hidden = false;
 }
-document.getElementById('print-btn').addEventListener('click', () => { buildPrint(); window.print(); });
+document.querySelectorAll('[data-paper]').forEach(b => b.addEventListener('click', () => { buildPrint(b.dataset.paper); window.print(); }));
 
 
 // ---- figura de términos: un corte a través de una bandeja con cada palabra en su sitio ----
