@@ -69,6 +69,19 @@
   .legend .l-pocket::before { background: var(--accent-soft); border-style: dotted; border-color: var(--accent); }
   .legend .l-cut::before { background: var(--paper); border-style: solid; border-color: var(--ink); }
   .cut { fill: var(--paper); stroke: var(--ink); stroke-width: 1; }
+  .plate { fill: var(--steel); stroke: var(--steel-edge); stroke-width: 1.4; }
+  .btn { font: inherit; font-family: var(--mono); font-size: .8rem; color: var(--accent); background: var(--paper); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 2px; cursor: pointer; }
+  .btn:hover { background: var(--accent-soft); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #print { display: none; }
+  @media print {
+    @page { size: A4 portrait; margin: 0; }
+    body { background: #fff; padding: 0; }
+    .wrap { display: none !important; }
+    #print { display: block !important; }
+    .pg { width: 210mm; height: 297mm; page-break-after: always; overflow: hidden; }
+    .pg svg { width: 210mm; height: 297mm; display: block; }
+  }
   .basin { fill: none; stroke: var(--steel-edge); stroke-width: 3; }
   .ice { fill: var(--accent-soft); }
   .water { fill: #f3d9c4; }
@@ -213,6 +226,7 @@
     <div class="ctl" id="ctl">
       <div class="ctl-row"><span class="ctl-lbl">Franja</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="975"> mm</label><span class="ctl-hint">× <span id="cav-w">162</span> mm · estimado</span></div>
       <div class="ctl-row"><span class="ctl-lbl">Montaje</span><div class="seg" role="group" aria-label="Montaje"><button type="button" data-mount="proud" aria-pressed="true">Sobrepuesto</button><button type="button" data-mount="flush" aria-pressed="false">A ras</button></div></div>
+      <div class="ctl-row"><span class="ctl-lbl">Estado</span><div class="seg" role="group" aria-label="Estado"><button type="button" data-state="open" aria-pressed="true">Abierta</button><button type="button" data-state="closed" aria-pressed="false">Cerrada</button></div><span class="ctl-hint">cerrada: una tapa ciega de acero con el mismo labio ocupa toda la franja y la barra vuelve a ser una superficie continua</span></div>
     </div>
     <div class="chosen" id="chosen"></div>
     <div class="sheet"><svg id="plan"></svg></div>
@@ -229,6 +243,7 @@
     <div id="verdict" class="verdict"></div>
     <h3>Lo que habría que cortar</h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
+    <div class="ctl-row"><button type="button" id="print-btn" class="btn">Imprimir plantilla 1:1</button><span class="ctl-hint">A4, escala real, sin ajustar a la página. Franja y cavidades de la fila de arriba, en hojas para pegar sobre el mesón.</span></div>
   </section>
 
   <section id="comparacion">
@@ -293,6 +308,7 @@
   </section>
 
 </div>
+<div id="print" hidden></div>
 
 <script>
 // ---- data (all inches; edit here) ----
@@ -323,6 +339,7 @@ const ZONES = {
 };
 let ZONE = 'barra', Z, PANS, KEYS, STRIP, DEFAULT_ROW, ROW, CAV_MM;
 let MOUNT = 'proud';                            // 'proud' | 'flush'
+let STATE = 'open';                             // 'open' | 'closed' (tapa ciega)
 const SAVED = {};                               // estado por zona al cambiar de una a otra
 function applyZone(z) {
   if (Z) SAVED[ZONE] = { ROW, CAV_MM, MOUNT };
@@ -374,7 +391,12 @@ function drawPlanNS() {
   g += h('rect', { x: M.l + W + 8, y: M.t - 10, width: CTX, height: H + 20, fill: 'var(--cavity)', stroke: 'var(--line)' });
   g += h('text', { x: M.l + W + 8 + CTX / 2, y: M.t + H / 2, 'text-anchor': 'middle', class: 'lbl' }, 'estufa');
   g += h('rect', { x: M.l, y: M.t, width: W, height: H, class: 'cav' });
-  LAYOUT.forEach((it, i) => {
+  if (STATE === 'closed') {
+    g += h('rect', { x: M.l, y: M.t, width: W, height: H, rx: 3, class: 'plate' });
+    g += h('rect', { x: M.l + LIP * S, y: M.t + LIP * S, width: W - 2 * LIP * S, height: H - 2 * LIP * S, rx: 2, fill: 'none', stroke: 'var(--steel-edge)', 'stroke-dasharray': '3 3' });
+    g += h('text', { x: M.l + W / 2, y: M.t + H / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, 'tapa ciega');
+  }
+  (STATE === 'closed' ? [] : LAYOUT).forEach((it, i) => {
     const p = PANS[it.p];
     const x = M.l, y = M.t + it.x * S, pw = p.l * S, ph = p.w * S;   // 6 7/8" side runs east–west
     g += h('rect', { x, y, width: pw, height: ph, rx: 3, class: 'pan hit', 'data-i': i });
@@ -422,7 +444,12 @@ function drawPlanEW() {
   g += h('rect', { x: M.l - 10, y: M.t + H + 40, width: W + 20, height: CTX, class: 'top' });
   g += h('text', { x: M.l + W / 2, y: M.t + H + 40 + CTX / 2, 'text-anchor': 'middle', class: 'lbl' }, 'mesón isla · sur');
   g += h('rect', { x: M.l, y: M.t, width: W, height: H, class: 'cav' });
-  LAYOUT.forEach((it, i) => {
+  if (STATE === 'closed') {
+    g += h('rect', { x: M.l, y: M.t, width: W, height: H, rx: 3, class: 'plate' });
+    g += h('rect', { x: M.l + LIP * S, y: M.t + LIP * S, width: W - 2 * LIP * S, height: H - 2 * LIP * S, rx: 2, fill: 'none', stroke: 'var(--steel-edge)', 'stroke-dasharray': '3 3' });
+    g += h('text', { x: M.l + W / 2, y: M.t + H / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, 'tapa ciega');
+  }
+  (STATE === 'closed' ? [] : LAYOUT).forEach((it, i) => {
     const p = PANS[it.p];
     const x = M.l + it.x * S, y = M.t + (CAVITY.w - p.l) / 2 * S, pw = p.w * S, ph = p.l * S;
     g += h('rect', { x, y, width: pw, height: ph, rx: 3, class: 'pan hit', 'data-i': i });
@@ -480,14 +507,17 @@ function drawSection(id, flush, items, cavBase, sideLbl) {
   // pans, left to right
   let x = 0;                                          // inches along the section
   const cuts = [];                                    // body cutout spans, for counter drawing
+  const closed = STATE === 'closed';
   for (const it of items) {
     const W = it.W, body = W - 2 * LIP, cut = body + 2 * CLEAR, d = it.d;
     const px = M.l + x * S, bodyX = px + LIP * S, bw = body * S, botY = y0 + d * S, taper = 0.2 * S;
     cuts.push({ a: bodyX - CLEAR * S, b: bodyX + bw + CLEAR * S, lipA: px, lipB: px + W * S });
-    g += h('rect', { x: px, y: lipY, width: W * S, height: LIPT * S, class: 'pan' });
-    g += h('path', { d: `M${bodyX},${lipY + LIPT * S}L${bodyX + taper},${botY}L${bodyX + bw - taper},${botY}L${bodyX + bw},${lipY + LIPT * S}`, class: 'pan', fill: 'var(--cavity)' });
-    g += h('text', { x: px + W * S / 2, y: y0 + d * S / 2, 'text-anchor': 'middle', class: 'lbl' }, it.name);
-    if (W * S > 90) g += h('text', { x: px + W * S / 2, y: y0 + d * S / 2 + 11, 'text-anchor': 'middle', class: 'sub' }, `${mm(d)} mm hondo`);
+    if (!closed) {
+      g += h('rect', { x: px, y: lipY, width: W * S, height: LIPT * S, class: 'pan' });
+      g += h('path', { d: `M${bodyX},${lipY + LIPT * S}L${bodyX + taper},${botY}L${bodyX + bw - taper},${botY}L${bodyX + bw},${lipY + LIPT * S}`, class: 'pan', fill: 'var(--cavity)' });
+      g += h('text', { x: px + W * S / 2, y: y0 + d * S / 2, 'text-anchor': 'middle', class: 'lbl' }, it.name);
+      if (W * S > 90) g += h('text', { x: px + W * S / 2, y: y0 + d * S / 2 + 11, 'text-anchor': 'middle', class: 'sub' }, `${mm(d)} mm hondo`);
+    }
     // dims: outer lip above, body and cutout below the counter
     const L = W * S > 150 ? dimLabel : mmL;        // narrow pans: mm only, so labels don't collide
     g += dim(px, y0 - 34, px + W * S, y0 - 34, `labio ${L(W)}`);
@@ -496,6 +526,11 @@ function drawSection(id, flush, items, cavBase, sideLbl) {
     x += flush ? W + 2 * CLEAR : W;
   }
   const cavL = cavBase + (flush ? 2 * CLEAR * items.length : 0);   // a ras: la franja crece 6 mm por bandeja
+  if (closed) {   // tapa ciega: una sola pieza con labio sobre toda la franja y una falda que entra en las cavidades
+    g += h('rect', { x: M.l, y: lipY, width: cavL * S, height: LIPT * S, class: 'plate' });
+    for (const c of cuts) g += h('rect', { x: c.a + CLEAR * S, y: lipY + LIPT * S, width: c.b - c.a - 2 * CLEAR * S, height: 0.8 * S, class: 'plate' });
+    g += h('text', { x: M.l + cavL * S / 2, y: y0 + 2 * S, 'text-anchor': 'middle', class: 'lbl' }, cavL * S > 320 ? 'tapa ciega · mismo labio, falda de 20 mm en cada cavidad' : 'tapa ciega');
+  }
   const openW = Math.max(x, cavL) * S, left = cavL - x;
   // countertop pieces between cutouts (drawn after pans so the rail reads on top)
   const edges = [M.l - side * S, ...cuts.flatMap(c => [c.a, c.b]), M.l + openW + side * S];
@@ -577,6 +612,7 @@ function render() {
   document.getElementById('cav-len').value = CAV_MM;
   document.getElementById('cav-w').textContent = mm(CAVITY.w);
   document.querySelectorAll('[data-mount]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mount === MOUNT));
+  document.querySelectorAll('[data-state]').forEach(b => b.setAttribute('aria-pressed', b.dataset.state === STATE));
   writeHash();
   document.getElementById('mounts').innerHTML =
   `<tr><th>Montaje</th><th>Riel entre bandejas</th><th>Paso ${KEYS.map(k => PANS[k].name).join(' · ')}</th><th>Largo de la fila (ejemplo)</th><th>Mesón</th><th>Agarre</th></tr>` +
@@ -620,7 +656,7 @@ function drawCards() {
 function drawChosen() {
   const left = CAVITY.l - rowLen(MOUNT);        // a ras: cada bandeja pide 6 mm más
   const seq = ROW.map(it => `${PANS[it.p].name} (${mm(it.d)})`).join(' → ');
-  document.getElementById('chosen').innerHTML = `<b>Probando:</b> ${seq} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · ${Z.word} ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}`;
+  document.getElementById('chosen').innerHTML = `<b>Probando:</b> ${seq}${STATE === 'closed' ? ' · <b>cerrada con tapa ciega</b>' : ''} · ${MOUNT === 'proud' ? 'sobrepuesto' : 'a ras'} · ${Z.word} ${CAV_MM} mm · ${left >= -1e-9 ? `sobran ${mm(left)} mm` : `<span style="color:#c0392b">no cabe a ras, faltan ${mm(-left)} mm</span>`}`;
   document.getElementById('corte-lead').innerHTML = MOUNT === 'proud'
     ? '<b>Sobrepuesto:</b> el labio apoyaría sobre el mesón y serviría de agarre. Términos en el <a href="#glosario">glosario</a>.'
     : '<b>A ras:</b> el labio bajaría a un <a href="#glosario">rebaje</a> y quedaría al nivel del mesón.';
@@ -685,6 +721,7 @@ function drawFit() {
     g0.flush ? ['Rebaje, 3 mm de hondo', g0.pocketW, g0.pocketL, 'un bolsillo para toda la fila'] : null,
     ...ROW.map((it, i) => ['Cavidad ' + (i + 1) + ' · ' + PANS[it.p].name, PANS[it.p].l - 2 * LIP + 2 * CLEAR, PANS[it.p].w - 2 * LIP + 2 * CLEAR, 'cuerpo + 3 mm por lado']),
     ['Riel entre cavidades', null, RAIL[MOUNT], `${g0.flush ? '3 mm bajo la superficie' : ''}`],
+    ['Tapa ciega (estado cerrada)', STRIP, CAVITY.l - (g0.flush ? 2 * CLEAR * ROW.length : 0), 'una pieza con el mismo labio de 13 mm y una falda de 20 mm en cada cavidad; misma lámina que las bandejas'],
   ].filter(Boolean);
   document.getElementById('cuts').innerHTML = `<tr>${Z.cutHead}</tr>` +
     rows.map(([n, w, l, note]) => `<tr><td>${n}</td><td>${w == null ? '—' : mm(w) + ' mm'}</td><td>${mm(l)} mm</td><td style="white-space:normal">${note}</td></tr>`).join('');
@@ -754,8 +791,48 @@ document.getElementById('pozo-ctl').addEventListener('click', e => {
   drawPozo(); writeHash();
 });
 
+
+// ---- plantilla 1:1 en A4: franja y cavidades de la fila, en hojas con solape ----
+function buildPrint() {
+  const PW = 210, PH = 297, MG = 10, OV = 10;                        // hoja, margen, solape (mm)
+  const fw = mm(CAVITY.w), fl = mm(CAVITY.l);                          // franja
+  const usable = PH - 2 * MG, step = usable - OV, pages = Math.max(1, Math.ceil((fl + 20 - OV) / step));
+  const ox = (PW - fw) / 2;                                            // franja centrada en la hoja
+  const zoneLbl = Z.orient === 'ns' ? ['NORTE · lado del invitado', 'SUR · lado de quien cocina'] : ['OESTE', 'ESTE'];
+  const cavs = [];                                                     // cavidades en mm, a lo largo de la franja
+  let x = 0;
+  for (const it of ROW) { const W = PANS[it.p].w; cavs.push({ a: mm(x + LIP - CLEAR), len: mm(W - 2 * LIP + 2 * CLEAR), name: PANS[it.p].name }); x += W + (MOUNT === 'flush' ? 2 * CLEAR : 0); }
+  const cavW = mm(STRIP - 2 * LIP + 2 * CLEAR), cx = ox + (fw - cavW) / 2;
+  let html = '';
+  for (let k = 0; k < pages; k++) {
+    const oy = MG + 10 - k * step;                                     // origen de la franja en esta hoja
+    let g = `<clipPath id="clip${k}"><rect x="${MG}" y="${MG}" width="${PW - 2 * MG}" height="${usable}"/></clipPath>`;
+    let d = `<g clip-path="url(#clip${k})">`;
+    d += `<rect x="${ox}" y="${oy}" width="${fw}" height="${fl}" fill="none" stroke="#2c6fb3" stroke-width="0.5" stroke-dasharray="4 2"/>`;
+    for (const c of cavs) {
+      d += `<rect x="${cx}" y="${oy + c.a}" width="${cavW}" height="${c.len}" fill="none" stroke="#1f2428" stroke-width="0.6"/>`;
+      d += `<text x="${cx + cavW / 2}" y="${oy + c.a + c.len / 2}" font-size="6" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#1f2428">${c.name} · cavidad ${cavW} × ${c.len}</text>`;
+      d += `<path d="M${cx},${oy + c.a}L${cx + cavW},${oy + c.a + c.len}M${cx + cavW},${oy + c.a}L${cx},${oy + c.a + c.len}" stroke="#1f2428" stroke-width="0.2"/>`;
+    }
+    // eje de la franja y extremos
+    d += `<text x="${ox + fw / 2}" y="${oy - 3}" font-size="4" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">${zoneLbl[0]} · franja ${fw} × ${fl} mm</text>`;
+    d += `<text x="${ox + fw / 2}" y="${oy + fl + 6}" font-size="4" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">${zoneLbl[1]}</text>`;
+    d += `</g>`;
+    // marcas de solape y registro
+    if (k > 0) d += `<path d="M${MG},${MG + OV}H${PW - MG}" stroke="#c0392b" stroke-width="0.3" stroke-dasharray="2 1"/><text x="${PW - MG}" y="${MG + OV - 1.5}" font-size="3.5" text-anchor="end" font-family="IBM Plex Mono, monospace" fill="#c0392b">solape: esta línea coincide con el borde inferior de la hoja ${k}</text>`;
+    if (k < pages - 1) d += `<path d="M${MG},${MG + usable}H${PW - MG}" stroke="#c0392b" stroke-width="0.3"/><text x="${MG}" y="${MG + usable - 1.5}" font-size="3.5" font-family="IBM Plex Mono, monospace" fill="#c0392b">corte aquí y pega la hoja ${k + 2} sobre los 10 mm de solape</text>`;
+    for (const [px, py] of [[MG, MG], [PW - MG, MG], [MG, PH - MG], [PW - MG, PH - MG]]) d += `<path d="M${px - 4},${py}h8M${px},${py - 4}v8" stroke="#1f2428" stroke-width="0.25"/>`;
+    // barra de control de escala + pie
+    d += `<path d="M${MG},${PH - 5}h100" stroke="#1f2428" stroke-width="0.6"/><path d="M${MG},${PH - 7}v4M${MG + 100},${PH - 7}v4" stroke="#1f2428" stroke-width="0.4"/><text x="${MG + 103}" y="${PH - 4}" font-size="3" font-family="IBM Plex Mono, monospace">= 100 mm si está al 100 %</text>`;
+    d += `<text x="${PW - MG}" y="${PH - 4}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">1:1 · ${ZONE} · ${ROW.map(it => PANS[it.p].name).join(' + ')} · hoja ${k + 1}/${pages}</text>`;
+    html += `<div class="pg"><svg viewBox="0 0 ${PW} ${PH}" xmlns="http://www.w3.org/2000/svg"><defs>${g}</defs>${d}</svg></div>`;
+  }
+  const el = document.getElementById('print'); el.innerHTML = html; el.hidden = false;
+}
+document.getElementById('print-btn').addEventListener('click', () => { buildPrint(); window.print(); });
+
 // estado en la URL para que el enlace lleve la configuración
-function writeHash() { try { history.replaceState(null, '', `#z=${ZONE}&L=${CAV_MM}&m=${MOUNT}&r=${ROW.map(it => `${it.p}:${it.d}`).join(',')}&p=${PUSE}:${PLEVEL}:${mm(PUNDER)}`); } catch (e) { /* hosts de vista previa bloquean replaceState */ } }
+function writeHash() { try { history.replaceState(null, '', `#z=${ZONE}&L=${CAV_MM}&m=${MOUNT}&r=${ROW.map(it => `${it.p}:${it.d}`).join(',')}&p=${PUSE}:${PLEVEL}:${mm(PUNDER)}&e=${STATE}`); } catch (e) { /* hosts de vista previa bloquean replaceState */ } }
 function readHash() {
   const q = new URLSearchParams(location.hash.slice(1));
   if (ZONES[q.get('z')]) applyZone(q.get('z'));
@@ -763,6 +840,7 @@ function readHash() {
   if (['proud', 'flush'].includes(q.get('m'))) MOUNT = q.get('m');
   const r = (q.get('r') || '').split(',').map(x => x.split(':')).filter(([p, d]) => PANS[p] && [2.5, 4].includes(+d)).map(([p, d]) => ({ p, d: +d }));
   if (r.length) ROW = r;
+  if (['open', 'closed'].includes(q.get('e'))) STATE = q.get('e');
   const pz = (q.get('p') || '').split(':'); if (pz.length === 3) { if (['ice', 'hot'].includes(pz[0])) PUSE = pz[0]; if ([0.5, 0.75].includes(+pz[1])) PLEVEL = +pz[1]; if ([25, 50, 75].includes(+pz[2])) PUNDER = +pz[2] / 25.4; }
 }
 
@@ -776,8 +854,9 @@ document.getElementById('cav-len').addEventListener('change', e => {
   render();
 });
 document.getElementById('ctl').addEventListener('click', e => {
-  const b = e.target.closest('button[data-mount]'); if (!b) return;
-  MOUNT = b.dataset.mount; render();
+  const b = e.target.closest('button[data-mount], button[data-state]'); if (!b) return;
+  if (b.dataset.mount) MOUNT = b.dataset.mount; else STATE = b.dataset.state;
+  render();
 });
 document.getElementById('cards').addEventListener('click', e => {
   const b = e.target.closest('button[data-combo]'); if (!b) return;
