@@ -962,9 +962,15 @@ function printMeta() {
   document.getElementById('res-meta-meson').textContent = `carta ${mesonPages('carta')} hojas · A4 ${mesonPages('a4')} · plóter 1 hoja de ${fw + 2 * MG + 60} × ${fl + 2 * MG + 40} mm`;
   document.getElementById('res-meta-pans').textContent = `carta ${pansPages('carta')} hojas · A4 ${pansPages('a4')} · plóter 1 hoja de ${lipW + 2 * MG + 40} × ${pansH} mm`;
 }
+// el nombre del PDF sale del título del documento: se cambia solo durante la impresión
+const PAGE_TITLE = document.title;
+window.addEventListener('afterprint', () => { document.title = PAGE_TITLE; });
 document.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', () => {
   const [what, paper] = b.dataset.print.split(':');
-  PRINT_WHAT = what; buildPrint(paper); window.print();
+  PRINT_WHAT = what; buildPrint(paper);
+  const row = what === 'meson' ? ROW.map(it => PANS[it.p].name.replace('/', '-')).join('+') : 'bandejas';
+  document.title = `refugio-${ZONE}-${what === 'meson' ? 'meson' : 'bandejas-recortables'}-${row}-${CAV_MM}mm-${paper}-1a1`;
+  window.print();
 }));
 
 
