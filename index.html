@@ -253,7 +253,8 @@
     <div id="verdict" class="verdict"></div>
     <h3>Lo que habría que cortar</h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
-    <div class="ctl-row"><span class="ctl-lbl">Plantilla 1:1</span><button type="button" class="btn" data-paper="carta">Carta</button><button type="button" class="btn" data-paper="a4">A4</button><button type="button" class="btn" data-paper="plotter">Plóter, una hoja</button><span class="ctl-hint">escala real, sin ajustar a la página. Carta y A4 van en hojas con solape; el plóter imprime la franja entera de una vez. Trae la franja, la cavidad y el labio de cada bandeja, para poner las de muestra encima.</span></div>
+    <div class="ctl-row"><span class="ctl-lbl">Plantilla 1:1</span><div class="seg" role="group" aria-label="Qué imprimir"><button type="button" data-what="meson" aria-pressed="true">Mesón</button><button type="button" data-what="pans" aria-pressed="false">Bandejas recortables</button></div><span class="ctl-hint" data-what-hint="meson">franja y cavidad, sin bandejas: para pegar sobre el butcher block</span><span class="ctl-hint" data-what-hint="pans" hidden>una hoja por tipo de bandeja, labio como línea de corte y cuerpo punteado: recórtelas y muévalas sobre la plantilla del mesón</span></div>
+    <div class="ctl-row"><span class="ctl-lbl">Papel</span><button type="button" class="btn" data-paper="carta">Carta</button><button type="button" class="btn" data-paper="a4">A4</button><button type="button" class="btn" data-paper="plotter">Plóter, una hoja</button><span class="ctl-hint">escala real, sin ajustar a la página. Carta y A4 van en hojas con solape; el plóter imprime todo de una vez.</span></div>
   </section>
 
   <section id="comparacion">
@@ -834,8 +835,10 @@ document.getElementById('pozo-ctl').addEventListener('click', e => {
 
 
 // ---- plantilla 1:1 en A4: franja y cavidades de la fila, en hojas con solape ----
+let PRINT_WHAT = 'meson';
 const PAPERS = { carta: { PW: 215.9, PH: 279.4, name: 'carta' }, a4: { PW: 210, PH: 297, name: 'A4' } };
 function buildPrint(paper = 'carta') {
+  if (PRINT_WHAT === 'pans') return buildPrintPans(paper);
   const MG = 10, OV = 10;                                              // margen, solape (mm)
   const fwAll = mm(CAVITY.w), flAll = mm(CAVITY.l);
   const plot = paper === 'plotter';
@@ -862,11 +865,6 @@ function buildPrint(paper = 'carta') {
       for (const b of bars) d += `<path d="M${cx},${oy + b}H${cx + cavW}" stroke="#2c6fb3" stroke-width="0.3" stroke-dasharray="3 1.5"/><text x="${cx + cavW + 2}" y="${oy + b + 1.5}" font-size="3.5" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">junta entre bandejas</text>`;
       d += `<path d="M${cx},${oy + c.a}L${cx + cavW},${oy + c.a + c.len}M${cx + cavW},${oy + c.a}L${cx},${oy + c.a + c.len}" stroke="#1f2428" stroke-width="0.2"/>`;
     }
-    // labios de las bandejas de la fila, para poner las de muestra encima
-    for (const p of pans) {
-      d += `<rect x="${ox}" y="${oy + p.a}" width="${fw}" height="${p.len}" fill="none" stroke="#7f8b93" stroke-width="0.35" stroke-dasharray="1.5 1"/>`;
-      d += `<text x="${ox + 2}" y="${oy + p.a + 5}" font-size="4" font-family="IBM Plex Mono, monospace" fill="#7f8b93">${p.name} · labio ${fw} × ${p.len} · ${p.d} hondo</text>`;
-    }
     // eje de la franja y extremos
     d += `<text x="${ox + fw / 2}" y="${oy - 3}" font-size="4" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">${zoneLbl[0]} · franja ${fw} × ${fl} mm</text>`;
     d += `<text x="${ox + fw / 2}" y="${oy + fl + 6}" font-size="4" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">${zoneLbl[1]}</text>`;
@@ -884,7 +882,42 @@ function buildPrint(paper = 'carta') {
   st.textContent = `@page { size: ${PW}mm ${PH}mm; margin: 0; }`;
   const el = document.getElementById('print'); el.innerHTML = html; el.hidden = false;
 }
+// bandejas recortables: una hoja por tipo, a escala, labio = línea de corte, cuerpo = punteado
+function buildPrintPans(paper) {
+  const MG = 10, plot = paper === 'plotter';
+  const lipW = mm(STRIP), bodyW = mm(STRIP - 2 * LIP);
+  const sheets = KEYS.map(k => ({ k, name: PANS[k].name, L: mm(PANS[k].w), B: mm(PANS[k].w - 2 * LIP) }));
+  let PW = plot ? lipW + 2 * MG + 40 : PAPERS[paper].PW, PH = plot ? sheets.reduce((a, p) => a + p.L + 12, 0) + 2 * MG + 30 : PAPERS[paper].PH;
+  const one = (x, y, p) => `<rect x="${x}" y="${y}" width="${lipW}" height="${p.L}" fill="none" stroke="#1f2428" stroke-width="0.6"/>` +
+    `<rect x="${x + mm(LIP)}" y="${y + mm(LIP)}" width="${bodyW}" height="${p.B}" fill="none" stroke="#7f8b93" stroke-width="0.35" stroke-dasharray="1.5 1"/>` +
+    `<text x="${x + lipW / 2}" y="${y + p.L / 2}" font-size="7" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#1f2428">${p.name}</text>` +
+    `<text x="${x + lipW / 2}" y="${y + p.L / 2 + 6}" font-size="3.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#5b656c">labio ${lipW} × ${p.L} · cuerpo ${bodyW} × ${p.B} · recortar por la línea continua</text>`;
+  const foot = (k, n) => `<path d="M${MG},${PH - 5}h100" stroke="#1f2428" stroke-width="0.6"/><path d="M${MG},${PH - 7}v4M${MG + 100},${PH - 7}v4" stroke="#1f2428" stroke-width="0.4"/><text x="${MG + 103}" y="${PH - 4}" font-size="3" font-family="IBM Plex Mono, monospace">= 100 mm si está al 100 %</text>` +
+    `<text x="${PW - MG}" y="${PH - 9.5}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">bandejas recortables 1:1 · ${plot ? 'plóter' : PAPERS[paper].name + ' · hoja ' + k + '/' + n}</text>`;
+  let html = '';
+  const ox = (PW - lipW) / 2;
+  if (plot) {
+    let y = MG + 10, d = '';
+    for (const p of sheets) { d += one(ox, y, p); y += p.L + 12; }
+    html = `<div class="pg" style="width:${PW}mm;height:${PH}mm"><svg viewBox="0 0 ${PW} ${PH}" style="width:${PW}mm;height:${PH}mm" xmlns="http://www.w3.org/2000/svg">${d}${foot(1, 1)}</svg></div>`;
+  } else {
+    // una hoja por tipo; en la hoja caben tantas como quepan a lo alto
+    sheets.forEach((p, i) => {
+      let y = MG + 8, d = '';
+      while (y + p.L <= PH - MG - 14) { d += one(ox, y, p); y += p.L + 8; }
+      html += `<div class="pg" style="width:${PW}mm;height:${PH}mm"><svg viewBox="0 0 ${PW} ${PH}" style="width:${PW}mm;height:${PH}mm" xmlns="http://www.w3.org/2000/svg">${d}${foot(i + 1, sheets.length)}</svg></div>`;
+    });
+  }
+  let st = document.getElementById('page-size'); if (!st) { st = document.createElement('style'); st.id = 'page-size'; document.head.appendChild(st); }
+  st.textContent = `@page { size: ${PW}mm ${PH}mm; margin: 0; }`;
+  const el = document.getElementById('print'); el.innerHTML = html; el.hidden = false;
+}
 document.querySelectorAll('[data-paper]').forEach(b => b.addEventListener('click', () => { buildPrint(b.dataset.paper); window.print(); }));
+document.querySelectorAll('[data-what]').forEach(b => b.addEventListener('click', () => {
+  PRINT_WHAT = b.dataset.what;
+  document.querySelectorAll('[data-what]').forEach(x => x.setAttribute('aria-pressed', x.dataset.what === PRINT_WHAT));
+  document.querySelectorAll('[data-what-hint]').forEach(x => x.hidden = x.dataset.whatHint !== PRINT_WHAT);
+}));
 
 
 // ---- figura de términos: un corte a través de una bandeja con cada palabra en su sitio ----
