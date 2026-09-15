@@ -525,8 +525,10 @@ function drawSection(id, flush, items, cavBase, sideLbl) {
     }
     // dims: outer lip above, body and cutout below the counter
     const L = W * S > 150 ? dimLabel : mmL;        // narrow pans: mm only, so labels don't collide
-    g += dim(px, y0 - 34, px + W * S, y0 - 34, `labio ${L(W)}`);
-    g += dim(bodyX, y0 - 20, bodyX + bw, y0 - 20, `cuerpo ${L(body)}`);
+    if (!closed) {
+      g += dim(px, y0 - 34, px + W * S, y0 - 34, `labio ${L(W)}`);
+      g += dim(bodyX, y0 - 20, bodyX + bw, y0 - 20, `cuerpo ${L(body)}`);
+    }
     g += dim(bodyX - CLEAR * S, y0 + 4.8 * S, bodyX + bw + CLEAR * S, y0 + 4.8 * S, `cavidad ${L(cut)}`, 16);
     x += flush ? W + 2 * CLEAR : W;
   }
@@ -534,7 +536,8 @@ function drawSection(id, flush, items, cavBase, sideLbl) {
   if (closed) {   // tapa ciega: una sola pieza con labio sobre toda la franja y una falda que entra en las cavidades
     g += h('rect', { x: M.l, y: lipY, width: cavL * S, height: LIPT * S, class: 'plate' });
     for (const c of cuts) g += h('rect', { x: c.a + CLEAR * S, y: lipY + LIPT * S, width: c.b - c.a - 2 * CLEAR * S, height: 0.8 * S, class: 'plate' });
-    g += h('text', { x: M.l + cavL * S / 2, y: y0 + 2 * S, 'text-anchor': 'middle', class: 'lbl' }, cavL * S > 320 ? 'tapa ciega · mismo labio, falda de 20 mm en cada cavidad' : 'tapa ciega');
+    g += h('text', { x: M.l + cavL * S / 2, y: y0 + 2 * S, 'text-anchor': 'middle', class: 'lbl' }, cavL * S > 320 ? 'tapa ciega, una sola pieza · mismo labio, falda de 20 mm en cada cavidad' : 'tapa ciega');
+    g += dim(M.l, y0 - 34, M.l + cavL * S, y0 - 34, `tapa ${mmL(cavL)} · una pieza`);
   }
   const openW = Math.max(x, cavL) * S, left = cavL - x;
   // countertop pieces between cutouts (drawn after pans so the rail reads on top)
@@ -694,7 +697,10 @@ function drawFit() {
     x = M.l + CLEAR * S; y = M.t;
   }
   const closedFit = STATE === 'closed';
-  if (closedFit) g += h('rect', { x, y, width: g0.lipsL * S, height: g0.lipW * S, rx: 2, class: 'plate' });
+  if (closedFit) {
+    g += h('rect', { x, y, width: g0.lipsL * S, height: g0.lipW * S, rx: 2, class: 'plate' });
+    g += h('text', { x: x + g0.lipsL * S / 2, y: y - 6, 'text-anchor': 'middle', class: 'lbl' }, 'tapa ciega, una sola pieza · debajo, las cavidades');
+  }
   for (const it of ROW) {
     const W = PANS[it.p].w, body = W - 2 * LIP, cut = body + 2 * CLEAR;
     const across = PANS[it.p].l, cutA = across - 2 * LIP + 2 * CLEAR;
@@ -702,8 +708,8 @@ function drawFit() {
       g += h('rect', { x, y, width: W * S, height: g0.lipW * S, rx: 2, class: 'pan' });
       g += h('rect', { x, y: y + (g0.lipW - across) / 2 * S, width: W * S, height: across * S, rx: 2, class: 'pan' });
     }
-    g += h('rect', { x: x + (W - cut) / 2 * S, y: y + (g0.lipW - cutA) / 2 * S, width: cut * S, height: cutA * S, class: 'cut' });
-    g += h('text', { x: x + W * S / 2, y: y + g0.lipW * S / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, closedFit ? 'tapa' : PANS[it.p].name);
+    g += h('rect', { x: x + (W - cut) / 2 * S, y: y + (g0.lipW - cutA) / 2 * S, width: cut * S, height: cutA * S, class: 'cut', ...(closedFit ? { fill: 'none', 'stroke-dasharray': '3 3', opacity: .6 } : {}) });
+    if (!closedFit) g += h('text', { x: x + W * S / 2, y: y + g0.lipW * S / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, PANS[it.p].name);
     if (!closedFit) g += dim(x, M.t + cavW + 14, x + W * S, M.t + cavW + 14, `labio ${mm(W)}`, 14);
     g += dim(x + (W - cut) / 2 * S, M.t + cavW + 32, x + (W + cut) / 2 * S, M.t + cavW + 32, `cavidad ${mm(cut)}`, 14);
     x += (W + (g0.flush ? 2 * CLEAR : 0)) * S;
