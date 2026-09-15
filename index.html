@@ -693,14 +693,18 @@ function drawFit() {
     g += h('rect', { x: M.l, y, width: g0.pocketL * S, height: g0.pocketW * S, class: 'pocket' });
     x = M.l + CLEAR * S; y = M.t;
   }
+  const closedFit = STATE === 'closed';
+  if (closedFit) g += h('rect', { x, y, width: g0.lipsL * S, height: g0.lipW * S, rx: 2, class: 'plate' });
   for (const it of ROW) {
     const W = PANS[it.p].w, body = W - 2 * LIP, cut = body + 2 * CLEAR;
-    g += h('rect', { x, y, width: W * S, height: g0.lipW * S, rx: 2, class: 'pan' });
     const across = PANS[it.p].l, cutA = across - 2 * LIP + 2 * CLEAR;
-    g += h('rect', { x, y: y + (g0.lipW - across) / 2 * S, width: W * S, height: across * S, rx: 2, class: 'pan' });
+    if (!closedFit) {
+      g += h('rect', { x, y, width: W * S, height: g0.lipW * S, rx: 2, class: 'pan' });
+      g += h('rect', { x, y: y + (g0.lipW - across) / 2 * S, width: W * S, height: across * S, rx: 2, class: 'pan' });
+    }
     g += h('rect', { x: x + (W - cut) / 2 * S, y: y + (g0.lipW - cutA) / 2 * S, width: cut * S, height: cutA * S, class: 'cut' });
-    g += h('text', { x: x + W * S / 2, y: y + g0.lipW * S / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, PANS[it.p].name);
-    g += dim(x, M.t + cavW + 14, x + W * S, M.t + cavW + 14, `labio ${mm(W)}`, 14);
+    g += h('text', { x: x + W * S / 2, y: y + g0.lipW * S / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, closedFit ? 'tapa' : PANS[it.p].name);
+    if (!closedFit) g += dim(x, M.t + cavW + 14, x + W * S, M.t + cavW + 14, `labio ${mm(W)}`, 14);
     g += dim(x + (W - cut) / 2 * S, M.t + cavW + 32, x + (W + cut) / 2 * S, M.t + cavW + 32, `cavidad ${mm(cut)}`, 14);
     x += (W + (g0.flush ? 2 * CLEAR : 0)) * S;
   }
@@ -755,7 +759,11 @@ function drawPozo() {
   g += h('path', { d: `M${xCut},${fillY}h${wCut}`, stroke: 'var(--accent)', 'stroke-width': 1, 'stroke-dasharray': '3 2' });
   g += h('path', { d: `M${xCut - LIP * S},${y0 - 3}h${LIP * S}v${g0.depth * S}h${wCut}v${-g0.depth * S}h${LIP * S}`, class: 'basin' });
   let x = xCut - CLEAR * S;
-  ROW.forEach((it, i) => {
+  if (STATE === 'closed') {
+    g += h('rect', { x: xCut - LIP * S, y: y0 - 5, width: wCut + 2 * LIP * S, height: 4, class: 'plate' });
+    g += h('text', { x: xCut + wCut / 2, y: y0 + 1.2 * S, 'text-anchor': 'middle', class: 'lbl' }, 'tapa ciega · sin bandejas');
+  }
+  (STATE === 'closed' ? [] : ROW).forEach((it, i) => {
     const p = PANS[it.p], lipW = p.w * S, bw = (p.w - 2 * LIP) * S, bx = x + LIP * S, taper = 0.4 * S, d = it.d * S;
     if (i > 0) g += h('rect', { x: x - 0.5 * S, y: y0 - 2, width: 1 * S, height: 0.35 * S, fill: 'var(--steel-edge)' });
     g += h('path', { d: `M${x},${y0 - 5}h${lipW}v3h${-LIP * S}L${bx + bw - taper},${y0 + d}h${-(bw - 2 * taper)}L${bx},${y0 - 2}h${-LIP * S}z`, class: 'pan' });
