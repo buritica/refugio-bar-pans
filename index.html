@@ -193,7 +193,7 @@
       <li><b>Hay dos anchos en juego, no uno.</b>
         <div class="widths">
           <div><span class="w-num">175 mm</span><span class="w-lbl">labio</span><span class="w-note">ancho de la bandeja y de la <b>franja</b> que se reserva en el mesón.</span></div>
-          <div><span class="w-num">156 mm</span><span class="w-lbl">cavidad</span><span class="w-note">el hueco, lo que se corta. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
+          <div><span class="w-num">156 mm</span><span class="w-lbl">cavidad</span><span class="w-note">el hueco, lo que se corta: uno solo y continuo, del largo de la fila. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
         </div>
         <span class="w-foot">Iguales para la 1/3, la 1/6 y la 1/9. A ras la franja crece a <b>181 mm</b> (3 mm de aire por lado para el labio); la cavidad sigue en 156.</span>
       </li>
@@ -201,14 +201,14 @@
       <li><b>La idea es una fila de norte a sur.</b> Cada bandeja ocupa 324, 159 o 108 mm; la fila suma el largo de la franja.</li>
       <li><b>Hondo máximo, por ahora, 102 mm.</b> Se consiguen de 64 o 102. El mueble tendría que dar 102 más aire para sacarla.</li>
     </ol>
-    <p>Lo atractivo de este camino: un solo ancho de corte para las tres bandejas, y cambiar la combinación después no tocaría la carpintería.</p>
+    <p>Lo atractivo de este camino: una sola cavidad continua para las tres bandejas. Cambiar la combinación después es mover barras adaptadoras, no tocar la carpintería.</p>
 </div>
 <div data-zone="isla">
     <ol class="rules">
       <li><b>Hay dos anchos en juego, no uno.</b>
         <div class="widths">
           <div><span class="w-num">175 mm</span><span class="w-lbl">labio</span><span class="w-note">ancho de la bandeja y de la <b>franja</b> que se reserva en el mesón. Igual que en la barra.</span></div>
-          <div><span class="w-num">156 mm</span><span class="w-lbl">cavidad</span><span class="w-note">el hueco, lo que se corta. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
+          <div><span class="w-num">156 mm</span><span class="w-lbl">cavidad</span><span class="w-note">el hueco, lo que se corta: uno solo y continuo, del largo de la fila. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
         </div>
         <span class="w-foot">Iguales para la 1/3, la 1/6 y la 1/9. A ras la franja crece a <b>181 mm</b>; la cavidad sigue en 156.</span>
       </li>
@@ -216,7 +216,7 @@
       <li><b>La idea es una fila de oeste a este.</b> Cada bandeja ocupa 324, 159 o 108 mm; la fila suma el largo de la franja. Tres 1/3 son 972 mm: por eso 975.</li>
       <li><b>Hondo máximo, por ahora, 102 mm.</b> Se consiguen de 64 o 102. El mueble tendría que dar 102 más aire para sacarla.</li>
     </ol>
-    <p>Lo atractivo de este camino: la misma franja de 175 mm que en la barra, y cambiar una 1/3 por dos 1/6 o tres 1/9 después no tocaría la carpintería.</p>
+    <p>Lo atractivo de este camino: la misma franja de 175 mm y la misma cavidad continua que en la barra. Cambiar una 1/3 por dos 1/6 o tres 1/9 después es mover barras adaptadoras, no tocar la carpintería.</p>
 </div>
   </section>
 
@@ -230,20 +230,20 @@
     </div>
     <div class="chosen" id="chosen"></div>
     <div class="sheet"><svg id="plan"></svg></div>
-    <div class="legend"><span class="l-cav">franja reservada</span><span class="l-pan">bandeja (labio exterior)</span><span class="l-left">sobrante</span><span class="hint">clic en una bandeja: 64 ↔ 102 mm · <button type="button" id="flip" class="link">invertir <span data-zone="barra">N↔S</span><span data-zone="isla">O↔E</span></button></span></div>
+    <div class="legend"><span class="l-cav">franja reservada</span><span class="l-cut">cavidad</span><span class="l-pan">bandeja (labio exterior)</span><span class="l-left">sobrante</span><span class="hint">clic en una bandeja: 64 ↔ 102 mm · <button type="button" id="flip" class="link">invertir <span data-zone="barra">N↔S</span><span data-zone="isla">O↔E</span></button></span></div>
     <h3>Lo que cabe en ese largo</h3>
     <div id="cards" class="cards"></div>
   </section>
 
   <section id="cabe">
     <h2><span class="num">3</span>¿Y esto cabe?</h2>
-    <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y las <b>cavidades</b>, que son los huecos. A ras la franja crece 3 mm por lado para que el labio baje al <b>rebaje</b>. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
+    <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y la <b>cavidad</b>, que es el único hueco. A ras la franja crece 3 mm por lado para que el labio baje al <b>rebaje</b>. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
     <div class="sheet"><svg id="fit"></svg></div>
     <div class="legend"><span class="l-cav">franja</span><span class="l-pocket">rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">cavidad (hueco)</span></div>
     <div id="verdict" class="verdict"></div>
     <h3>Lo que habría que cortar</h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
-    <div class="ctl-row"><button type="button" id="print-btn" class="btn">Imprimir plantilla 1:1</button><span class="ctl-hint">A4, escala real, sin ajustar a la página. Franja y cavidades de la fila de arriba, en hojas para pegar sobre el mesón.</span></div>
+    <div class="ctl-row"><button type="button" id="print-btn" class="btn">Imprimir plantilla 1:1</button><span class="ctl-hint">A4, escala real, sin ajustar a la página. Franja, cavidad y posición de las barras, en hojas para pegar sobre el mesón.</span></div>
   </section>
 
   <section id="comparacion">
@@ -251,7 +251,7 @@
     <p>Dos maneras de que el labio encuentre el mesón. El selector de arriba cambia entre las dos; aquí van lado a lado.</p>
     <div class="sheet tbl"><table id="mounts"></table></div>
     <h3>La tapa ciega</h3>
-    <p>Cuando la barra no está en uso, las bandejas <b>salen</b> y en su lugar va una sola pieza de acero con el <b>mismo labio de 13 mm</b>, que ocupa la franja entera; una falda de 20 mm entra en cada cavidad para que no se mueva. No va encima de las bandejas: o están las bandejas o está la tapa. El selector Abierta / Cerrada de arriba muestra los dos estados en planta y en los cortes.</p>
+    <p>Cuando la barra no está en uso, las bandejas <b>salen</b> y en su lugar va una sola pieza de acero con el <b>mismo labio de 13 mm</b>, que ocupa la franja entera; una falda de 20 mm entra en la cavidad para que no se mueva. No va encima de las bandejas: o están las bandejas o está la tapa. El selector Abierta / Cerrada de arriba muestra los dos estados en planta y en los cortes.</p>
     <p>Sirve con los dos montajes, porque se apoya igual que las bandejas. <b>Sobrepuesta</b>, queda 3 mm por encima del mesón: una franja de acero continua con un escalón mínimo en el borde. <b>A ras</b>, baja al rebaje y el mesón vuelve a ser un solo plano; es el mejor argumento a favor del montaje a ras.</p>
     <p>Dos cosas que decide: cómo se levanta (a ras no hay labio a la vista, así que pide una muesca o una ventosa, igual que las bandejas) y dónde se guarda lo que no está puesto. Con la barra abierta, la tapa: mide <span id="t-tapa"></span> y no cabe en un cajón cualquiera. Con la barra cerrada, las bandejas.</p>
   </section>
@@ -301,13 +301,13 @@
     <h2><span class="num">9</span>Cómo llamamos las cosas</h2>
     <dl class="terms">
       <div><dt>Franja</dt><dd>Zona del mesón reservada para las bandejas, 175 mm por el largo de la fila. Ahí apoyan los labios. No es un hueco.</dd></div>
-      <div><dt>Cavidad</dt><dd>El hueco que se corta en el mesón: cuerpo más dos holguras, 156 mm de ancho. Siempre más chica que la franja; si fueran iguales, la bandeja se cae.</dd></div>
+      <div><dt>Cavidad</dt><dd>El hueco que se corta en el mesón: uno solo y continuo, 156 mm de ancho por el largo de la fila. Siempre más chica que la franja; si fueran iguales, la bandeja se cae. No cambia con la combinación.</dd></div>
       <div><dt>Labio</dt><dd>Ceja exterior de la bandeja, la medida de catálogo. Sobresale <span id="t-lip"></span> por lado.</dd></div>
       <div><dt>Cuerpo</dt><dd>Lo que cuelga bajo el mesón. Labio menos dos cejas.</dd></div>
-      <div><dt>Holgura</dt><dd>Aire entre cuerpo y cavidad, <span id="t-clear"></span> por lado.</dd></div>
+      <div><dt>Holgura</dt><dd>Aire entre cuerpo y borde de la cavidad, <span id="t-clear"></span> por lado.</dd></div>
       <div><dt>Corte</dt><dd>Lo mismo que cavidad, dicho desde la carpintería.</dd></div>
-      <div><dt>Riel</dt><dd>Mesón que queda entre dos cavidades. Carga dos labios.</dd></div>
-      <div><dt>Tapa ciega</dt><dd>Pieza de acero del tamaño de la franja, con el mismo labio que las bandejas y una falda en cada cavidad. Reemplaza a las bandejas cuando la barra no se usa; nunca va encima de ellas. Va con los dos montajes.</dd></div>
+      <div><dt>Barra adaptadora</dt><dd>Perfil de acero de 25 mm que cruza la cavidad donde se juntan dos labios y los sostiene. Se mueve o se quita al cambiar la fila.</dd></div>
+      <div><dt>Tapa ciega</dt><dd>Pieza de acero del tamaño de la franja, con el mismo labio que las bandejas y una falda dentro de la cavidad. Reemplaza a las bandejas cuando la barra no se usa; nunca va encima de ellas. Va con los dos montajes.</dd></div>
       <div><dt>Rebaje</dt><dd>Escalón de 3 mm alrededor de la cavidad para que el labio quede a ras.</dd></div>
     </dl>
   </section>
@@ -396,6 +396,7 @@ function drawPlanNS() {
   g += h('rect', { x: M.l + W + 8, y: M.t - 10, width: CTX, height: H + 20, fill: 'var(--cavity)', stroke: 'var(--line)' });
   g += h('text', { x: M.l + W + 8 + CTX / 2, y: M.t + H / 2, 'text-anchor': 'middle', class: 'lbl' }, 'estufa');
   g += h('rect', { x: M.l, y: M.t, width: W, height: H, class: 'cav' });
+  g += h('rect', { x: M.l + (LIP - CLEAR) * S, y: M.t + (LIP - CLEAR) * S, width: W - 2 * (LIP - CLEAR) * S, height: H - 2 * (LIP - CLEAR) * S, class: 'cut' });
   if (STATE === 'closed') {
     g += h('rect', { x: M.l, y: M.t, width: W, height: H, rx: 3, class: 'plate' });
     g += h('rect', { x: M.l + LIP * S, y: M.t + LIP * S, width: W - 2 * LIP * S, height: H - 2 * LIP * S, rx: 2, fill: 'none', stroke: 'var(--steel-edge)', 'stroke-dasharray': '3 3' });
@@ -404,6 +405,7 @@ function drawPlanNS() {
   (STATE === 'closed' ? [] : LAYOUT).forEach((it, i) => {
     const p = PANS[it.p];
     const x = M.l, y = M.t + it.x * S, pw = p.l * S, ph = p.w * S;   // 6 7/8" side runs east–west
+    if (i > 0) g += h('rect', { x: M.l + (LIP - CLEAR) * S, y: y - BAR * S / 2, width: W - 2 * (LIP - CLEAR) * S, height: BAR * S, fill: 'var(--steel-edge)' });
     g += h('rect', { x, y, width: pw, height: ph, rx: 3, class: 'pan hit', 'data-i': i });
     g += h('rect', { x: x + LIP * S, y: y + LIP * S, width: pw - 2 * LIP * S, height: ph - 2 * LIP * S, rx: 2, class: 'body hit', 'data-i': i });
     g += h('text', { x: x + pw / 2, y: y + ph / 2 - 2, 'text-anchor': 'middle', class: 'lbl' }, p.name);
@@ -449,6 +451,7 @@ function drawPlanEW() {
   g += h('rect', { x: M.l - 10, y: M.t + H + 40, width: W + 20, height: CTX, class: 'top' });
   g += h('text', { x: M.l + W / 2, y: M.t + H + 40 + CTX / 2, 'text-anchor': 'middle', class: 'lbl' }, 'mesón isla · sur');
   g += h('rect', { x: M.l, y: M.t, width: W, height: H, class: 'cav' });
+  g += h('rect', { x: M.l + (LIP - CLEAR) * S, y: M.t + (LIP - CLEAR) * S, width: W - 2 * (LIP - CLEAR) * S, height: H - 2 * (LIP - CLEAR) * S, class: 'cut' });
   if (STATE === 'closed') {
     g += h('rect', { x: M.l, y: M.t, width: W, height: H, rx: 3, class: 'plate' });
     g += h('rect', { x: M.l + LIP * S, y: M.t + LIP * S, width: W - 2 * LIP * S, height: H - 2 * LIP * S, rx: 2, fill: 'none', stroke: 'var(--steel-edge)', 'stroke-dasharray': '3 3' });
@@ -457,6 +460,7 @@ function drawPlanEW() {
   (STATE === 'closed' ? [] : LAYOUT).forEach((it, i) => {
     const p = PANS[it.p];
     const x = M.l + it.x * S, y = M.t + (CAVITY.w - p.l) / 2 * S, pw = p.w * S, ph = p.l * S;
+    if (i > 0) g += h('rect', { x: x - BAR * S / 2, y: M.t + (LIP - CLEAR) * S, width: BAR * S, height: H - 2 * (LIP - CLEAR) * S, fill: 'var(--steel-edge)' });
     g += h('rect', { x, y, width: pw, height: ph, rx: 3, class: 'pan hit', 'data-i': i });
     g += h('rect', { x: x + LIP * S, y: y + LIP * S, width: pw - 2 * LIP * S, height: ph - 2 * LIP * S, rx: 2, class: 'body hit', 'data-i': i });
     g += h('text', { x: x + pw / 2, y: y + ph / 2 - 2, 'text-anchor': 'middle', class: 'lbl' }, p.name);
@@ -499,7 +503,8 @@ const CLEAR = 0.125;   // clearance between pan body and cutout edge, each side
 const LIPT  = 0.125;   // lip thickness incl. rolled bead, assumed
 const geom = k => { const W = PANS[k].w, body = W - 2 * LIP, cut = body + 2 * CLEAR; return { W, body, cut }; };
 // rail material left between two adjacent body cutouts
-const RAIL = { proud: 2 * (LIP - CLEAR), flush: 2 * LIP };
+const BAR = 1;                                    // barra adaptadora: 25 mm de ancho, cruza la cavidad donde se juntan dos labios
+const RAIL = { proud: BAR, flush: BAR };          // (compat) ancho de la barra en los dos montajes
 // centre-to-centre pitch of adjacent pans
 const PITCH = k => ({ proud: PANS[k].w, flush: PANS[k].w + 2 * CLEAR });
 const rowLen = m => ROW.reduce((a, it) => a + PITCH(it.p)[m], 0);
@@ -529,33 +534,34 @@ function drawSection(id, flush, items, cavBase, sideLbl) {
       g += dim(px, y0 - 34, px + W * S, y0 - 34, `labio ${L(W)}`);
       g += dim(bodyX, y0 - 20, bodyX + bw, y0 - 20, `cuerpo ${L(body)}`);
     }
-    g += dim(bodyX - CLEAR * S, y0 + 4.8 * S, bodyX + bw + CLEAR * S, y0 + 4.8 * S, `cavidad ${L(cut)}`, 16);
     x += flush ? W + 2 * CLEAR : W;
   }
   const cavL = cavBase + (flush ? 2 * CLEAR * items.length : 0);   // a ras: la franja crece 6 mm por bandeja
   if (closed) {   // tapa ciega: una sola pieza con labio sobre toda la franja y una falda que entra en las cavidades
     g += h('rect', { x: M.l, y: lipY, width: cavL * S, height: LIPT * S, class: 'plate' });
-    for (const c of cuts) g += h('rect', { x: c.a + CLEAR * S, y: lipY + LIPT * S, width: c.b - c.a - 2 * CLEAR * S, height: 0.8 * S, class: 'plate' });
-    g += h('text', { x: M.l + cavL * S / 2, y: y0 + 2 * S, 'text-anchor': 'middle', class: 'lbl' }, cavL * S > 320 ? 'tapa ciega, una sola pieza · mismo labio, falda de 20 mm en cada cavidad' : 'tapa ciega');
+    g += h('rect', { x: M.l + LIP * S, y: lipY + LIPT * S, width: (cavL - 2 * LIP) * S, height: 0.8 * S, class: 'plate' });
+    g += h('text', { x: M.l + cavL * S / 2, y: y0 + 2 * S, 'text-anchor': 'middle', class: 'lbl' }, cavL * S > 320 ? 'tapa ciega, una sola pieza · mismo labio, falda de 20 mm dentro de la cavidad' : 'tapa ciega');
     g += dim(M.l, y0 - 34, M.l + cavL * S, y0 - 34, `tapa ${mmL(cavL)} · una pieza`);
   }
   const openW = Math.max(x, cavL) * S, left = cavL - x;
-  // countertop pieces between cutouts (drawn after pans so the rail reads on top)
-  const edges = [M.l - side * S, ...cuts.flatMap(c => [c.a, c.b]), M.l + openW + side * S];
-  for (let i = 0; i < edges.length; i += 2) {
-    const a = edges[i], b = edges[i + 1];
-    if (b - a <= 0) continue;
-    const isRail = i > 0 && i < edges.length - 2;
-    // in flush mode the top of the counter is rebated under the lips
-    const top = isRail || flush ? y0 + rebate : y0;
-    g += h('rect', { x: a, y: top, width: b - a, height: topH - (top - y0), class: isRail ? 'rail' : 'top' });
-    if (flush && !isRail) {  // un-rebated counter beyond the pocket
-      const outerA = i === 0 ? a : cuts[cuts.length - 1].lipB + CLEAR * S;
-      const outerB = i === 0 ? cuts[0].lipA - CLEAR * S : b;
+  // una sola cavidad: el mesón queda solo a los dos extremos
+  const cavA = M.l + (LIP - CLEAR) * S, cavB = M.l + (cavL - LIP + CLEAR) * S;   // borde de la cavidad, dentro de la franja
+  const edges = [[M.l - side * S, cavA], [cavB, M.l + openW + side * S]];
+  edges.forEach(([a, b], i) => {
+    const top = flush ? y0 + rebate : y0;
+    g += h('rect', { x: a, y: top, width: b - a, height: topH - (top - y0), class: 'top' });
+    if (flush) {  // fuera del rebaje el mesón conserva su altura
+      const outerA = i === 0 ? a : M.l + (cavL + CLEAR) * S, outerB = i === 0 ? M.l - CLEAR * S : b;
       g += h('rect', { x: outerA, y: y0, width: outerB - outerA, height: topH, class: 'top' });
     }
-    if (isRail) g += dim(a, y0 + 5.6 * S, b, y0 + 5.6 * S, `riel ${dimLabel((b - a) / S)}`, 16);
+  });
+  // barras adaptadoras donde se juntan dos labios
+  for (let i = 1; i < cuts.length; i++) {
+    const jx = cuts[i].lipA;
+    g += h('rect', { x: jx - BAR * S / 2, y: y0 + rebate, width: BAR * S, height: 0.6 * S, class: 'plate' });
   }
+  g += dim(cavA, y0 + 5.6 * S, cavB, y0 + 5.6 * S, `cavidad ${dimLabel(cavL - 2 * LIP + 2 * CLEAR)} · una sola`, 16);
+  if (cuts.length > 1) g += h('text', { x: cuts[1].lipA, y: y0 + 4.6 * S + 12, 'text-anchor': 'middle', class: 'sub' }, `barra adaptadora ${mm(BAR)} mm en cada junta`);
   // depth + counter dims
   g += dim(M.l - side * S - 14, y0, M.l - side * S - 14, y0 + MAXD * S, `máx ${mmL(MAXD)}`);
   if (sideLbl) { g += h('text', { x: M.l - side * S, y: y0 + topH + 12, class: 'sub' }, sideLbl[0]); g += h('text', { x: M.l + openW + side * S, y: y0 + topH + 12, 'text-anchor': 'end', class: 'sub' }, sideLbl[1]); }
@@ -624,7 +630,7 @@ function render() {
   document.querySelectorAll('[data-state]').forEach(b => b.setAttribute('aria-pressed', b.dataset.state === STATE));
   writeHash();
   document.getElementById('mounts').innerHTML =
-  `<tr><th>Montaje</th><th>Riel entre bandejas</th><th>Paso ${KEYS.map(k => PANS[k].name).join(' · ')}</th><th>Largo de la fila (ejemplo)</th><th>Mesón</th><th>Agarre</th></tr>` +
+  `<tr><th>Montaje</th><th>Barra adaptadora</th><th>Paso ${KEYS.map(k => PANS[k].name).join(' · ')}</th><th>Largo de la fila (ejemplo)</th><th>Mesón</th><th>Agarre</th></tr>` +
   [['Sobrepuesto', 'proud', 'cortes simples', 'el labio'], ['A ras', 'flush', 'cortes + rebaje', 'muesca o punto de izaje']].map(([n, m, work, grip]) =>
     `<tr><td>${n}</td><td>${dimLabel(RAIL[m])}</td><td>${KEYS.map(k => mm(PITCH(k)[m])).join(' · ')} mm</td><td>${dimLabel(rowLen(m))}</td><td>${work}</td><td>${grip}</td></tr>`).join('');
 }
@@ -670,8 +676,8 @@ function drawChosen() {
     ? '<b>Sobrepuesto:</b> el labio apoyaría sobre el mesón y serviría de agarre. Términos en el <a href="#glosario">glosario</a>.'
     : '<b>A ras:</b> el labio bajaría a un <a href="#glosario">rebaje</a> y quedaría al nivel del mesón.';
   document.getElementById('corte-note').innerHTML = MOUNT === 'proud'
-    ? `<p>Tres anchos por bandeja: <b>labio</b>, <b>cuerpo</b> y <b>cavidad</b>.</p><p>Las bandejas van labio con labio. Entre dos cavidades queda el <b>riel</b>: ${mmL(RAIL.proud)}.</p>`
-    : `<p>El rebaje sería un segundo paso: ${mmL(LIP + CLEAR)} de ancho y ${mmL(LIPT)} de hondo alrededor de cada cavidad.</p><p>Cada bandeja pide ${mmL(2 * CLEAR)} más de paso y el riel crece a ${mmL(RAIL.flush)}.</p><p><b>Ojo:</b> sin labio a la vista no habría de dónde agarrar. Haría falta una muesca o un punto de izaje por bandeja.</p>`;
+    ? `<p>Tres anchos por bandeja: <b>labio</b>, <b>cuerpo</b> y <b>cavidad</b>.</p><p>Las bandejas van labio con labio sobre una sola cavidad. Donde se juntan dos labios cruza una <b>barra adaptadora</b> de ${mmL(BAR)}; al cambiar la fila, la barra se mueve. El mesón no se toca.</p>`
+    : `<p>El rebaje sería un segundo paso: ${mmL(LIP + CLEAR)} de ancho y ${mmL(LIPT)} de hondo alrededor de la cavidad.</p><p>Cada bandeja pide ${mmL(2 * CLEAR)} más de paso; las barras adaptadoras bajan al rebaje con los labios.</p><p><b>Ojo:</b> sin labio a la vista no habría de dónde agarrar. Haría falta una muesca o un punto de izaje por bandeja.</p>`;
 }
 // ---- franja vs labios vs cavidades ----
 function fitGeom() {
@@ -699,21 +705,23 @@ function drawFit() {
   const closedFit = STATE === 'closed';
   if (closedFit) {
     g += h('rect', { x, y, width: g0.lipsL * S, height: g0.lipW * S, rx: 2, class: 'plate' });
-    g += h('text', { x: x + g0.lipsL * S / 2, y: y - 6, 'text-anchor': 'middle', class: 'lbl' }, 'tapa ciega, una sola pieza · debajo, las cavidades');
+    g += h('text', { x: x + g0.lipsL * S / 2, y: y - 6, 'text-anchor': 'middle', class: 'lbl' }, 'tapa ciega, una sola pieza · debajo, la cavidad');
   }
-  for (const it of ROW) {
-    const W = PANS[it.p].w, body = W - 2 * LIP, cut = body + 2 * CLEAR;
-    const across = PANS[it.p].l, cutA = across - 2 * LIP + 2 * CLEAR;
+  // la cavidad: una sola, continua, dentro de la franja
+  const cx0 = M.l + (LIP - CLEAR) * S, cyy = M.t + (g0.lipW - g0.cutW) / 2 * S, cLen = (g0.cavL - 2 * LIP + 2 * CLEAR) * S;
+  g += h('rect', { x: cx0, y: cyy, width: cLen, height: g0.cutW * S, class: 'cut', ...(closedFit ? { fill: 'none', 'stroke-dasharray': '3 3', opacity: .6 } : {}) });
+  const x0 = x;
+  ROW.forEach((it, i) => {
+    const W = PANS[it.p].w;
     if (!closedFit) {
+      if (i > 0) g += h('rect', { x: x - BAR * S / 2, y: cyy, width: BAR * S, height: g0.cutW * S, fill: 'var(--steel-edge)' });   // barra adaptadora
       g += h('rect', { x, y, width: W * S, height: g0.lipW * S, rx: 2, class: 'pan' });
-      g += h('rect', { x, y: y + (g0.lipW - across) / 2 * S, width: W * S, height: across * S, rx: 2, class: 'pan' });
+      g += h('text', { x: x + W * S / 2, y: y + g0.lipW * S / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, PANS[it.p].name);
+      g += dim(x, M.t + cavW + 14, x + W * S, M.t + cavW + 14, `labio ${mm(W)}`, 14);
     }
-    g += h('rect', { x: x + (W - cut) / 2 * S, y: y + (g0.lipW - cutA) / 2 * S, width: cut * S, height: cutA * S, class: 'cut', ...(closedFit ? { fill: 'none', 'stroke-dasharray': '3 3', opacity: .6 } : {}) });
-    if (!closedFit) g += h('text', { x: x + W * S / 2, y: y + g0.lipW * S / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, PANS[it.p].name);
-    if (!closedFit) g += dim(x, M.t + cavW + 14, x + W * S, M.t + cavW + 14, `labio ${mm(W)}`, 14);
-    g += dim(x + (W - cut) / 2 * S, M.t + cavW + 32, x + (W + cut) / 2 * S, M.t + cavW + 32, `cavidad ${mm(cut)}`, 14);
     x += (W + (g0.flush ? 2 * CLEAR : 0)) * S;
-  }
+  });
+  g += dim(cx0, M.t + cavW + 32, cx0 + cLen, M.t + cavW + 32, `cavidad ${mm(g0.cavL - 2 * LIP + 2 * CLEAR)} · una sola, continua`, 14);
   g += h('rect', { x: M.l, y: M.t, width: cavL, height: cavW, class: 'cav-line' });
   // dims de largo (arriba) y de ancho (izquierda)
   g += dim(M.l, M.t - 40, M.l + cavL, M.t - 40, `franja reservada ${mm(g0.cavL)} mm`);
@@ -735,9 +743,9 @@ function drawFit() {
   const rows = [
     ['Franja reservada', g0.cavW, g0.cavL, 'no se corta'],
     g0.flush ? ['Rebaje, 3 mm de hondo', g0.pocketW, g0.pocketL, 'un bolsillo para toda la fila'] : null,
-    ...ROW.map((it, i) => ['Cavidad ' + (i + 1) + ' · ' + PANS[it.p].name, PANS[it.p].l - 2 * LIP + 2 * CLEAR, PANS[it.p].w - 2 * LIP + 2 * CLEAR, 'cuerpo + 3 mm por lado']),
-    ['Riel entre cavidades', null, RAIL[MOUNT], `${g0.flush ? '3 mm bajo la superficie' : ''}`],
-    ['Tapa ciega (estado cerrada)', STRIP, CAVITY.l - (g0.flush ? 2 * CLEAR * ROW.length : 0), 'una pieza con el mismo labio de 13 mm y una falda de 20 mm en cada cavidad; misma lámina que las bandejas'],
+    ['Cavidad, una sola', g0.cutW, g0.cavL - 2 * LIP + 2 * CLEAR, 'el único hueco; franja menos 13 de ceja más 3 de aire, por lado. No cambia con la combinación'],
+    [`Barras adaptadoras × ${Math.max(0, ROW.length - 1)}`, g0.cutW, BAR, 'perfil de acero que cruza la cavidad donde se juntan dos labios; se mueven o se quitan al cambiar la fila'],
+    ['Tapa ciega (estado cerrada)', STRIP, CAVITY.l - (g0.flush ? 2 * CLEAR * ROW.length : 0), 'una pieza con el mismo labio de 13 mm y una falda de 20 mm dentro de la cavidad; misma lámina que las bandejas'],
   ].filter(Boolean);
   document.getElementById('cuts').innerHTML = `<tr>${Z.cutHead}</tr>` +
     rows.map(([n, w, l, note]) => `<tr><td>${n}</td><td>${w == null ? '—' : mm(w) + ' mm'}</td><td>${mm(l)} mm</td><td style="white-space:normal">${note}</td></tr>`).join('');
@@ -821,7 +829,9 @@ function buildPrint() {
   const zoneLbl = Z.orient === 'ns' ? ['NORTE · lado del invitado', 'SUR · lado de quien cocina'] : ['OESTE', 'ESTE'];
   const cavs = [];                                                     // cavidades en mm, a lo largo de la franja
   let x = 0;
-  for (const it of ROW) { const W = PANS[it.p].w; cavs.push({ a: mm(x + LIP - CLEAR), len: mm(W - 2 * LIP + 2 * CLEAR), name: PANS[it.p].name }); x += W + (MOUNT === 'flush' ? 2 * CLEAR : 0); }
+  const bars = [];
+  ROW.forEach((it, i) => { if (i > 0) bars.push(mm(x)); x += PANS[it.p].w + (MOUNT === 'flush' ? 2 * CLEAR : 0); });
+  cavs.push({ a: mm(LIP - CLEAR), len: mm(CAVITY.l - 2 * LIP + 2 * CLEAR), name: 'cavidad' });
   const cavW = mm(STRIP - 2 * LIP + 2 * CLEAR), cx = ox + (fw - cavW) / 2;
   let html = '';
   for (let k = 0; k < pages; k++) {
@@ -831,7 +841,8 @@ function buildPrint() {
     d += `<rect x="${ox}" y="${oy}" width="${fw}" height="${fl}" fill="none" stroke="#2c6fb3" stroke-width="0.5" stroke-dasharray="4 2"/>`;
     for (const c of cavs) {
       d += `<rect x="${cx}" y="${oy + c.a}" width="${cavW}" height="${c.len}" fill="none" stroke="#1f2428" stroke-width="0.6"/>`;
-      d += `<text x="${cx + cavW / 2}" y="${oy + c.a + c.len / 2}" font-size="6" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#1f2428">${c.name} · cavidad ${cavW} × ${c.len}</text>`;
+      d += `<text x="${cx + cavW / 2}" y="${oy + c.a + c.len / 2}" font-size="6" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#1f2428">cavidad ${cavW} × ${c.len} · una sola</text>`;
+      for (const b of bars) d += `<path d="M${cx},${oy + b}H${cx + cavW}" stroke="#2c6fb3" stroke-width="0.4" stroke-dasharray="3 1.5"/><text x="${cx + cavW + 2}" y="${oy + b + 1.5}" font-size="3.5" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">barra adaptadora</text>`;
       d += `<path d="M${cx},${oy + c.a}L${cx + cavW},${oy + c.a + c.len}M${cx + cavW},${oy + c.a}L${cx},${oy + c.a + c.len}" stroke="#1f2428" stroke-width="0.2"/>`;
     }
     // eje de la franja y extremos
