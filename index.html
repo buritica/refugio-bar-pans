@@ -887,8 +887,8 @@ function buildPrint(paper = 'carta') {
     d += `<rect x="${ox}" y="${oy}" width="${fw}" height="${fl}" fill="none" stroke="#2c6fb3" stroke-width="0.5" stroke-dasharray="4 2"/>`;
     for (const c of cavs) {
       d += `<rect x="${cx}" y="${oy + c.a}" width="${cavW}" height="${c.len}" fill="none" stroke="#1f2428" stroke-width="0.6"/>`;
-      d += `<text x="${cx + cavW / 2}" y="${oy + c.a + c.len / 2}" font-size="6" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#1f2428">cavidad ${cavW} × ${c.len} · una sola</text>`;
-      for (const b of bars) d += `<path d="M${cx},${oy + b}H${cx + cavW}" stroke="#2c6fb3" stroke-width="0.3" stroke-dasharray="3 1.5"/><text x="${cx + cavW + 2}" y="${oy + b + 1.5}" font-size="3.5" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">junta entre bandejas</text>`;
+      d += `<text x="${cx + cavW / 2}" y="${oy + c.a + 12}" font-size="5" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#1f2428">cavidad ${cavW} × ${c.len} · una sola</text>`;
+      for (const b of bars) d += `<path d="M${cx},${oy + b}H${cx + cavW}" stroke="#2c6fb3" stroke-width="0.3" stroke-dasharray="3 1.5"/><text x="${cx + 3}" y="${oy + b - 1.5}" font-size="3.5" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">junta entre bandejas</text>`;
       d += `<path d="M${cx},${oy + c.a}L${cx + cavW},${oy + c.a + c.len}M${cx + cavW},${oy + c.a}L${cx},${oy + c.a + c.len}" stroke="#1f2428" stroke-width="0.2"/>`;
     }
     // eje de la franja y extremos
@@ -901,7 +901,7 @@ function buildPrint(paper = 'carta') {
     for (const [px, py] of [[MG, MG], [PW - MG, MG], [MG, PH - MG], [PW - MG, PH - MG]]) d += `<path d="M${px - 4},${py}h8M${px},${py - 4}v8" stroke="#1f2428" stroke-width="0.25"/>`;
     // barra de control de escala + pie
     d += `<path d="M${MG},${PH - 5}h100" stroke="#1f2428" stroke-width="0.6"/><path d="M${MG},${PH - 7}v4M${MG + 100},${PH - 7}v4" stroke="#1f2428" stroke-width="0.4"/><text x="${MG + 103}" y="${PH - 4}" font-size="3" font-family="IBM Plex Mono, monospace">= 100 mm si está al 100 %</text>`;
-    d += `<text x="${PW - MG}" y="${PH - 9.5}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">1:1 · ${ZONE} · ${ROW.map(it => PANS[it.p].name).join(' + ')} · ${plot ? 'plóter, una hoja' : `${PAPERS[paper].name} · hoja ${k + 1}/${pages}`}</text>`;
+    d += `<text x="${PW - MG}" y="${MG - 3}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">1:1 · ${ZONE} · ${ROW.map(it => PANS[it.p].name).join(' + ')} · ${plot ? 'plóter, una hoja' : `${PAPERS[paper].name} · hoja ${k + 1}/${pages}`}</text>`;
     html += `<div class="pg" style="width:${PW}mm;height:${PH}mm"><svg viewBox="0 0 ${PW} ${PH}" style="width:${PW}mm;height:${PH}mm" xmlns="http://www.w3.org/2000/svg"><defs>${g}</defs>${d}</svg></div>`;
   }
   let st = document.getElementById('page-size'); if (!st) { st = document.createElement('style'); st.id = 'page-size'; document.head.appendChild(st); }
@@ -920,7 +920,7 @@ function buildPrintPans(paper) {
     `<text x="${x + lipW / 2}" y="${y + p.L / 2}" font-size="7" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#1f2428">${p.name}</text>` +
     `<text x="${x + lipW / 2}" y="${y + p.L / 2 + 6}" font-size="3.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#5b656c">labio ${lipW} × ${p.L} · cuerpo ${bodyW} × ${p.B} · recortar por la línea continua</text>`;
   const foot = (label) => `<path d="M${MG},${PH - 5}h100" stroke="#1f2428" stroke-width="0.6"/><path d="M${MG},${PH - 7}v4M${MG + 100},${PH - 7}v4" stroke="#1f2428" stroke-width="0.4"/><text x="${MG + 103}" y="${PH - 4}" font-size="3" font-family="IBM Plex Mono, monospace">= 100 mm si está al 100 %</text>` +
-    `<text x="${PW - MG}" y="${PH - 9.5}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">bandejas recortables 1:1 · ${label}</text>`;
+    `<text x="${PW - MG}" y="${MG - 3}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">bandejas recortables 1:1 · ${label}</text>`;
   const page = (inner, label) => `<div class="pg" style="width:${PW}mm;height:${PH}mm"><svg viewBox="0 0 ${PW} ${PH}" style="width:${PW}mm;height:${PH}mm" xmlns="http://www.w3.org/2000/svg">${inner}${foot(label)}</svg></div>`;
   let html = '';
   const ox = (PW - lipW) / 2;
