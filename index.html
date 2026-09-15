@@ -69,6 +69,11 @@
   .legend .l-pocket::before { background: var(--accent-soft); border-style: dotted; border-color: var(--accent); }
   .legend .l-cut::before { background: var(--paper); border-style: solid; border-color: var(--ink); }
   .cut { fill: var(--paper); stroke: var(--ink); stroke-width: 1; }
+  .basin { fill: none; stroke: var(--steel-edge); stroke-width: 3; }
+  .ice { fill: var(--accent-soft); }
+  .water { fill: #f3d9c4; }
+  .legend .l-ice::before { background: var(--accent-soft); border-color: var(--accent-soft); }
+  .legend .l-basin::before { background: transparent; border: 2px solid var(--steel-edge); }
   .pocket { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1; stroke-dasharray: 2 2; }
   .verdict { display: grid; gap: 6px; font-family: var(--mono); font-size: .8rem; }
   .verdict div { padding: 6px 10px; border-left: 3px solid var(--line); background: var(--paper); }
@@ -152,7 +157,7 @@
 </div>
 <div data-zone="isla">
     <h1>Exploración de bandejas de acero para la isla</h1>
-    <p class="lead">Un cuaderno para probar ideas: qué bandejas podrían caber en el pozo de la isla, en qué combinaciones, y qué implicaría cada una para el mesón. Nada aquí está decidido.</p>
+    <p class="lead">Un cuaderno para probar ideas: qué bandejas podrían caber en la franja de la isla, en qué combinaciones, y qué implicaría cada una para el mesón. Nada aquí está decidido.</p>
 </div>
   </header>
 
@@ -160,11 +165,12 @@
     <a href="#principios">1 Empezamos</a>
     <a href="#planta">2 La fila</a>
     <a href="#cabe">3 ¿Cabe?</a>
-    <a href="#corte">4 En corte</a>
-    <a href="#comparacion">5 Montaje</a>
-    <a href="#bandejas">6 Catálogo</a>
-    <a href="#supuestos">7 Dudas</a>
-    <a href="#glosario">8 Palabras</a>
+    <a href="#comparacion">4 Montaje</a>
+    <a href="#corte">5 En corte</a>
+    <a href="#pozo">6 Pozo</a>
+    <a href="#bandejas">7 Catálogo</a>
+    <a href="#supuestos">8 Dudas</a>
+    <a href="#glosario">9 Palabras</a>
   </nav>
 
   <section id="principios">
@@ -174,12 +180,12 @@
       <li><b>Hay dos anchos en juego, no uno.</b>
         <div class="widths">
           <div><span class="w-num">175 mm</span><span class="w-lbl">labio</span><span class="w-note">ancho de la bandeja y de la <b>franja</b> que se reserva en el mesón.</span></div>
-          <div><span class="w-num">156 mm</span><span class="w-lbl">corte pasante</span><span class="w-note">el hueco. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
+          <div><span class="w-num">156 mm</span><span class="w-lbl">cavidad</span><span class="w-note">el hueco, lo que se corta. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
         </div>
-        <span class="w-foot">Iguales para la 1/3, la 1/6 y la 1/9. A ras la franja crece a <b>181 mm</b> (3 mm de aire por lado para el labio); el corte sigue en 156.</span>
+        <span class="w-foot">Iguales para la 1/3, la 1/6 y la 1/9. A ras la franja crece a <b>181 mm</b> (3 mm de aire por lado para el labio); la cavidad sigue en 156.</span>
       </li>
       <li><b>Partimos de la 1/3, la 1/6 y la 1/9.</b> Comparten el lado corto de 175 mm, así que una sola franja les sirve a las tres.</li>
-      <li><b>La idea es una fila de norte a sur.</b> Cada bandeja ocupa 324, 159 o 108 mm; la fila suma el largo de la cavidad.</li>
+      <li><b>La idea es una fila de norte a sur.</b> Cada bandeja ocupa 324, 159 o 108 mm; la fila suma el largo de la franja.</li>
       <li><b>Hondo máximo, por ahora, 102 mm.</b> Se consiguen de 64 o 102. El mueble tendría que dar 102 más aire para sacarla.</li>
     </ol>
     <p>Lo atractivo de este camino: un solo ancho de corte para las tres bandejas, y cambiar la combinación después no tocaría la carpintería.</p>
@@ -189,12 +195,12 @@
       <li><b>Hay dos anchos en juego, no uno.</b>
         <div class="widths">
           <div><span class="w-num">175 mm</span><span class="w-lbl">labio</span><span class="w-note">ancho de la bandeja y de la <b>franja</b> que se reserva en el mesón. Igual que en la barra.</span></div>
-          <div><span class="w-num">156 mm</span><span class="w-lbl">corte pasante</span><span class="w-note">el hueco. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
+          <div><span class="w-num">156 mm</span><span class="w-lbl">cavidad</span><span class="w-note">el hueco, lo que se corta. Cuerpo de 149 mm más 3 mm de aire por lado. El labio apoya en los 9,5 mm que quedan a cada lado.</span></div>
         </div>
-        <span class="w-foot">Iguales para la 1/3, la 1/6 y la 1/9. A ras la franja crece a <b>181 mm</b>; el corte sigue en 156.</span>
+        <span class="w-foot">Iguales para la 1/3, la 1/6 y la 1/9. A ras la franja crece a <b>181 mm</b>; la cavidad sigue en 156.</span>
       </li>
       <li><b>Partimos de tres 1/3.</b> Son las que más se usan, con la 1/6 y la 1/9 para sal, especias y guarniciones. Cada 1/3 se puede abrir en dos 1/6 o tres 1/9 sin tocar nada.</li>
-      <li><b>La idea es una fila de oeste a este.</b> Cada bandeja ocupa 324, 159 o 108 mm; la fila suma el largo del pozo. Tres 1/3 son 972 mm: por eso 975.</li>
+      <li><b>La idea es una fila de oeste a este.</b> Cada bandeja ocupa 324, 159 o 108 mm; la fila suma el largo de la franja. Tres 1/3 son 972 mm: por eso 975.</li>
       <li><b>Hondo máximo, por ahora, 102 mm.</b> Se consiguen de 64 o 102. El mueble tendría que dar 102 más aire para sacarla.</li>
     </ol>
     <p>Lo atractivo de este camino: la misma franja de 175 mm que en la barra, y cambiar una 1/3 por dos 1/6 o tres 1/9 después no tocaría la carpintería.</p>
@@ -203,9 +209,9 @@
 
   <section id="planta">
     <h2><span class="num">2</span>Armemos la fila</h2>
-    <span data-zone="barra"><p>Vista desde el lado de quien cocina, con el invitado al norte. De oeste a este: <b>butcher block · bandejas · estufa</b>. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p></span><span data-zone="isla"><p>El pozo corre de oeste a este a lo largo de la isla; largo estimado 975 mm, tres 1/3. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p></span>
+    <span data-zone="barra"><p>Vista desde el lado de quien cocina, con el invitado al norte. De oeste a este: <b>butcher block · bandejas · estufa</b>. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p></span><span data-zone="isla"><p>La franja corre de oeste a este a lo largo de la isla; largo estimado 975 mm, tres 1/3. Cambie el largo, pruebe una combinación y mire qué pasa abajo.</p></span>
     <div class="ctl" id="ctl">
-      <div class="ctl-row"><span class="ctl-lbl"><span data-zone="barra">Cavidad</span><span data-zone="isla">Pozo</span></span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="975"> mm</label><span class="ctl-hint">× <span id="cav-w">162</span> mm · estimado</span></div>
+      <div class="ctl-row"><span class="ctl-lbl">Franja</span><label for="cav-len" class="ctl-in">largo fijo <input id="cav-len" type="number" min="100" max="3000" step="1" value="975"> mm</label><span class="ctl-hint">× <span id="cav-w">162</span> mm · estimado</span></div>
       <div class="ctl-row"><span class="ctl-lbl">Montaje</span><div class="seg" role="group" aria-label="Montaje"><button type="button" data-mount="proud" aria-pressed="true">Sobrepuesto</button><button type="button" data-mount="flush" aria-pressed="false">A ras</button></div></div>
     </div>
     <div class="chosen" id="chosen"></div>
@@ -217,21 +223,27 @@
 
   <section id="cabe">
     <h2><span class="num">3</span>¿Y esto cabe?</h2>
-    <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y los <b>cortes</b>. A ras la franja crece 3 mm por lado para que el labio baje al <b>rebaje</b>. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
+    <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y las <b>cavidades</b>, que son los huecos. A ras la franja crece 3 mm por lado para que el labio baje al <b>rebaje</b>. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
     <div class="sheet"><svg id="fit"></svg></div>
-    <div class="legend"><span class="l-cav">franja</span><span class="l-pocket">rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">corte pasante</span></div>
+    <div class="legend"><span class="l-cav">franja</span><span class="l-pocket">rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">cavidad (hueco)</span></div>
     <div id="verdict" class="verdict"></div>
     <h3>Lo que habría que cortar</h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
   </section>
 
+  <section id="comparacion">
+    <h2><span class="num">4</span>Sobre el mesón o a ras</h2>
+    <p>Dos maneras de que el labio encuentre el mesón. El selector de arriba cambia entre las dos; aquí van lado a lado.</p>
+    <div class="sheet tbl"><table id="mounts"></table></div>
+  </section>
+
   <section id="corte">
-    <h2><span class="num">4</span>Visto en corte</h2>
+    <h2><span class="num">5</span>Visto en corte</h2>
     <p id="corte-lead"></p>
     <h3>A–A · <span data-zone="barra">norte–sur</span><span data-zone="isla">oeste–este</span></h3>
     <div class="sheet"><svg id="section"></svg></div>
     <h3>B–B · <span data-zone="barra">este–oeste</span><span data-zone="isla">norte–sur</span>, por la bandeja más honda</h3>
-    <span data-zone="barra"><p>Sería igual para cualquier bandeja: labio 175, corte 156. Solo cambiaría el hondo.</p></span><span data-zone="isla"><p>Sería igual para cualquier bandeja: labio 175, corte 156. Solo cambiaría el hondo.</p></span>
+    <span data-zone="barra"><p>Sería igual para cualquier bandeja: labio 175, cavidad 156. Solo cambiaría el hondo.</p></span><span data-zone="isla"><p>Sería igual para cualquier bandeja: labio 175, cavidad 156. Solo cambiaría el hondo.</p></span>
     <div class="sheet"><svg id="section-b"></svg></div>
     <div class="two">
       <div class="sheet"><svg id="detail"></svg></div>
@@ -239,31 +251,44 @@
     </div>
   </section>
 
-  <section id="comparacion">
-    <h2><span class="num">5</span>Sobre el mesón o a ras</h2>
-    <div class="sheet tbl"><table id="mounts"></table></div>
+  <section id="pozo">
+    <h2><span class="num">6</span>¿Y un pozo debajo?</h2>
+    <p>Una cubeta de acero colgada de la misma cavidad, bajo la fila de arriba. Se llena de hielo y las bandejas se enfrían por el fondo y por los lados; de agua caliente, y se mantienen tibias. Sin motor: una cubeta y un desagüe. Va con el montaje sobrepuesto, porque el reborde de la cubeta ocupa el lugar de los labios.</p>
+    <div class="ctl" id="pozo-ctl">
+      <div class="ctl-row"><span class="ctl-lbl">Uso</span><div class="seg" role="group" aria-label="Uso"><button type="button" data-puse="ice" aria-pressed="true">Hielo</button><button type="button" data-puse="hot" aria-pressed="false">Agua caliente</button></div></div>
+      <div class="ctl-row"><span class="ctl-lbl">Nivel</span><div class="seg" role="group" aria-label="Nivel"><button type="button" data-plevel="0.5">½</button><button type="button" data-plevel="0.75" aria-pressed="true">¾</button></div><span class="ctl-hint">hasta dónde se llena; nunca hasta el labio</span></div>
+      <div class="ctl-row"><span class="ctl-lbl">Hondo libre</span><div class="seg" role="group" aria-label="Hondo libre"><button type="button" data-punder="25" aria-pressed="true">25 mm</button><button type="button" data-punder="50">50 mm</button><button type="button" data-punder="75">75 mm</button></div><span class="ctl-hint">bajo la bandeja más honda; el hielo también sube por los lados, porque las bandejas no van ajustadas</span></div>
+    </div>
+    <div class="chosen" id="pozo-chosen"></div>
+    <h3>Visto de lado · <span data-zone="barra">norte–sur</span><span data-zone="isla">oeste–este</span></h3>
+    <div class="sheet"><svg id="pozo-side"></svg></div>
+    <div class="legend"><span class="l-top">mesón</span><span class="l-basin">cubeta</span><span class="l-pan">bandeja</span><span class="l-cut">barra adaptadora</span><span class="l-ice" id="pozo-lg">hielo</span></div>
+    <div id="pozo-verdict" class="verdict"></div>
+    <div class="sheet tbl"><table id="pozo-nums"></table></div>
   </section>
 
+
   <section id="bandejas">
-    <h2><span class="num">6</span>El catálogo</h2>
+    <h2><span class="num">7</span>El catálogo</h2>
     <p>Medidas de catálogo, formato US steam table.</p>
     <div class="sheet tbl"><table id="sizes"></table></div>
   </section>
 
   <section id="supuestos">
-    <h2><span class="num">7</span>Lo que aún no sabemos</h2>
+    <h2><span class="num">8</span>Lo que aún no sabemos</h2>
     <ul class="assume" id="assume"></ul>
   </section>
   <section id="glosario">
-    <h2><span class="num">8</span>Cómo llamamos las cosas</h2>
+    <h2><span class="num">9</span>Cómo llamamos las cosas</h2>
     <dl class="terms">
-      <div><dt>Cavidad / franja</dt><dd>Zona del mesón reservada para las bandejas, 175 mm por el largo de la fila. Ahí apoyan los labios. No es un hueco.</dd></div>
+      <div><dt>Franja</dt><dd>Zona del mesón reservada para las bandejas, 175 mm por el largo de la fila. Ahí apoyan los labios. No es un hueco.</dd></div>
+      <div><dt>Cavidad</dt><dd>El hueco que se corta en el mesón: cuerpo más dos holguras, 156 mm de ancho. Siempre más chica que la franja; si fueran iguales, la bandeja se cae.</dd></div>
       <div><dt>Labio</dt><dd>Ceja exterior de la bandeja, la medida de catálogo. Sobresale <span id="t-lip"></span> por lado.</dd></div>
       <div><dt>Cuerpo</dt><dd>Lo que cuelga bajo el mesón. Labio menos dos cejas.</dd></div>
-      <div><dt>Holgura</dt><dd>Aire entre cuerpo y corte, <span id="t-clear"></span> por lado.</dd></div>
-      <div><dt>Corte</dt><dd>El hueco en el mesón: cuerpo más dos holguras.</dd></div>
-      <div><dt>Riel</dt><dd>Mesón que queda entre dos cortes. Carga dos labios.</dd></div>
-      <div><dt>Rebaje</dt><dd>Escalón de 3 mm alrededor del corte para que el labio quede a ras.</dd></div>
+      <div><dt>Holgura</dt><dd>Aire entre cuerpo y cavidad, <span id="t-clear"></span> por lado.</dd></div>
+      <div><dt>Corte</dt><dd>Lo mismo que cavidad, dicho desde la carpintería.</dd></div>
+      <div><dt>Riel</dt><dd>Mesón que queda entre dos cavidades. Carga dos labios.</dd></div>
+      <div><dt>Rebaje</dt><dd>Escalón de 3 mm alrededor de la cavidad para que el labio quede a ras.</dd></div>
     </dl>
   </section>
 
@@ -279,21 +304,21 @@ const MAXD = 4;
 const ZONES = {
   barra: {
     pans: { third: { name: '1/3', w: 12.75, l: 6.875 }, sixth: { name: '1/6', w: 6.25, l: 6.875 }, ninth: { name: '1/9', w: 4.25, l: 6.875 } },
-    strip: 6.875, orient: 'ns', cav: 483, word: 'cavidad',
+    strip: 6.875, orient: 'ns', cav: 483, word: 'franja',
     row: () => [{ p: 'third', d: 4 }, { p: 'sixth', d: 2.5 }],
     aa: ['norte', 'sur'], bb: ['butcher block ←', '→ estufa'],
     catHead: '<th>Bandeja</th><th>Este–oeste</th><th>Norte–sur</th><th>Corte N–S</th><th>Hondos</th>',
     cutHead: '<th>Elemento</th><th>Ancho E–O</th><th>Largo N–S</th><th>Nota</th>',
-    lenNote: L => `<li><b>Largo de la cavidad: ${L} mm</b> — valor de prueba. Entre 450 y 520, 483 es el largo con más combinaciones sin desperdicio: 1/3 + 1/6 y 1/6 + 3 × 1/9 exactos, 3 × 1/6 con 7 mm. A ras pediría 496 a 500.</li>`,
+    lenNote: L => `<li><b>Largo de la franja: ${L} mm</b> — valor de prueba. Entre 450 y 520, 483 es el largo con más combinaciones sin desperdicio: 1/3 + 1/6 y 1/6 + 3 × 1/9 exactos, 3 × 1/6 con 7 mm. A ras pediría 496 a 500.</li>`,
   },
   isla: {
     pans: { third: { name: '1/3', w: 12.75, l: 6.875 }, sixth: { name: '1/6', w: 6.25, l: 6.875 }, ninth: { name: '1/9', w: 4.25, l: 6.875 } },
-    strip: 6.875, orient: 'ew', cav: 975, word: 'pozo',
+    strip: 6.875, orient: 'ew', cav: 975, word: 'franja',
     row: () => [{ p: 'third', d: 4 }, { p: 'third', d: 4 }, { p: 'third', d: 4 }],
     aa: ['oeste', 'este'], bb: ['norte', 'sur'],
     catHead: '<th>Bandeja</th><th>Norte–sur</th><th>Oeste–este</th><th>Corte O–E</th><th>Hondos</th>',
     cutHead: '<th>Elemento</th><th>Ancho N–S</th><th>Largo O–E</th><th>Nota</th>',
-    lenNote: L => `<li><b>Largo del pozo: ${L} mm</b> — estimado. Tres 1/3 ocupan 972, así que 975 es casi exacto (sobran 3). Cada 1/3 se puede abrir en dos 1/6 (318) o tres 1/9 (324).</li>`,
+    lenNote: L => `<li><b>Largo de la franja: ${L} mm</b> — estimado. Tres 1/3 ocupan 972, así que 975 es casi exacto (sobran 3). Cada 1/3 se puede abrir en dos 1/6 (318) o tres 1/9 (324).</li>`,
   },
 };
 let ZONE = 'barra', Z, PANS, KEYS, STRIP, DEFAULT_ROW, ROW, CAV_MM;
@@ -467,10 +492,10 @@ function drawSection(id, flush, items, cavBase, sideLbl) {
     const L = W * S > 150 ? dimLabel : mmL;        // narrow pans: mm only, so labels don't collide
     g += dim(px, y0 - 34, px + W * S, y0 - 34, `labio ${L(W)}`);
     g += dim(bodyX, y0 - 20, bodyX + bw, y0 - 20, `cuerpo ${L(body)}`);
-    g += dim(bodyX - CLEAR * S, y0 + 4.8 * S, bodyX + bw + CLEAR * S, y0 + 4.8 * S, `corte ${L(cut)}`, 16);
+    g += dim(bodyX - CLEAR * S, y0 + 4.8 * S, bodyX + bw + CLEAR * S, y0 + 4.8 * S, `cavidad ${L(cut)}`, 16);
     x += flush ? W + 2 * CLEAR : W;
   }
-  const cavL = cavBase + (flush ? 2 * CLEAR * items.length : 0);   // a ras: la cavidad crece 6 mm por bandeja
+  const cavL = cavBase + (flush ? 2 * CLEAR * items.length : 0);   // a ras: la franja crece 6 mm por bandeja
   const openW = Math.max(x, cavL) * S, left = cavL - x;
   // countertop pieces between cutouts (drawn after pans so the rail reads on top)
   const edges = [M.l - side * S, ...cuts.flatMap(c => [c.a, c.b]), M.l + openW + side * S];
@@ -545,6 +570,7 @@ function render() {
   drawChosen();
   drawSizes();
   drawAssume();
+  drawPozo();
   document.querySelectorAll('[data-zone]').forEach(el => el.hidden = el.dataset.zone !== ZONE);
   document.querySelectorAll('[data-zone-btn]').forEach(b => b.setAttribute('aria-pressed', b.dataset.zoneBtn === ZONE));
   document.querySelector(`[data-zlen="${ZONE}"]`).textContent = CAV_MM;
@@ -558,7 +584,7 @@ function render() {
     `<tr><td>${n}</td><td>${dimLabel(RAIL[m])}</td><td>${KEYS.map(k => mm(PITCH(k)[m])).join(' · ')} mm</td><td>${dimLabel(rowLen(m))}</td><td>${work}</td><td>${grip}</td></tr>`).join('');
 }
 
-// ---- combinaciones que caben en la cavidad ----
+// ---- combinaciones que caben en la franja ----
 function combos() {
   const L = CAVITY.l, out = [];
   const rec = (i, counts, len) => {
@@ -599,10 +625,10 @@ function drawChosen() {
     ? '<b>Sobrepuesto:</b> el labio apoyaría sobre el mesón y serviría de agarre. Términos en el <a href="#glosario">glosario</a>.'
     : '<b>A ras:</b> el labio bajaría a un <a href="#glosario">rebaje</a> y quedaría al nivel del mesón.';
   document.getElementById('corte-note').innerHTML = MOUNT === 'proud'
-    ? `<p>Tres anchos por bandeja: <b>labio</b>, <b>cuerpo</b> y <b>corte</b>.</p><p>Las bandejas van labio con labio. Entre dos cortes queda el <b>riel</b>: ${mmL(RAIL.proud)}.</p>`
-    : `<p>El rebaje sería un segundo paso: ${mmL(LIP + CLEAR)} de ancho y ${mmL(LIPT)} de hondo alrededor de cada corte.</p><p>Cada bandeja pide ${mmL(2 * CLEAR)} más de paso y el riel crece a ${mmL(RAIL.flush)}.</p><p><b>Ojo:</b> sin labio a la vista no habría de dónde agarrar. Haría falta una muesca o un punto de izaje por bandeja.</p>`;
+    ? `<p>Tres anchos por bandeja: <b>labio</b>, <b>cuerpo</b> y <b>cavidad</b>.</p><p>Las bandejas van labio con labio. Entre dos cavidades queda el <b>riel</b>: ${mmL(RAIL.proud)}.</p>`
+    : `<p>El rebaje sería un segundo paso: ${mmL(LIP + CLEAR)} de ancho y ${mmL(LIPT)} de hondo alrededor de cada cavidad.</p><p>Cada bandeja pide ${mmL(2 * CLEAR)} más de paso y el riel crece a ${mmL(RAIL.flush)}.</p><p><b>Ojo:</b> sin labio a la vista no habría de dónde agarrar. Haría falta una muesca o un punto de izaje por bandeja.</p>`;
 }
-// ---- cavidad vs labios ----
+// ---- franja vs labios vs cavidades ----
 function fitGeom() {
   const flush = MOUNT === 'flush', n = ROW.length;
   const lipW = STRIP;                                          // 162 mm, la franja
@@ -620,7 +646,7 @@ function drawFit() {
   let g = h('rect', { x: M.l, y: M.t, width: cavL, height: cavW, class: 'cav' });
   let x = M.l, y = M.t;
   if (g0.flush) {
-    // el rebaje se centra en la cavidad; si es más ancho, sobresale y se ve
+    // el rebaje se centra en la franja; si es más ancho, sobresale y se ve
     y = M.t - CLEAR * S;
     g += h('rect', { x: M.l, y, width: g0.pocketL * S, height: g0.pocketW * S, class: 'pocket' });
     x = M.l + CLEAR * S; y = M.t;
@@ -633,7 +659,7 @@ function drawFit() {
     g += h('rect', { x: x + (W - cut) / 2 * S, y: y + (g0.lipW - cutA) / 2 * S, width: cut * S, height: cutA * S, class: 'cut' });
     g += h('text', { x: x + W * S / 2, y: y + g0.lipW * S / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, PANS[it.p].name);
     g += dim(x, M.t + cavW + 14, x + W * S, M.t + cavW + 14, `labio ${mm(W)}`, 14);
-    g += dim(x + (W - cut) / 2 * S, M.t + cavW + 32, x + (W + cut) / 2 * S, M.t + cavW + 32, `corte ${mm(cut)}`, 14);
+    g += dim(x + (W - cut) / 2 * S, M.t + cavW + 32, x + (W + cut) / 2 * S, M.t + cavW + 32, `cavidad ${mm(cut)}`, 14);
     x += (W + (g0.flush ? 2 * CLEAR : 0)) * S;
   }
   g += h('rect', { x: M.l, y: M.t, width: cavL, height: cavW, class: 'cav-line' });
@@ -641,7 +667,7 @@ function drawFit() {
   g += dim(M.l, M.t - 40, M.l + cavL, M.t - 40, `franja reservada ${mm(g0.cavL)} mm`);
   g += dim(M.l, M.t - 24, M.l + g0.needL * S, M.t - 24, `${g0.flush ? 'rebaje' : 'labios'} ${mm(g0.needL)} mm`);
   g += dim(M.l - 14, M.t, M.l - 14, M.t + cavW, `franja ${mm(g0.cavW)}`);
-  g += dim(M.l + cavL + 14, M.t + (g0.lipW - g0.cutW) / 2 * S, M.l + cavL + 14, M.t + (g0.lipW + g0.cutW) / 2 * S, `corte ${mm(g0.cutW)}`, 62);
+  g += dim(M.l + cavL + 14, M.t + (g0.lipW - g0.cutW) / 2 * S, M.l + cavL + 14, M.t + (g0.lipW + g0.cutW) / 2 * S, `cavidad ${mm(g0.cutW)}`, 62);
   if (g0.flush) g += dim(M.l - 74, M.t - CLEAR * S, M.l - 74, M.t - CLEAR * S + g0.pocketW * S, `rebaje ${mm(g0.pocketW)}`);
   g += h('text', { x: M.l, y: M.t + cavW + 54, class: 'sub' }, 'O → E');
   const svg = document.getElementById('fit');
@@ -657,15 +683,79 @@ function drawFit() {
   const rows = [
     ['Franja reservada', g0.cavW, g0.cavL, 'no se corta'],
     g0.flush ? ['Rebaje, 3 mm de hondo', g0.pocketW, g0.pocketL, 'un bolsillo para toda la fila'] : null,
-    ...ROW.map((it, i) => ['Corte pasante ' + (i + 1) + ' · ' + PANS[it.p].name, PANS[it.p].l - 2 * LIP + 2 * CLEAR, PANS[it.p].w - 2 * LIP + 2 * CLEAR, 'cuerpo + 3 mm por lado']),
-    ['Riel entre cortes', null, RAIL[MOUNT], `${g0.flush ? '3 mm bajo la superficie' : ''}`],
+    ...ROW.map((it, i) => ['Cavidad ' + (i + 1) + ' · ' + PANS[it.p].name, PANS[it.p].l - 2 * LIP + 2 * CLEAR, PANS[it.p].w - 2 * LIP + 2 * CLEAR, 'cuerpo + 3 mm por lado']),
+    ['Riel entre cavidades', null, RAIL[MOUNT], `${g0.flush ? '3 mm bajo la superficie' : ''}`],
   ].filter(Boolean);
   document.getElementById('cuts').innerHTML = `<tr>${Z.cutHead}</tr>` +
     rows.map(([n, w, l, note]) => `<tr><td>${n}</td><td>${w == null ? '—' : mm(w) + ' mm'}</td><td>${mm(l)} mm</td><td style="white-space:normal">${note}</td></tr>`).join('');
 }
 
+// ---- pozo debajo: cubeta de hielo o agua bajo la fila ----
+const POZO = { wall: 1.5 / 25.4, drain: 0.75 };
+let PUSE = 'ice', PLEVEL = 0.75, PUNDER = 25 / 25.4;
+function pozoGeom() {
+  const cutW = STRIP - 2 * LIP + 2 * CLEAR, cutL = CAVITY.l - 2 * LIP + 2 * CLEAR;   // el corte de hoy; la cubeta cuelga de él
+  const deepest = Math.max(...ROW.map(it => it.d)), depth = deepest + PUNDER;
+  return { cutW, cutL, inW: cutW - 2 * POZO.wall, inL: cutL - 2 * POZO.wall, deepest, depth, total: depth + POZO.wall };
+}
+function drawPozo() {
+  const g0 = pozoGeom(), S = 0.95 * 25.4 * (CAVITY.l > 30 ? 0.55 : 1), side = 110 / 25.4, M = { l: 190, t: 80 };
+  const y0 = M.t, topH = TOP * S;
+  const xCut = M.l + side * S, wCut = g0.cutL * S, bottom = y0 + g0.total * S;
+  let g = '';
+  g += h('rect', { x: M.l, y: y0, width: side * S, height: topH, class: 'top' });
+  g += h('rect', { x: xCut + wCut, y: y0, width: side * S, height: topH, class: 'top' });
+  g += h('text', { x: M.l + side * S / 2, y: y0 + topH + 14, 'text-anchor': 'middle', class: 'sub' }, Z.aa[0]);
+  g += h('text', { x: xCut + wCut + side * S / 2, y: y0 + topH + 14, 'text-anchor': 'middle', class: 'sub' }, Z.aa[1]);
+  const fillH = g0.depth * PLEVEL * S, fillY = y0 + g0.depth * S - fillH;
+  g += h('rect', { x: xCut + 2, y: fillY, width: wCut - 4, height: fillH, class: PUSE === 'ice' ? 'ice' : 'water' });
+  g += h('path', { d: `M${xCut},${fillY}h${wCut}`, stroke: 'var(--accent)', 'stroke-width': 1, 'stroke-dasharray': '3 2' });
+  g += h('path', { d: `M${xCut - LIP * S},${y0 - 3}h${LIP * S}v${g0.depth * S}h${wCut}v${-g0.depth * S}h${LIP * S}`, class: 'basin' });
+  let x = xCut - CLEAR * S;
+  ROW.forEach((it, i) => {
+    const p = PANS[it.p], lipW = p.w * S, bw = (p.w - 2 * LIP) * S, bx = x + LIP * S, taper = 0.4 * S, d = it.d * S;
+    if (i > 0) g += h('rect', { x: x - 0.5 * S, y: y0 - 2, width: 1 * S, height: 0.35 * S, fill: 'var(--steel-edge)' });
+    g += h('path', { d: `M${x},${y0 - 5}h${lipW}v3h${-LIP * S}L${bx + bw - taper},${y0 + d}h${-(bw - 2 * taper)}L${bx},${y0 - 2}h${-LIP * S}z`, class: 'pan' });
+    g += h('text', { x: x + lipW / 2, y: y0 + d / 2 + 3, 'text-anchor': 'middle', class: 'lbl' }, p.name);
+    if (lipW > 60) g += h('text', { x: x + lipW / 2, y: y0 + d / 2 + 14, 'text-anchor': 'middle', class: 'sub' }, `${mm(it.d)} mm`);
+    x += lipW;
+  });
+  const dx = xCut + wCut / 2;
+  g += h('rect', { x: dx - 0.15 * S, y: y0 + (g0.deepest + 0.3) * S, width: 0.3 * S, height: (PUNDER - 0.3) * S, fill: 'var(--steel-edge)' });
+  g += h('rect', { x: dx - POZO.drain * S / 2, y: bottom, width: POZO.drain * S, height: 1 * S, fill: 'var(--steel-edge)' });
+  g += h('text', { x: xCut, y: bottom + 1 * S + 12, class: 'sub' }, `desagüe ${mm(POZO.drain)} mm con rebosadero → sifón, o llave y balde`);
+  g += h('text', { x: xCut + wCut, y: bottom + 1 * S + 12, 'text-anchor': 'end', class: 'sub' }, `nivel ${PLEVEL === 0.5 ? '½' : '¾'} · ${mm(g0.depth * PLEVEL)} mm desde el fondo`);
+  g += dim(xCut, y0 - 24, xCut + wCut, y0 - 24, `cavidad y cubeta ${mm(g0.cutL)} mm`);
+  g += dim(M.l - 14, y0, M.l - 14, y0 + g0.deepest * S, `bandeja ${mm(g0.deepest)}`);
+  g += dim(M.l - 54, y0 + g0.deepest * S, M.l - 54, y0 + g0.depth * S, `${PUSE === 'ice' ? 'hielo' : 'agua'} ${mm(PUNDER)}`);
+  g += dim(M.l - 100, y0, M.l - 100, bottom, `cubeta ${mm(g0.total)}`);
+  const svg = document.getElementById('pozo-side');
+  svg.setAttribute('viewBox', `0 0 ${xCut + wCut + side * S + 150} ${bottom + 2.2 * S}`);
+  svg.innerHTML = g;
+  document.getElementById('pozo-lg').textContent = PUSE === 'ice' ? 'hielo' : 'agua caliente';
+  document.querySelectorAll('[data-puse]').forEach(b => b.setAttribute('aria-pressed', b.dataset.puse === PUSE));
+  document.querySelectorAll('[data-plevel]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.plevel === PLEVEL));
+  document.querySelectorAll('[data-punder]').forEach(b => b.setAttribute('aria-pressed', Math.round(+b.dataset.punder) === mm(PUNDER)));
+  document.getElementById('pozo-chosen').innerHTML = `<b>Probando:</b> cubeta ${mm(g0.cutW)} × ${mm(g0.cutL)} mm por fuera, ${mmL(g0.depth)} de hondo · ${PUSE === 'ice' ? 'hielo' : 'agua caliente'} ${mmL(PUNDER)} bajo la bandeja, lleno a ${PLEVEL === 0.5 ? '½' : '¾'} · desagüe ${mmL(POZO.drain)}`;
+  document.getElementById('pozo-verdict').innerHTML =
+    `<div class="ok"><b>En planta:</b> nada nuevo. La cubeta cuelga de la cavidad de hoy, ${mm(g0.cutW)} × ${mm(g0.cutL)} mm; la franja no cambia.</div>` +
+    `<div class="no"><b>Debajo:</b> ${mmL(g0.total)} de cubeta bajo el mesón más el desagüe. En ese tramo no cabe un cajón a esa altura, y el desagüe tiene que salir a un sifón o a una llave.</div>` +
+    (MOUNT === 'flush' ? '<div class="no"><b>A ras:</b> el reborde de la cubeta también pediría rebaje. No está modelado.</div>' : '');
+  document.getElementById('pozo-nums').innerHTML = '<tr><th>Número</th><th>Valor</th><th>Qué decide</th></tr>' +
+    [['Cavidad', `${mm(g0.cutW)} × ${mm(g0.cutL)} mm`, `la misma de hoy. Interior ${mm(g0.inW)} × ${mm(g0.inL)}`],
+     ['Hondo de la cubeta', mmL(g0.depth), `bandeja de ${mmL(g0.deepest)} más ${mmL(PUNDER)} debajo; se puede echar más, sube por los lados`],
+     ['Desagüe', `${mmL(POZO.drain)} + rebosadero`, 'a un sifón si pasa una línea; si no, una llave y un balde'],
+     ['Agua caliente', 'se llena a mano', 'sin resistencia; se cambia. Permanente sería otro aparato']]
+    .map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td style="white-space:normal">${r[2]}</td></tr>`).join('');
+}
+document.getElementById('pozo-ctl').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.puse) PUSE = b.dataset.puse; else if (b.dataset.plevel) PLEVEL = +b.dataset.plevel; else if (b.dataset.punder) PUNDER = +b.dataset.punder / 25.4;
+  drawPozo(); writeHash();
+});
+
 // estado en la URL para que el enlace lleve la configuración
-function writeHash() { try { history.replaceState(null, '', `#z=${ZONE}&L=${CAV_MM}&m=${MOUNT}&r=${ROW.map(it => `${it.p}:${it.d}`).join(',')}`); } catch (e) { /* hosts de vista previa bloquean replaceState */ } }
+function writeHash() { try { history.replaceState(null, '', `#z=${ZONE}&L=${CAV_MM}&m=${MOUNT}&r=${ROW.map(it => `${it.p}:${it.d}`).join(',')}&p=${PUSE}:${PLEVEL}:${mm(PUNDER)}`); } catch (e) { /* hosts de vista previa bloquean replaceState */ } }
 function readHash() {
   const q = new URLSearchParams(location.hash.slice(1));
   if (ZONES[q.get('z')]) applyZone(q.get('z'));
@@ -673,6 +763,7 @@ function readHash() {
   if (['proud', 'flush'].includes(q.get('m'))) MOUNT = q.get('m');
   const r = (q.get('r') || '').split(',').map(x => x.split(':')).filter(([p, d]) => PANS[p] && [2.5, 4].includes(+d)).map(([p, d]) => ({ p, d: +d }));
   if (r.length) ROW = r;
+  const pz = (q.get('p') || '').split(':'); if (pz.length === 3) { if (['ice', 'hot'].includes(pz[0])) PUSE = pz[0]; if ([0.5, 0.75].includes(+pz[1])) PLEVEL = +pz[1]; if ([25, 50, 75].includes(+pz[2])) PUNDER = +pz[2] / 25.4; }
 }
 
 document.getElementById('cav-len').addEventListener('change', e => {
@@ -716,7 +807,8 @@ function drawAssume() {
     ['Espesor del mesón', TOP, 'por definir'],
   ].map(([n, v, why]) => `<li><b>${n}: ${dimLabel(v)}</b> — ${why}.</li>`).join('') +
     Z.lenNote(CAV_MM) +
-    '<li><b>Aire bajo la bandeja más honda</b> — para sacarla.</li>';
+    '<li><b>Aire bajo la bandeja más honda</b> — para sacarla.</li>' +
+    '<li><b>Cubeta del pozo: lámina 1,5 mm, reborde 13 mm, desagüe 19 mm</b> — por confirmar con quien la fabrique.</li>';
 }
 
 // rellenos en el texto
