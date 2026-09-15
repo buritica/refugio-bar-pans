@@ -824,7 +824,7 @@ function buildPrint() {
     for (const [px, py] of [[MG, MG], [PW - MG, MG], [MG, PH - MG], [PW - MG, PH - MG]]) d += `<path d="M${px - 4},${py}h8M${px},${py - 4}v8" stroke="#1f2428" stroke-width="0.25"/>`;
     // barra de control de escala + pie
     d += `<path d="M${MG},${PH - 5}h100" stroke="#1f2428" stroke-width="0.6"/><path d="M${MG},${PH - 7}v4M${MG + 100},${PH - 7}v4" stroke="#1f2428" stroke-width="0.4"/><text x="${MG + 103}" y="${PH - 4}" font-size="3" font-family="IBM Plex Mono, monospace">= 100 mm si está al 100 %</text>`;
-    d += `<text x="${PW - MG}" y="${PH - 4}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">1:1 · ${ZONE} · ${ROW.map(it => PANS[it.p].name).join(' + ')} · hoja ${k + 1}/${pages}</text>`;
+    d += `<text x="${PW - MG}" y="${PH - 9.5}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">1:1 · ${ZONE} · ${ROW.map(it => PANS[it.p].name).join(' + ')} · hoja ${k + 1}/${pages}</text>`;
     html += `<div class="pg"><svg viewBox="0 0 ${PW} ${PH}" xmlns="http://www.w3.org/2000/svg"><defs>${g}</defs>${d}</svg></div>`;
   }
   const el = document.getElementById('print'); el.innerHTML = html; el.hidden = false;
