@@ -85,6 +85,12 @@
   .ice { fill: var(--accent-soft); }
   .water { fill: #f3d9c4; }
   #terms-fig { max-width: 820px; margin: 0 auto; }
+  .res-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+  .res { background: var(--paper); border: 1px solid var(--line); padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
+  .res-name { font-weight: 600; }
+  .res p { font-size: .92rem; }
+  .res-meta { font-family: var(--mono); font-size: .74rem; color: var(--ink-2); }
+  .res-btns { display: flex; flex-wrap: wrap; gap: 6px; }
   .cap { font-family: var(--mono); font-size: .74rem; color: var(--ink-2); margin-top: -4px; }
   .sheet:has(> svg) { cursor: zoom-in; }
   .two .sheet:has(> svg) { cursor: default; }
@@ -190,8 +196,9 @@
     <a href="#corte">5 En corte</a>
     <a href="#pozo">6 Pozo</a>
     <a href="#bandejas">7 Catálogo</a>
-    <a href="#supuestos">8 Dudas</a>
-    <a href="#glosario">9 Palabras</a>
+    <a href="#recursos">8 Imprimir</a>
+    <a href="#supuestos">9 Dudas</a>
+    <a href="#glosario">10 Palabras</a>
   </nav>
 
   <section id="principios">
@@ -253,8 +260,6 @@
     <div id="verdict" class="verdict"></div>
     <h3>Lo que habría que cortar</h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
-    <div class="ctl-row"><span class="ctl-lbl">Plantilla 1:1</span><div class="seg" role="group" aria-label="Qué imprimir"><button type="button" data-what="meson" aria-pressed="true">Mesón</button><button type="button" data-what="pans" aria-pressed="false">Bandejas recortables</button></div><span class="ctl-hint" data-what-hint="meson">franja y cavidad, sin bandejas: para pegar sobre el butcher block</span><span class="ctl-hint" data-what-hint="pans" hidden>una hoja por tipo de bandeja, labio como línea de corte y cuerpo punteado: recórtelas y muévalas sobre la plantilla del mesón</span></div>
-    <div class="ctl-row"><span class="ctl-lbl">Papel</span><button type="button" class="btn" data-paper="carta">Carta</button><button type="button" class="btn" data-paper="a4">A4</button><button type="button" class="btn" data-paper="plotter">Plóter, una hoja</button><span class="ctl-hint">escala real, sin ajustar a la página. Carta y A4 van en hojas con solape; el plóter imprime todo de una vez.</span></div>
   </section>
 
   <section id="comparacion">
@@ -308,12 +313,32 @@
     <div class="sheet tbl"><table id="sizes"></table></div>
   </section>
 
+  <section id="recursos">
+    <h2><span class="num">8</span>Para imprimir</h2>
+    <p>Plantillas a escala real de lo que está arriba: la fila, la franja y el montaje que tenga elegidos ahora. Imprima al 100 %, sin ajustar a la página, y mida la barra de 100 mm de cada hoja antes de confiar en el resto.</p>
+    <div class="res-grid">
+      <div class="res">
+        <div class="res-name">Plantilla del mesón</div>
+        <p>La franja y la cavidad, sin bandejas. Se pega sobre el butcher block para ver la posición antes de cortar. Marca dónde se juntan las bandejas de la fila.</p>
+        <div class="res-meta" id="res-meta-meson"></div>
+        <div class="res-btns"><button type="button" class="btn" data-print="meson:carta">Carta</button><button type="button" class="btn" data-print="meson:a4">A4</button><button type="button" class="btn" data-print="meson:plotter">Plóter</button></div>
+      </div>
+      <div class="res">
+        <div class="res-name">Bandejas recortables</div>
+        <p>Una de cada tipo, a escala: el labio como línea de corte, el cuerpo punteado. Se recortan y se mueven sobre la plantilla del mesón. Para más de una del mismo tipo, imprima esa hoja varias veces.</p>
+        <div class="res-meta" id="res-meta-pans"></div>
+        <div class="res-btns"><button type="button" class="btn" data-print="pans:carta">Carta</button><button type="button" class="btn" data-print="pans:a4">A4</button><button type="button" class="btn" data-print="pans:plotter">Plóter</button></div>
+      </div>
+    </div>
+    <p class="ctl-hint">Carta y A4 van en hojas con 10 mm de solape y línea de corte; lo que no cabe en una hoja sigue en la siguiente. El plóter imprime cada plantilla en una sola hoja a la medida.</p>
+  </section>
+
   <section id="supuestos">
-    <h2><span class="num">8</span>Lo que aún no sabemos</h2>
+    <h2><span class="num">9</span>Lo que aún no sabemos</h2>
     <ul class="assume" id="assume"></ul>
   </section>
   <section id="glosario">
-    <h2><span class="num">9</span>Cómo llamamos las cosas</h2>
+    <h2><span class="num">10</span>Cómo llamamos las cosas</h2>
     <p>Un corte a través de una bandeja, con cada palabra en su parte. Gris, la bandeja; beige, el mesón.</p>
     <div class="sheet"><svg id="terms-fig"></svg></div>
     <div class="cap">Corte transversal · una bandeja en el mesón, con cada término en su parte. Clic para ampliar.</div>
@@ -636,6 +661,7 @@ function render() {
   drawAssume();
   drawPozo();
   drawTerms();
+  printMeta();
   document.querySelectorAll('[data-zone]').forEach(el => el.hidden = el.dataset.zone !== ZONE);
   document.querySelectorAll('[data-zone-btn]').forEach(b => b.setAttribute('aria-pressed', b.dataset.zoneBtn === ZONE));
   document.querySelector(`[data-zlen="${ZONE}"]`).textContent = CAV_MM;
@@ -884,39 +910,61 @@ function buildPrint(paper = 'carta') {
 }
 // bandejas recortables: una hoja por tipo, a escala, labio = línea de corte, cuerpo = punteado
 function buildPrintPans(paper) {
-  const MG = 10, plot = paper === 'plotter';
+  const MG = 10, OV = 10, plot = paper === 'plotter';
   const lipW = mm(STRIP), bodyW = mm(STRIP - 2 * LIP);
   const sheets = KEYS.map(k => ({ k, name: PANS[k].name, L: mm(PANS[k].w), B: mm(PANS[k].w - 2 * LIP) }));
   let PW = plot ? lipW + 2 * MG + 40 : PAPERS[paper].PW, PH = plot ? sheets.reduce((a, p) => a + p.L + 12, 0) + 2 * MG + 30 : PAPERS[paper].PH;
+  const usable = PH - 2 * MG - 14, step = usable - OV;
   const one = (x, y, p) => `<rect x="${x}" y="${y}" width="${lipW}" height="${p.L}" fill="none" stroke="#1f2428" stroke-width="0.6"/>` +
     `<rect x="${x + mm(LIP)}" y="${y + mm(LIP)}" width="${bodyW}" height="${p.B}" fill="none" stroke="#7f8b93" stroke-width="0.35" stroke-dasharray="1.5 1"/>` +
     `<text x="${x + lipW / 2}" y="${y + p.L / 2}" font-size="7" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#1f2428">${p.name}</text>` +
     `<text x="${x + lipW / 2}" y="${y + p.L / 2 + 6}" font-size="3.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#5b656c">labio ${lipW} × ${p.L} · cuerpo ${bodyW} × ${p.B} · recortar por la línea continua</text>`;
-  const foot = (k, n) => `<path d="M${MG},${PH - 5}h100" stroke="#1f2428" stroke-width="0.6"/><path d="M${MG},${PH - 7}v4M${MG + 100},${PH - 7}v4" stroke="#1f2428" stroke-width="0.4"/><text x="${MG + 103}" y="${PH - 4}" font-size="3" font-family="IBM Plex Mono, monospace">= 100 mm si está al 100 %</text>` +
-    `<text x="${PW - MG}" y="${PH - 9.5}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">bandejas recortables 1:1 · ${plot ? 'plóter' : PAPERS[paper].name + ' · hoja ' + k + '/' + n}</text>`;
+  const foot = (label) => `<path d="M${MG},${PH - 5}h100" stroke="#1f2428" stroke-width="0.6"/><path d="M${MG},${PH - 7}v4M${MG + 100},${PH - 7}v4" stroke="#1f2428" stroke-width="0.4"/><text x="${MG + 103}" y="${PH - 4}" font-size="3" font-family="IBM Plex Mono, monospace">= 100 mm si está al 100 %</text>` +
+    `<text x="${PW - MG}" y="${PH - 9.5}" font-size="3" text-anchor="end" font-family="IBM Plex Mono, monospace">bandejas recortables 1:1 · ${label}</text>`;
+  const page = (inner, label) => `<div class="pg" style="width:${PW}mm;height:${PH}mm"><svg viewBox="0 0 ${PW} ${PH}" style="width:${PW}mm;height:${PH}mm" xmlns="http://www.w3.org/2000/svg">${inner}${foot(label)}</svg></div>`;
   let html = '';
   const ox = (PW - lipW) / 2;
   if (plot) {
     let y = MG + 10, d = '';
     for (const p of sheets) { d += one(ox, y, p); y += p.L + 12; }
-    html = `<div class="pg" style="width:${PW}mm;height:${PH}mm"><svg viewBox="0 0 ${PW} ${PH}" style="width:${PW}mm;height:${PH}mm" xmlns="http://www.w3.org/2000/svg">${d}${foot(1, 1)}</svg></div>`;
+    html = page(d, 'plóter, una hoja');
   } else {
-    // una hoja por tipo; en la hoja caben tantas como quepan a lo alto
-    sheets.forEach((p, i) => {
-      let y = MG + 8, d = '';
-      while (y + p.L <= PH - MG - 14) { d += one(ox, y, p); y += p.L + 8; }
-      html += `<div class="pg" style="width:${PW}mm;height:${PH}mm"><svg viewBox="0 0 ${PW} ${PH}" style="width:${PW}mm;height:${PH}mm" xmlns="http://www.w3.org/2000/svg">${d}${foot(i + 1, sheets.length)}</svg></div>`;
-    });
+    let n = 0;
+    for (const p of sheets) {
+      if (p.L <= usable) {
+        // caben enteras: tantas como quepan a lo alto
+        let y = MG + 8, d = '';
+        while (y + p.L <= MG + usable) { d += one(ox, y, p); y += p.L + 8; }
+        html += page(d, `${PAPERS[paper].name} · ${p.name} · hoja ${++n}`);
+      } else {
+        // más larga que la hoja: se parte en tramos con solape, como la plantilla del mesón
+        const parts = Math.ceil((p.L - OV) / step);
+        for (let k = 0; k < parts; k++) {
+          const oy = MG + 8 - k * step;
+          let d = `<clipPath id="pc${n}"><rect x="${MG}" y="${MG}" width="${PW - 2 * MG}" height="${usable}"/></clipPath><g clip-path="url(#pc${n})">${one(ox, oy, p)}</g>`;
+          if (k > 0) d += `<path d="M${MG},${MG + OV}H${PW - MG}" stroke="#c0392b" stroke-width="0.3" stroke-dasharray="2 1"/><text x="${PW - MG}" y="${MG + OV - 1.5}" font-size="3.5" text-anchor="end" font-family="IBM Plex Mono, monospace" fill="#c0392b">solape con el borde inferior del tramo ${k}</text>`;
+          if (k < parts - 1) d += `<path d="M${MG},${MG + usable}H${PW - MG}" stroke="#c0392b" stroke-width="0.3"/><text x="${MG}" y="${MG + usable - 1.5}" font-size="3.5" font-family="IBM Plex Mono, monospace" fill="#c0392b">corte aquí y pega el tramo ${k + 2} sobre los 10 mm de solape</text>`;
+          html += page(d, `${PAPERS[paper].name} · ${p.name} · tramo ${k + 1}/${parts} · hoja ${++n}`);
+        }
+      }
+    }
   }
   let st = document.getElementById('page-size'); if (!st) { st = document.createElement('style'); st.id = 'page-size'; document.head.appendChild(st); }
   st.textContent = `@page { size: ${PW}mm ${PH}mm; margin: 0; }`;
   const el = document.getElementById('print'); el.innerHTML = html; el.hidden = false;
 }
-document.querySelectorAll('[data-paper]').forEach(b => b.addEventListener('click', () => { buildPrint(b.dataset.paper); window.print(); }));
-document.querySelectorAll('[data-what]').forEach(b => b.addEventListener('click', () => {
-  PRINT_WHAT = b.dataset.what;
-  document.querySelectorAll('[data-what]').forEach(x => x.setAttribute('aria-pressed', x.dataset.what === PRINT_WHAT));
-  document.querySelectorAll('[data-what-hint]').forEach(x => x.hidden = x.dataset.whatHint !== PRINT_WHAT);
+// cuántas hojas pide cada plantilla en cada papel, para la tarjeta
+function printMeta() {
+  const MG = 10, OV = 10, fl = mm(CAVITY.l), fw = mm(CAVITY.w);
+  const mesonPages = p => { const usable = PAPERS[p].PH - 2 * MG; return Math.max(1, Math.ceil((fl + 20 - OV) / (usable - OV))); };
+  const pansPages = p => { const usable = PAPERS[p].PH - 2 * MG - 14, step = usable - OV; return KEYS.reduce((a, k) => a + (mm(PANS[k].w) <= usable ? 1 : Math.ceil((mm(PANS[k].w) - OV) / step)), 0); };
+  const lipW = mm(STRIP), pansH = KEYS.reduce((a, k) => a + mm(PANS[k].w) + 12, 0) + 2 * MG + 30;
+  document.getElementById('res-meta-meson').textContent = `carta ${mesonPages('carta')} hojas · A4 ${mesonPages('a4')} · plóter 1 hoja de ${fw + 2 * MG + 60} × ${fl + 2 * MG + 40} mm`;
+  document.getElementById('res-meta-pans').textContent = `carta ${pansPages('carta')} hojas · A4 ${pansPages('a4')} · plóter 1 hoja de ${lipW + 2 * MG + 40} × ${pansH} mm`;
+}
+document.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', () => {
+  const [what, paper] = b.dataset.print.split(':');
+  PRINT_WHAT = what; buildPrint(paper); window.print();
 }));
 
 
