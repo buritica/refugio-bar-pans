@@ -250,6 +250,10 @@
     <h2><span class="num">4</span>Sobre el mesón o a ras</h2>
     <p>Dos maneras de que el labio encuentre el mesón. El selector de arriba cambia entre las dos; aquí van lado a lado.</p>
     <div class="sheet tbl"><table id="mounts"></table></div>
+    <h3>La tapa ciega</h3>
+    <p>Cuando la barra no está en uso, una sola pieza de acero con el <b>mismo labio de 13 mm</b> que las bandejas ocupa toda la franja, y una falda de 20 mm entra en cada cavidad para que no se mueva. Se pone y se quita como una bandeja más. El selector Abierta / Cerrada de arriba la muestra en planta y en los cortes.</p>
+    <p>Sirve con los dos montajes, porque se apoya igual que las bandejas. <b>Sobrepuesta</b>, queda 3 mm por encima del mesón: una franja de acero continua con un escalón mínimo en el borde. <b>A ras</b>, baja al rebaje y el mesón vuelve a ser un solo plano; es el mejor argumento a favor del montaje a ras.</p>
+    <p>Dos cosas que decide: cómo se levanta (a ras no hay labio a la vista, así que pide una muesca o una ventosa, igual que las bandejas) y dónde se guarda cuando la barra está abierta: mide <span id="t-tapa"></span> y no cabe en un cajón cualquiera.</p>
   </section>
 
   <section id="corte">
@@ -303,6 +307,7 @@
       <div><dt>Holgura</dt><dd>Aire entre cuerpo y cavidad, <span id="t-clear"></span> por lado.</dd></div>
       <div><dt>Corte</dt><dd>Lo mismo que cavidad, dicho desde la carpintería.</dd></div>
       <div><dt>Riel</dt><dd>Mesón que queda entre dos cavidades. Carga dos labios.</dd></div>
+      <div><dt>Tapa ciega</dt><dd>Pieza de acero del tamaño de la franja, con el mismo labio que las bandejas y una falda en cada cavidad. Cierra la barra cuando no se usa. Va con los dos montajes.</dd></div>
       <div><dt>Rebaje</dt><dd>Escalón de 3 mm alrededor de la cavidad para que el labio quede a ras.</dd></div>
     </dl>
   </section>
@@ -611,6 +616,7 @@ function render() {
   document.querySelector(`[data-zlen="${ZONE}"]`).textContent = CAV_MM;
   document.getElementById('cav-len').value = CAV_MM;
   document.getElementById('cav-w').textContent = mm(CAVITY.w);
+  document.getElementById('t-tapa').textContent = `${mm(STRIP)} × ${mm(CAVITY.l)} mm`;
   document.querySelectorAll('[data-mount]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mount === MOUNT));
   document.querySelectorAll('[data-state]').forEach(b => b.setAttribute('aria-pressed', b.dataset.state === STATE));
   writeHash();
