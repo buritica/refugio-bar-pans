@@ -86,6 +86,14 @@
   .ice { fill: var(--accent-soft); }
   .water { fill: #f3d9c4; }
   #terms-fig { max-width: 820px; margin: 0 auto; }
+  .cap { font-family: var(--mono); font-size: .74rem; color: var(--ink-2); margin-top: -4px; }
+  .sheet:has(> svg) { cursor: zoom-in; }
+  .two .sheet:has(> svg) { cursor: default; }
+  #lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(20, 24, 28, .82); display: grid; place-items: center; padding: 24px; cursor: zoom-out; }
+  #lightbox[hidden] { display: none; }
+  .lb-inner { background: var(--paper); border: 1px solid var(--line); padding: 16px; max-width: 96vw; max-height: 88vh; overflow: auto; }
+  .lb-inner svg { width: min(92vw, 1600px); height: auto; min-width: 0; }
+  .lb-hint { position: fixed; bottom: 12px; right: 16px; font-family: var(--mono); font-size: .74rem; color: #e6e9eb; }
   .legend .l-ice::before { background: var(--accent-soft); border-color: var(--accent-soft); }
   .legend .l-basin::before { background: transparent; border: 2px solid var(--steel-edge); }
   .pocket { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1; stroke-dasharray: 2 2; }
@@ -231,6 +239,7 @@
     </div>
     <div class="chosen" id="chosen"></div>
     <div class="sheet"><svg id="plan"></svg></div>
+    <div class="cap">Planta · vista desde arriba. <span data-zone="barra">Norte arriba, invitado al norte.</span><span data-zone="isla">Oeste a la izquierda.</span> Clic para ampliar.</div>
     <div class="legend"><span class="l-cav">franja reservada</span><span class="l-cut">cavidad</span><span class="l-pan">bandeja (labio exterior)</span><span class="l-left">sobrante</span><span class="hint">clic en una bandeja: 64 ↔ 102 mm · <button type="button" id="flip" class="link">invertir <span data-zone="barra">N↔S</span><span data-zone="isla">O↔E</span></button></span></div>
     <h3>Lo que cabe en ese largo</h3>
     <div id="cards" class="cards"></div>
@@ -240,6 +249,7 @@
     <h2><span class="num">3</span>¿Y esto cabe?</h2>
     <p>De afuera hacia adentro: la <b>franja</b> que se reservaría, los <b>labios</b> y la <b>cavidad</b>, que es el único hueco. A ras la franja crece 3 mm por lado para que el labio baje al <b>rebaje</b>. La prueba es simple: cada rectángulo tiene que caber en el de afuera.</p>
     <div class="sheet"><svg id="fit"></svg></div>
+    <div class="cap">Planta esquemática · franja, labios y cavidad, uno dentro de otro. Clic para ampliar.</div>
     <div class="legend"><span class="l-cav">franja</span><span class="l-pocket">rebaje (a ras)</span><span class="l-pan">labio</span><span class="l-cut">cavidad (hueco)</span></div>
     <div id="verdict" class="verdict"></div>
     <h3>Lo que habría que cortar</h3>
@@ -262,11 +272,14 @@
     <p id="corte-lead"></p>
     <h3>A–A · <span data-zone="barra">norte–sur</span><span data-zone="isla">oeste–este</span></h3>
     <div class="sheet"><svg id="section"></svg></div>
+    <div class="cap">Corte longitudinal A–A · a lo largo de la fila, visto de lado. Clic para ampliar.</div>
     <h3>B–B · <span data-zone="barra">este–oeste</span><span data-zone="isla">norte–sur</span>, por la bandeja más honda</h3>
     <span data-zone="barra"><p>Sería igual para cualquier bandeja: labio 175, cavidad 156. Solo cambiaría el hondo.</p></span><span data-zone="isla"><p>Sería igual para cualquier bandeja: labio 175, cavidad 156. Solo cambiaría el hondo.</p></span>
     <div class="sheet"><svg id="section-b"></svg></div>
+    <div class="cap">Corte transversal B–B · a través de la bandeja más honda, visto <span data-zone="barra">desde el lado del invitado</span><span data-zone="isla">desde el sur</span>. Clic para ampliar.</div>
     <div class="two">
       <div class="sheet"><svg id="detail"></svg></div>
+    <div class="cap">Detalle ampliado · el labio donde encuentra el mesón.</div>
       <div class="note" id="corte-note"></div>
     </div>
   </section>
@@ -282,6 +295,7 @@
     <div class="chosen" id="pozo-chosen"></div>
     <h3>Visto de lado · <span data-zone="barra">norte–sur</span><span data-zone="isla">oeste–este</span></h3>
     <div class="sheet"><svg id="pozo-side"></svg></div>
+    <div class="cap">Corte longitudinal · la cubeta bajo la fila, visto de lado. Clic para ampliar.</div>
     <div class="legend"><span class="l-top">mesón</span><span class="l-basin">cubeta</span><span class="l-pan">bandeja</span><span class="l-ice" id="pozo-lg">hielo</span></div>
     <div id="pozo-verdict" class="verdict"></div>
     <div class="sheet tbl"><table id="pozo-nums"></table></div>
@@ -302,11 +316,11 @@
     <h2><span class="num">9</span>Cómo llamamos las cosas</h2>
     <p>Un corte a través de una bandeja, con cada palabra apuntando a su parte. Lo gris es la bandeja; lo beige, el mesón.</p>
     <div class="sheet"><svg id="terms-fig"></svg></div>
+    <div class="cap">Corte transversal · una bandeja en el mesón, con cada término en su parte. Clic para ampliar.</div>
     <h3>De la bandeja</h3>
     <dl class="terms">
       <div><dt>Labio</dt><dd>La ceja exterior de la bandeja, la medida de catálogo: 175 mm. Es lo que apoya sobre el mesón. Sobresale <span id="t-lip"></span> por lado respecto al cuerpo.</dd></div>
       <div><dt>Cuerpo</dt><dd>La parte de la bandeja que cuelga bajo el mesón: 149 mm, el labio menos dos cejas.</dd></div>
-      <div><dt>Tapa ciega</dt><dd>Pieza de acero del tamaño de la franja, con el mismo labio que las bandejas y una falda dentro de la cavidad. Reemplaza a las bandejas cuando la barra no se usa; nunca va encima de ellas. Va con los dos montajes.</dd></div>
     </dl>
     <h3>Del mesón</h3>
     <dl class="terms">
@@ -321,6 +335,7 @@
 
 </div>
 <div id="print" hidden></div>
+<div id="lightbox" hidden role="dialog" aria-label="Dibujo ampliado"><div class="lb-inner"></div><div class="lb-hint">Esc o clic para cerrar</div></div>
 
 <script>
 // ---- data (all inches; edit here) ----
@@ -939,6 +954,18 @@ document.getElementById('plan').addEventListener('click', e => {
   const it = ROW[+r.dataset.i]; it.d = it.d === MAXD ? 2.5 : MAXD; render();
 });
 document.getElementById('flip').addEventListener('click', () => { ROW.reverse(); render(); });
+// ---- ampliar un dibujo ----
+const LB = document.getElementById('lightbox'), LBI = LB.querySelector('.lb-inner');
+document.querySelectorAll('.sheet > svg').forEach(sv => {
+  if (sv.closest('.two')) return;
+  sv.parentElement.addEventListener('click', e => {
+    if (e.target.closest('[data-i]') || e.target.closest('[data-slot]')) return;   // los clics que cambian algo siguen funcionando
+    LBI.innerHTML = sv.outerHTML; LBI.querySelector('svg').removeAttribute('id'); LB.hidden = false; document.body.style.overflow = 'hidden';
+  });
+});
+const closeLB = () => { LB.hidden = true; LBI.innerHTML = ''; document.body.style.overflow = ''; };
+LB.addEventListener('click', closeLB);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !LB.hidden) closeLB(); });
 document.querySelectorAll('[data-zone-btn]').forEach(b => b.addEventListener('click', () => { applyZone(b.dataset.zoneBtn); render(); }));
 readHash();
 render();
