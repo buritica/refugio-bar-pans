@@ -253,7 +253,7 @@
     <div id="verdict" class="verdict"></div>
     <h3>Lo que habría que cortar</h3>
     <div class="sheet tbl"><table id="cuts"></table></div>
-    <div class="ctl-row"><span class="ctl-lbl">Plantilla 1:1</span><button type="button" class="btn" data-paper="carta">Carta</button><button type="button" class="btn" data-paper="a4">A4</button><button type="button" class="btn" data-paper="plotter">Plóter, una hoja</button><span class="ctl-hint">escala real, sin ajustar a la página. Carta y A4 van en hojas con solape; el plóter imprime la franja entera de una vez.</span></div>
+    <div class="ctl-row"><span class="ctl-lbl">Plantilla 1:1</span><button type="button" class="btn" data-paper="carta">Carta</button><button type="button" class="btn" data-paper="a4">A4</button><button type="button" class="btn" data-paper="plotter">Plóter, una hoja</button><span class="ctl-hint">escala real, sin ajustar a la página. Carta y A4 van en hojas con solape; el plóter imprime la franja entera de una vez. Trae la franja, la cavidad y el labio de cada bandeja, para poner las de muestra encima.</span></div>
   </section>
 
   <section id="comparacion">
@@ -846,8 +846,8 @@ function buildPrint(paper = 'carta') {
   const zoneLbl = Z.orient === 'ns' ? ['NORTE · lado del invitado', 'SUR · lado de quien cocina'] : ['OESTE', 'ESTE'];
   const cavs = [];                                                     // cavidades en mm, a lo largo de la franja
   let x = 0;
-  const bars = [];
-  ROW.forEach((it, i) => { if (i > 0) bars.push(mm(x)); x += PANS[it.p].w + (MOUNT === 'flush' ? 2 * CLEAR : 0); });
+  const bars = [], pans = [];
+  ROW.forEach((it, i) => { if (i > 0) bars.push(mm(x)); pans.push({ a: mm(x), len: mm(PANS[it.p].w), name: PANS[it.p].name, d: mm(it.d) }); x += PANS[it.p].w + (MOUNT === 'flush' ? 2 * CLEAR : 0); });
   cavs.push({ a: mm(LIP - CLEAR), len: mm(CAVITY.l - 2 * LIP + 2 * CLEAR), name: 'cavidad' });
   const cavW = mm(STRIP - 2 * LIP + 2 * CLEAR), cx = ox + (fw - cavW) / 2;
   let html = '';
@@ -861,6 +861,11 @@ function buildPrint(paper = 'carta') {
       d += `<text x="${cx + cavW / 2}" y="${oy + c.a + c.len / 2}" font-size="6" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#1f2428">cavidad ${cavW} × ${c.len} · una sola</text>`;
       for (const b of bars) d += `<path d="M${cx},${oy + b}H${cx + cavW}" stroke="#2c6fb3" stroke-width="0.3" stroke-dasharray="3 1.5"/><text x="${cx + cavW + 2}" y="${oy + b + 1.5}" font-size="3.5" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">junta entre bandejas</text>`;
       d += `<path d="M${cx},${oy + c.a}L${cx + cavW},${oy + c.a + c.len}M${cx + cavW},${oy + c.a}L${cx},${oy + c.a + c.len}" stroke="#1f2428" stroke-width="0.2"/>`;
+    }
+    // labios de las bandejas de la fila, para poner las de muestra encima
+    for (const p of pans) {
+      d += `<rect x="${ox}" y="${oy + p.a}" width="${fw}" height="${p.len}" fill="none" stroke="#7f8b93" stroke-width="0.35" stroke-dasharray="1.5 1"/>`;
+      d += `<text x="${ox + 2}" y="${oy + p.a + 5}" font-size="4" font-family="IBM Plex Mono, monospace" fill="#7f8b93">${p.name} · labio ${fw} × ${p.len} · ${p.d} hondo</text>`;
     }
     // eje de la franja y extremos
     d += `<text x="${ox + fw / 2}" y="${oy - 3}" font-size="4" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#2c6fb3">${zoneLbl[0]} · franja ${fw} × ${fl} mm</text>`;
